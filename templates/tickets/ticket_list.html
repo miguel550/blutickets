@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+    <div class="row">
+
+    {% with ''|center:10 as range %}
+    {% for ticket in range %}
+        <!--<div class="">-->
+        <div class="mx-auto pt-3" style="width: -webkit-fill-available">
+        <div class="card" style="">
+          <img class="card-img" height="auto" width="100%" src="{% static 'flyer-4.png' %}" alt="Card image cap">
+        </div>
+        </div>
+        <!--</div>-->
+    {% endfor %}
+    {% endwith %}
+    </div>
+    </div>
+{% endblock content %}

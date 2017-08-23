@@ -1,0 +1,9 @@
+venv
+*.pyc
+staticfiles
+.env
+.idea/
+db.sqlite3
+local_settings.py
+htmlcov
+.coverage

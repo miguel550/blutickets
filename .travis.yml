@@ -8,8 +8,8 @@ script:
 deploy:
   provider: heroku
   app:
-    master: prod-blupacket
-    dev: dev-blupacket
+    master: prod-blutickets
+    dev: dev-blutickets
   api_key:
     secure: f8v56MD/0K2e6dHLo0/msqdqIIdwvcNO/iUHgkx/JI7t9P5TN6mZm/zGLGQx/0NOlX36R46I4YB6R62bzMc716WGPs4aj7YeyW01341aOM4LKQIsO+5Xd4+h76KHzYYpeWm0PCvu8PL6w/P96a8spuPq99iLr5TJgwDCtC6BqhbfgpzP5EFaBL5OTzicJdzcU3BhFQOaE7xkfOR4SNJFCMVyOKBKPFdghJmTCESFD6Blv3nqPVhHlJ8O5+o9fMpNwuRRWuO2lDD1S6xgA3OvZFg2cHYjIb1msqLn/6g6xcWCAaG6FPcKjkebocwGH5ke8SS1LuVSZFrGky51NPmgLZp6AEhVtsvMhhCod3PmBseyg06bjScnqTJGDnTCqK6nCRPvaTGORGkzvYBo8sWySfdmhCBIZTdu+KCCTs/jjsTzaFhobAGIVnchof+C3czgWgQErZOWa/VA3iARY16ZIPlmvLcZ/tXXAAU6eBWfERWD1FblOq73wiQIlCP6rIjSfhNdeB+Kj4y94+rfv5HeLokalFqe/jEjpkwcYJrGJW620nYuC+U8fyq7N20Iw/jjPMk3g/52VqtXUJcq5MyRpOpSlaQhgwk03/0H2UzeLtRUncplIkxR8eutc75tkWetc+YnzFJjge+/vQp6L0ay6s1AIkBOUT+5DE/nAUke6eE=
 notifications:

@@ -8,3 +8,4 @@ db.sqlite3
 local_settings.py
 htmlcov
 .coverage
+.ipynb_checkpoints

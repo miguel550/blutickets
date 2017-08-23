@@ -1,1 +1,1 @@
-web: gunicorn blupacket.wsgi --log-file -
+web: gunicorn blutickets.wsgi --log-file -

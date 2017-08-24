@@ -17,12 +17,16 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
-from tickets.views import TicketList, who_we_are
+from django.views.generic import TemplateView
+from tickets.views import TicketList
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TicketList.as_view(), name='home'),
-    url(r'^who-we-are/$', who_we_are, name='who-we-are'),
+    url(r'^who-we-are/$', TemplateView.as_view(template_name='who-we-are.html'), name='who-we-are'),
+    url(r'^terms-and-conditions/$', TemplateView.as_view(template_name='terms-and-conditions.html'), name='terms'),
+    url(r'^privacy/$', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
 ]
 
 

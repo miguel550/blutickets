@@ -8,7 +8,4 @@ class TicketList(ListView):
     model = Ticket
 
 
-def who_we_are(request):
-    return render(request, 'who-we-are.html')
-
 

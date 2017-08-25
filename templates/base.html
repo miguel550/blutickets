@@ -48,6 +48,17 @@
     .white-text {
         color: white;
     }
+    .footer-text{
+        font-size: 3vw;
+    }
+    @media only screen
+    and (min-width : 1224px) {
+        .footer-text{
+            font-size: 16px;
+        }
+    }
+
+
 </style>
     <footer class="blutickets-footer footer py-2">
         <div class="container">
@@ -63,12 +74,12 @@
                             </a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row footer-text">
                         <div class="mx-auto">
                             <a class="white-text" href="{% url 'who-we-are' %}">¿Quiénes somos?</a>| <a class="white-text" href="{% url 'terms' %}">Términos y condiciones</a> | <a class="white-text" href="{% url 'privacy' %}">Política de privacidad</a>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row footer-text">
                         <div class="mx-auto">
                             Copyright © 2017 Blutickets
                         </div>

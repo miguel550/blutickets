@@ -3,7 +3,7 @@ from django.db import models
 
 class Ticket(models.Model):
     party_name = models.CharField(max_length=150)
-    flyer_image = models.ImageField()
+    flyer_image = models.ImageField(upload_to='flyers')
     address = models.CharField(max_length=250)
     description = models.TextField()
     when = models.DateTimeField()

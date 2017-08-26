@@ -4,12 +4,13 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            <h1>{{ object.party_name }}</h1>
-            <img src="{{ object.flyer_image.url }}" />
-            <p>Descripcion del evento: {{ object.description }}</p>
-            <p>Direccion del evento: {{ object.address }}</p>
-            <p>Fecha del evento: {{ object.when|date }}</p>
-
+            <div style="width: -webkit-fill-available">
+                <h1>{{ object.party_name }}</h1>
+                <img src="{{ object.flyer_image.url }}" height="auto" width="100%" />
+                <p>Descripcion del evento: {{ object.description }}</p>
+                <p>Direccion del evento: {{ object.address }}</p>
+                <p>Fecha del evento: {{ object.when|date }}</p>
+            </div>
         </div>
     </div>
 {% endblock content %}

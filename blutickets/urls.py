@@ -18,12 +18,13 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
-from tickets.views import TicketList
+from tickets.views import TicketList, TicketDetailView
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TicketList.as_view(), name='home'),
+    url(r'^tickets/(?P<pk>[-\w]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
     url(r'^who-we-are/$', TemplateView.as_view(template_name='who-we-are.html'), name='who-we-are'),
     url(r'^terms-and-conditions/$', TemplateView.as_view(template_name='terms-and-conditions.html'), name='terms'),
     url(r'^privacy/$', TemplateView.as_view(template_name='privacy.html'), name='privacy'),

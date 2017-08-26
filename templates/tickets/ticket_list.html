@@ -6,11 +6,13 @@
 
     {% for ticket in object_list %}
         <!--<div class="">-->
-        <div class="mx-auto pt-3" style="width: -webkit-fill-available">
-        <div class="card" style="">
-          <img class="card-img" height="auto" width="100%" src="{{ ticket.flyer_image.url }}" alt="Card image cap">
-        </div>
-        </div>
+        <a href="{% url 'ticket-detail' ticket.id %}">
+            <div class="mx-auto pt-3" style="width: -webkit-fill-available">
+            <div class="card" style="">
+              <img class="card-img" height="auto" width="100%" src="{{ ticket.flyer_image.url }}" alt="Card image cap">
+            </div>
+            </div>
+        </a>
         <!--</div>-->
     {% endfor %}
     </div>

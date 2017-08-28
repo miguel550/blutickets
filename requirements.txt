@@ -5,3 +5,4 @@ django-storages==1.6.5
 gunicorn==19.7.1
 Pillow==4.2.1
 psycopg2==2.7.3
+-e git+https://github.com/philippbosch/django-geoposition.git@django-1.11#egg=django-geoposition

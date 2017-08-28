@@ -2,14 +2,50 @@
 {% load static %}
 {% block title %}{{ block.super }} - {{ object.party_name }}{% endblock title %}
 {% block content %}
+            <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
     <div class="container">
         <div class="row">
             <div style="width: -webkit-fill-available">
                 <img src="{{ object.flyer_image.url }}" height="auto" width="100%" />
-                <p>Descripcion del evento: {{ object.description }}</p>
-                <p>Direccion del evento: {{ object.address }}</p>
+                <p>Descripción del evento: {{ object.description }}</p>
+                <p>Dirección del evento: {{ object.address }}</p>
                 <p>Fecha del evento: {{ object.when|date }}</p>
+                <h1>Ubicación en el mapa del evento</h1>
+                <div id="map"></div>
+
             </div>
         </div>
     </div>
+    <script>
+
+      function initMap() {
+        var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: "{{ object.party_name }}"
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3B2CnwKHWPZCOkm40bPzYZBJ9dcEoXGo&callback=initMap">
+    </script>
 {% endblock content %}

@@ -1,11 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% block title %}{{ block.super }} - {{ object.party_name }}{% endblock title %}
 {% block content %}
     <div class="container">
         <div class="row">
             <div style="width: -webkit-fill-available">
-                <h1>{{ object.party_name }}</h1>
                 <img src="{{ object.flyer_image.url }}" height="auto" width="100%" />
                 <p>Descripcion del evento: {{ object.description }}</p>
                 <p>Direccion del evento: {{ object.address }}</p>

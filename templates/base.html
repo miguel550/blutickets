@@ -34,6 +34,14 @@
       </li>
         {% endblock navbaritems %}
     </ul>
+    <ul class="nav navbar-nav navbar-right pr-5">
+    {% if user.is_authenticated %}
+      <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ user.first_name }}</a></li>
+    {% else %}
+      <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}"><i class="fa fa-user" aria-hidden="true"></i> Regístrate</a></li>
+      <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+    {% endif %}
+    </ul>
 
   </div>
 </nav>

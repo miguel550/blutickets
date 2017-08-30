@@ -1,0 +1,13 @@
+{% load account %}
+{% load static %}
+{% user_display user as user_display %}
+
+<hr />
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="{% static 'logo_for_white_bg.png' %}" alt="Blutickets" width="347" height="103" /></p>
+<p><strong>Hey @{{ user_display }},&nbsp;</strong></p>
+<p>Gracias por registrarte en blutickets.com</p>
+<p><strong>&iexcl;Ya est&aacute;s casi listo! Simplemente verifique su direcci&oacute;n de correo electr&oacute;nico en la direcci&oacute;n que aparece ah&iacute; abajo.</strong></p>
+<p>{{ activate_url }}</p>
+<p>Gracias.</p>
+<hr />
+<p>&nbsp;</p>

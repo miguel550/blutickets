@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load l10n %}
 {% block title %}{{ block.super }} - {{ object.party_name }}{% endblock title %}
 {% block content %}
             <style>
@@ -31,8 +32,11 @@
     <script>
 
       function initMap() {
-        var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
+        {% localize off %}
 
+            var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
+
+        {% endlocalize %}
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: myLatLng

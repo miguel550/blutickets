@@ -10,7 +10,7 @@
 <body>
 <header>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="{% url 'home' %}">
       <div style="height: 50px">
         <img src="{% static 'logo_for_white_bg.png' %}" width="auto" height="100%" class="d-inline-block align-top" alt="">
       </div>
@@ -36,6 +36,7 @@
     <ul class="nav navbar-nav navbar-right pr-5">
     {% if user.is_authenticated %}
       <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ user.first_name }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Salir</a></li>
     {% else %}
       <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}"><i class="fa fa-user" aria-hidden="true"></i> Regístrate</a></li>
       <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>

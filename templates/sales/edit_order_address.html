@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post" action="{% url 'checkout' %}">{% csrf_token %}
+        <input type="hidden" name="order_id" value="{{ order.pk }}" />
+        <input type="submit" value="Checkout" />
+    </form>
+
+{% endblock %}

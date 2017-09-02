@@ -9,6 +9,9 @@ class Ticket(models.Model):
     description = models.TextField()
     map_position = GeopositionField()
     when = models.DateTimeField()
+    quantity = models.IntegerField(default=0)
+    price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

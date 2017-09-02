@@ -19,6 +19,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
 from tickets.views import TicketList, TicketDetailView
+from sales.views import create_order, edit_order_and_next, checkout
 
 
 urlpatterns = [
@@ -29,6 +30,10 @@ urlpatterns = [
     url(r'^who-we-are/$', TemplateView.as_view(template_name='who-we-are.html'), name='who-we-are'),
     url(r'^terms-and-conditions/$', TemplateView.as_view(template_name='terms-and-conditions.html'), name='terms'),
     url(r'^privacy/$', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
+    # Sales
+    url(r'^bucket/(?P<ticket_pk>\d+)?/?$', create_order, name='create_order_or_add_item'),
+    url(r'^edit-add-addresses/$', edit_order_and_next, name='edit_order_and_next'),
+    url(r'^checkout/$', checkout, name='checkout'),
 ]
 
 

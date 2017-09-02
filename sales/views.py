@@ -1,8 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import UpdateView, CreateView
 from .models import Order, LineItem
-from .forms import OrderFirstStepForm
-from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from tickets.models import Ticket

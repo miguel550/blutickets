@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
     'tickets',
     'profiles',
+    'sales',
 ]
 SITE_ID = 1
 

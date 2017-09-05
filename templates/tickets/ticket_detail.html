@@ -15,6 +15,10 @@
         margin: 0;
         padding: 0;
       }
+        .geoposition-widget > table, .geoposition-search, label{
+            display: none !important;
+        }
+
     </style>
     <div class="container">
         <div class="row">
@@ -24,7 +28,11 @@
                 <p>Dirección del evento: {{ object.address }}</p>
                 <p>Fecha del evento: {{ object.when|date }}</p>
                 <h1><i class="fa fa-map-marker" aria-hidden="true"></i> Ubicación</h1>
-                <div id="map"></div>
+                <div id="mapp"></div>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+                {{ form.media }}
+                {{ form.as_p }}
+
 
             </div>
         </div>
@@ -49,7 +57,7 @@
         });
       }
     </script>
-    <script
+    <!--<script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3B2CnwKHWPZCOkm40bPzYZBJ9dcEoXGo&callback=initMap">
-    </script>
+    </script>-->
 {% endblock content %}

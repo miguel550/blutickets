@@ -50,6 +50,11 @@ INSTALLED_APPS = [
     'profiles',
     'sales',
 ]
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignUpForm'
+AUTH_USER_MODEL = 'profiles.User'
+
+
 SITE_ID = 1
 
 ACCOUNT_AUTHENTICATION_METHOD = "email"

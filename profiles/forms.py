@@ -4,14 +4,28 @@ from .models import Province, Sector
 from operator import methodcaller
 
 
+def get_province_choices():
+    try:
+        return map(lambda x: (*x.values(),),
+                   Province.objects.filter(active=True).values('pk', 'name'))
+    except:
+        return [(0, 'No hay provincias')]
+
+
+def get_sector_choices():
+    try:
+        return map(lambda x: (*x.values(),),
+                   Sector.objects.filter(active=True).values('pk', 'name'))
+    except:
+        return [(0, 'No hay sector')]
+
+
 class SignUpForm(forms.ModelForm):
 
-    province = forms.TypedChoiceField(choices=map(lambda x: (*x.values(),),
-                                                  Province.objects.filter(active=True).values('pk', 'name')),
+    province = forms.TypedChoiceField(choices=get_province_choices(),
                                       initial=get_user_model().DISTRITO_NACIONAL,
                                       label="Provincia")
-    sector = forms.TypedChoiceField(choices=map(lambda x: (*x.values(),),
-                                                Sector.objects.filter(active=True).values('pk', 'name')),
+    sector = forms.TypedChoiceField(choices=get_sector_choices(),
                                     coerce=lambda x: Sector.objects.get(pk=x),
                                     )
 

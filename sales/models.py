@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from tickets.models import Ticket
 from geoposition.fields import GeopositionField
 
@@ -18,7 +18,7 @@ class Order(models.Model):
     APPROVED = 'approved'
     CLOSED = 'closed'
     STATUS_CHOICES = (
-        (PREPARING, 'Preparación'),
+        (PREPARING, 'Preparacion'),
         (PENDING, 'En espera'),
         (REJECTED, 'Rechazado'),
         (APPROVED, 'Aprovado'),
@@ -31,7 +31,7 @@ class Order(models.Model):
     )
     line_items = models.ManyToManyField(Ticket, through='LineItem')
     map_position = GeopositionField(null=True, blank=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(get_user_model())
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -17,7 +17,7 @@
                 <img src="{{ object.flyer_image.url }}" height="auto" width="100%" />
                 <p ><div class="mx-auto">{{ object.description.rendered|default:"<No tiene cuerpo>"|safe }}</div></p>
                 <p><div class="mx-auto">
-                <p style="text-align: justify;">&nbsp;&nbsp;<img src="http://oi63.tinypic.com/n2e2ja.jpg" alt="" width="36" height="36" />&nbsp;<strong>Precio: {{ object.price|unlocalize }} P/P</strong></p>
+                <p style="text-align: justify;">&nbsp;&nbsp;<img src="http://oi63.tinypic.com/n2e2ja.jpg" alt="" width="36" height="36" />&nbsp;<strong>Precio: RD${{ object.price|unlocalize }} P/P</strong></p>
                 <p class="text-justify">&nbsp;&nbsp;<strong><i class="fa fa-calendar fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Fecha: {{ object.when|date }} a las {{ object.when|time:"H:i A" }}.</strong></p>
                 <p class="text-justify">&nbsp;&nbsp;&nbsp;<strong><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Ubicaci&oacute;n del evento en el MAPA.</strong></p>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>

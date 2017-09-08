@@ -5,7 +5,6 @@ from geoposition.fields import GeopositionField
 class Ticket(models.Model):
     party_name = models.CharField(max_length=150)
     flyer_image = models.ImageField(upload_to='flyers')
-    address = models.CharField(max_length=250)
     description = models.TextField()
     map_position = GeopositionField()
     when = models.DateTimeField()

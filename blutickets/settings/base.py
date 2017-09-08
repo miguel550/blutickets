@@ -74,9 +74,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-
-ROOT_URLCONF = 'blutickets.urls'
+ROOT_URLCONF = os.environ.get('ROOT_URLCONF', 'blutickets.urls')
 
 TEMPLATES = [
     {

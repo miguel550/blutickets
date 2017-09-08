@@ -30,8 +30,8 @@ class Order(models.Model):
         default=PREPARING,
     )
     line_items = models.ManyToManyField(Ticket, through='LineItem')
-    map_position = GeopositionField(null=True, blank=True)
-    user = models.ForeignKey(get_user_model())
+    map_position = GeopositionField(null=True)
+    user = models.ForeignKey(get_user_model(), null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

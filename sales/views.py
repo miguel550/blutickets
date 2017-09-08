@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import UpdateView, CreateView
 from .models import Order, LineItem
+from .forms import OrderSecondStepForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from tickets.models import Ticket
@@ -30,7 +31,11 @@ def edit_order_and_next(request):
         # edit items quantity
         if 'order_id' in request.POST:
             order = get_object_or_404(Order, pk=request.POST['order_id'])
-            return render(request, 'sales/edit_order_address.html', {'order': order})
+            form = OrderSecondStepForm(instance=order)
+            return render(request, 'sales/edit_order_address.html', {
+                'order': order,
+                'form': form,
+            })
 
 
 def checkout(request):
@@ -38,6 +43,11 @@ def checkout(request):
         # map location through post
         if 'order_id' in request.POST:
             order = get_object_or_404(Order, pk=request.POST['order_id'])
+            # order.user = request.user
+            form = OrderSecondStepForm(instance=order, data=request.POST)
+            form = OrderSecondStepForm(instance=order, data=request.POST)
+            if form.is_valid():
+                form.save()
             order.status = Order.PENDING
             order.save()
             return render(request, 'sales/thank_you.html', {'order': order})

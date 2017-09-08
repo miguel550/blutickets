@@ -1,13 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <form method="post" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
+    <form method="post" class="pt-5" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
         <input type="hidden" name="order_id" value="{{ order.pk }}" />
-        {% for line_item in line_items %}
-            {{ line_item.product.party_name }}
-            {{ line_item.price }}
-            {{ line_item.quantity }}
-        {% endfor %}
-        <p><input type="submit" value="Seleccionar ubicacion de envio" /></p>
+    <h1>Carrito</h1>
+    <table class="table table-bordered " style="width: 100%;">
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+      <th>Evento</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+        <th>Total</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for line_item in line_items %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ line_item.product.party_name }}hgjkkjlkjhlkjhlkjhlkjhlkjh</td>
+      <td>{{ line_item.price }}</td>
+      <td><input type="number" min="0" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
+        <td>{{ line_item.price }}</td>
+    <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+        <p><input class="btn btn-outline-primary" type="submit" value="Continuar" /></p>
     </form>
+    <a class="btn btn-outline-primary" href="{% url 'home' %}">Seguir comprando</a>
 {% endblock %}

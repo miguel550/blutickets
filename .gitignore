@@ -10,3 +10,4 @@ htmlcov
 .ipynb_checkpoints
 media
 static
+bfg.jar

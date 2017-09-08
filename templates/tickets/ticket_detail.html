@@ -4,17 +4,8 @@
 {% block title %}{{ block.super }} - {{ object.party_name }}{% endblock title %}
 {% block content %}
             <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+
+
         .geoposition-widget > table, .geoposition-search, label{
             display: none !important;
         }
@@ -24,11 +15,9 @@
         <div class="row">
             <div style="width: -webkit-fill-available">
                 <img src="{{ object.flyer_image.url }}" height="auto" width="100%" />
-                <p>Descripción del evento: {{ object.description }}</p>
-                <p>Dirección del evento: {{ object.address }}</p>
-                <p>Fecha del evento: {{ object.when|date }}</p>
+                <p ><div class="mx-auto">{{ object.description.rendered|default:"<No tiene cuerpo>"|safe }}</div></p>
+                <p><i class="fa fa-calendar" aria-hidden="true"></i> Fecha del evento: {{ object.when|date }}</p>
                 <h1><i class="fa fa-map-marker" aria-hidden="true"></i> Ubicación</h1>
-                <div id="mapp"></div>
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
                 {{ form.media }}
                 {{ form.as_p }}

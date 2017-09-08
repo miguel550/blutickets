@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'tickets',
     'profiles',
     'sales',
+    'markupfield',
 ]
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignUpForm'

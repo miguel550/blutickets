@@ -1,11 +1,12 @@
 from django.db import models
 from geoposition.fields import GeopositionField
+from markupfield.fields import MarkupField
 
 
 class Ticket(models.Model):
     party_name = models.CharField(max_length=150)
     flyer_image = models.ImageField(upload_to='flyers')
-    description = models.TextField()
+    description = MarkupField(default_markup_type='markdown')
     map_position = GeopositionField()
     when = models.DateTimeField()
     quantity = models.IntegerField(default=0)

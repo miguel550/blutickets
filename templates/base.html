@@ -65,7 +65,12 @@
         }
     }
 
-
+    .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+    }
 </style>
     <footer class="blutickets-footer footer py-2">
         <div class="container">
@@ -83,7 +88,7 @@
                     </div>
                     <div class="row footer-text">
                         <div class="mx-auto">
-                            <a class="white-text" href="{% url 'who-we-are' %}">Sobre nosotros</a>| <a class="white-text" href="{% url 'terms' %}">Términos y condiciones</a> | <a class="white-text" href="{% url 'privacy' %}">Política de privacidad</a>
+                            <a class="white-text" href="{% url 'who-we-are' %}">Sobre nosotros</a> | <a class="white-text" href="{% url 'terms' %}">Términos y condiciones</a> | <a class="white-text" href="{% url 'privacy' %}">Política de privacidad</a>
                         </div>
                     </div>
                     <div class="row footer-text">

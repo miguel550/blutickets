@@ -3,7 +3,9 @@ from .base import *
 LANGUAGE_CODE = 'es'
 
 AWS_IS_GZIPPED = True
-
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True  
 MIDDLEWARE += ['django.middleware.gzip.GZipMiddleware']
 
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', True)

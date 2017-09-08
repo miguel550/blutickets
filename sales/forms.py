@@ -30,13 +30,13 @@ class OrderSecondStepForm(forms.ModelForm):
     province = forms.TypedChoiceField(choices=get_province_choices(),
                                       initial=get_user_model().DISTRITO_NACIONAL,
                                       label="Provincia")
-    sector = forms.TypedChoiceField(choices=get_sector_choices(),
-                                    coerce=lambda x: Sector.objects.get(pk=x),
-                                    )
+    sector = forms.ChoiceField(
+        choices=get_sector_choices(),
+    )
     street_and_house = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={
-            'placeholder': "Dirección casa",
+            'placeholder': "Dirección casa/ Calle X Casa #12",
 
             'class': "mx-auto"
         }),
@@ -44,10 +44,20 @@ class OrderSecondStepForm(forms.ModelForm):
     reference = forms.CharField(
         max_length=100,
         widget=forms.TextInput(attrs={
-            'placeholder': "Referencia",
+            'placeholder': "Referencia/ Al lado de..., frente a...",
             'class': "mx-auto"
         }),
     )
+
+    def save(self, commit=True):
+        order = super().save(commit=commit)
+        order.address = Address.objects.create(
+            sector_id=self.cleaned_data['sector'],
+            street_and_house=self.cleaned_data['street_and_house'],
+            reference=self.cleaned_data['reference'],
+        )
+        order.save()
+        return order
 
     class Meta:
         model = Order

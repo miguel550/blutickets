@@ -2,7 +2,7 @@
 
 {% block content %}
     <style>
-        form label:not([for="id_remember"]){
+        label[for="id_province"], label[for="id_sector"] {
             display: none;
         }
     </style>
@@ -10,8 +10,10 @@
     <form method="post"  class="col-md-12" action="{% url 'checkout' %}">{% csrf_token %}
             <input type="hidden" name="order_id" value="{{ order.pk }}" />
             {{ form.media }}
-            {{ form.as_table }}
-        <input class="btn btn-outline-primary" type="submit" value="Checkout" />
+        <div class="pt-3">
+            {{ form.as_p }}
+            <input class="btn btn-outline-primary" type="submit" value="Checkout" />
+        </div>
 
     </form>
 

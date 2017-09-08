@@ -27,26 +27,39 @@ class OrderFirstStepForm(forms.ModelForm):
 
 
 class OrderSecondStepForm(forms.ModelForm):
-    province = forms.TypedChoiceField(choices=get_province_choices(),
-                                      initial=get_user_model().DISTRITO_NACIONAL,
-                                      label="Provincia")
+    province = forms.TypedChoiceField(
+        choices=get_province_choices(),
+        initial=get_user_model().DISTRITO_NACIONAL,
+        label="Provincia",
+        widget=forms.Select(
+            attrs={
+            }
+        )
+    )
     sector = forms.ChoiceField(
         choices=get_sector_choices(),
+        widget=forms.Select(
+            attrs={
+            }
+        )
     )
     street_and_house = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(attrs={
-            'placeholder': "Dirección casa/ Calle X Casa #12",
-
-            'class': "mx-auto"
-        }),
+        label="Calle",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': " (Calle/Casa/apart,etc)",
+            }
+        ),
     )
     reference = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(attrs={
-            'placeholder': "Referencia/ Al lado de..., frente a...",
-            'class': "mx-auto"
-        }),
+        label="Referencias",
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': "(Al lado de/Frente a/etc)",
+            }
+        ),
     )
 
     def save(self, commit=True):

@@ -1,7 +1,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from tickets.models import Ticket
+from profiles.models import Province, Sector
 from geoposition.fields import GeopositionField
+
+
+class Address(models.Model):
+    sector = models.ForeignKey(Sector)
+    street_and_house = models.CharField(max_length=100)
+    reference = models.CharField(max_length=100)
 
 
 class LineItem(models.Model):
@@ -30,6 +37,7 @@ class Order(models.Model):
         default=PREPARING,
     )
     line_items = models.ManyToManyField(Ticket, through='LineItem')
+    address = models.ForeignKey('Address', null=True)
     map_position = GeopositionField(null=True)
     user = models.ForeignKey(get_user_model(), null=True)
 

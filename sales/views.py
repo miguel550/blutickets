@@ -45,7 +45,6 @@ def checkout(request):
             order = get_object_or_404(Order, pk=request.POST['order_id'])
             # order.user = request.user
             form = OrderSecondStepForm(instance=order, data=request.POST)
-            form = OrderSecondStepForm(instance=order, data=request.POST)
             if form.is_valid():
                 form.save()
             order.status = Order.PENDING

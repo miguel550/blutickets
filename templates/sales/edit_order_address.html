@@ -6,7 +6,7 @@
             display: none;
         }
     </style>
-
+    <h1>Dirección de envío</h1>
     <form method="post"  class="col-md-12" action="{% url 'checkout' %}">{% csrf_token %}
             <input type="hidden" name="order_id" value="{{ order.pk }}" />
             {{ form.media }}

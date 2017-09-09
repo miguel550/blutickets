@@ -69,7 +69,7 @@ def order_udpdated(sender, instance, created, raw, using, update_fields, **kwarg
         email.send()
     elif instance.status == Order.APPROVED:
         email = EmailMultiAlternatives(
-            "Orden de compra aprovada!",
+            "Orden de compra aprobada!",
             loader.get_template(
                 'email_templates/email_order_approved.html'
             ).render(c),

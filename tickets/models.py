@@ -11,7 +11,7 @@ class Ticket(models.Model):
     flyer_image_compressed = ImageSpecField(source='flyer_image',
                                             format='JPEG',
                                             options={
-                                                'quality': 99
+                                                'quality': 70
                                             },)
     description = MarkupField(default_markup_type='markdown')
     map_position = GeopositionField()

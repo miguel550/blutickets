@@ -1,11 +1,18 @@
 from django.db import models
 from geoposition.fields import GeopositionField
 from markupfield.fields import MarkupField
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 
 class Ticket(models.Model):
     party_name = models.CharField(max_length=150)
     flyer_image = models.ImageField(upload_to='flyers')
+    flyer_image_compressed = ImageSpecField(source='flyer_image',
+                                            format='JPEG',
+                                            options={
+                                                'quality': 99
+                                            },)
     description = MarkupField(default_markup_type='markdown')
     map_position = GeopositionField()
     when = models.DateTimeField()

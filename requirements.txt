@@ -11,3 +11,4 @@ Markdown==2.6.9
 django-markupfield==1.4.2
 uwsgi==2.0.15
 gevent==1.2.2
+django-imagekit==4.0.1

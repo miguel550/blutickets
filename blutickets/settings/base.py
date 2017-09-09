@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'profiles',
     'sales',
     'markupfield',
+    'imagekit',
 ]
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignUpForm'

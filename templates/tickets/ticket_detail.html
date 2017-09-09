@@ -11,7 +11,7 @@
     <div class="container">
         <div class="row">
             <div style="width: -webkit-fill-available">
-                <img src="{{ object.flyer_image.url }}" height="auto" width="100%" />
+                <img src="{{ object.flyer_image_compressed.url }}" height="auto" width="100%" />
                 <p ><div class="mx-auto">{{ object.description.rendered|default:"<No tiene cuerpo>"|safe }}</div></p>
                 <p><div class="mx-auto">
                 <p style="text-align: justify;">&nbsp;&nbsp;<img src="http://oi63.tinypic.com/n2e2ja.jpg" alt="" width="36" height="36" />&nbsp;<strong>Precio: RD${{ object.price|unlocalize }} P/P</strong></p>

@@ -6,16 +6,14 @@ from profiles.models import Province, Sector
 
 def get_province_choices():
     try:
-        return map(lambda x: (*x.values(),),
-                   Province.objects.filter(active=True).values('pk', 'name'))
+        return Province.objects.filter(active=True)
     except:
         return [(0, 'No hay provincias')]
 
 
 def get_sector_choices():
     try:
-        return map(lambda x: (*x.values(),),
-                   Sector.objects.filter(active=True).values('pk', 'name'))
+        return Sector.objects.filter(active=True)
     except:
         return [(0, 'No hay sector')]
 
@@ -27,21 +25,14 @@ class OrderFirstStepForm(forms.ModelForm):
 
 
 class OrderSecondStepForm(forms.ModelForm):
-    province = forms.TypedChoiceField(
-        choices=get_province_choices(),
+    province = forms.ModelChoiceField(
+        queryset=get_province_choices(),
         initial=get_user_model().DISTRITO_NACIONAL,
         label="Provincia",
-        widget=forms.Select(
-            attrs={
-            }
-        )
     )
-    sector = forms.ChoiceField(
-        choices=get_sector_choices(),
-        widget=forms.Select(
-            attrs={
-            }
-        )
+    sector = forms.ModelChoiceField(
+        queryset=get_sector_choices(),
+        empty_label="--Sector--"
     )
     street_and_house = forms.CharField(
         max_length=100,
@@ -65,7 +56,7 @@ class OrderSecondStepForm(forms.ModelForm):
     def save(self, commit=True):
         order = super().save(commit=commit)
         order.address = Address.objects.create(
-            sector_id=self.cleaned_data['sector'],
+            sector=self.cleaned_data['sector'],
             street_and_house=self.cleaned_data['street_and_house'],
             reference=self.cleaned_data['reference'],
         )

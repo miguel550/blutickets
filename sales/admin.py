@@ -7,7 +7,13 @@ class TermInlineAdmin(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('status', 'show_address', 'user', )
+    list_display = (
+        'status',
+        'show_address',
+        'user',
+        'user_number_primary',
+        'user_number_secondary'
+    )
     fields = ('status',)
 
     inlines = (TermInlineAdmin,)
@@ -16,5 +22,15 @@ class OrderAdmin(admin.ModelAdmin):
         if obj.address:
             return f"{obj.address.sector.name}, {obj.address.street_and_house}, {obj.address.reference}"
         return "No address."
+
+    def user_number_primary(self, obj):
+        if obj.user.phone_number_primary_type:
+            return f"{obj.user.phone_number_primary_type}: {obj.user.phone_number_primary}"
+        return "No hay telefono."
+
+    def user_number_secondary(self, obj):
+        if obj.user.phone_number_secondary_type:
+            return f"{obj.user.phone_number_secondary_type}: {obj.user.phone_number_secondary}"
+        return "No hay telefono."
 
 admin.site.register(Order, OrderAdmin)

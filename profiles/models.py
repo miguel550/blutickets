@@ -26,3 +26,7 @@ class User(AbstractUser):
     # Reference: http://www.jmarcano.com/mipais/diversos/iso3166.html
     DISTRITO_NACIONAL = 1
     sector = models.ForeignKey('Sector', null=True)
+    phone_number_primary_type = models.CharField(max_length=15, default="")
+    phone_number_primary = models.CharField(max_length=15, default="")
+    phone_number_secondary_type = models.CharField(max_length=15, default="")
+    phone_number_secondary = models.CharField(max_length=15, default="")

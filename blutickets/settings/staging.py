@@ -7,7 +7,20 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 MIDDLEWARE += ['django.middleware.gzip.GZipMiddleware']
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 
+GZIP_CONTENT_TYPES = (
+    'text/css',
+    'text/javascript',
+    'application/javascript',
+    'application/x-javascript',
+    'image/svg+xml',
+    'image/png',
+    'image/jpeg',
+    'image/x-png'
+)
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', True)
 EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']

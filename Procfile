@@ -1,1 +1,1 @@
-web: gunicorn blutickets.wsgi --log-file -
+web: gunicorn blutickets.wsgi  --worker-class gevent --log-file -

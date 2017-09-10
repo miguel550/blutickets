@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>{% block title %}Blutickets{% endblock %}</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js" integrity="sha256-NjbogQqosWgor0UBdCURR5dzcvAgHnfUZMcZ8RCwkk8=" crossorigin="anonymous"></script>
 </head>
 <body>
 <header>
@@ -35,11 +36,12 @@
     </ul>
     <ul class="nav navbar-nav navbar-right pr-5">
     {% if user.is_authenticated %}
-      <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ user.first_name }}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'create_order_or_add_item' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Carrito de compras</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true"></i> {{ user.first_name }}</a></li>
         <li class="nav-item"><a class="nav-link" href="{% url 'account_logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i> Salir</a></li>
     {% else %}
-      <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}"><i class="fa fa-user" aria-hidden="true"></i> Regístrate</a></li>
-      <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'account_signup' %}"><i class="fa fa-user" aria-hidden="true"></i> Regístrate</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'account_login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
     {% endif %}
     </ul>
 

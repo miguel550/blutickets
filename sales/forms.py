@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Order, Address
+from .models import Order, Address, LineItem
 from profiles.models import Province, Sector
 
 
@@ -18,10 +18,15 @@ def get_sector_choices():
         return [(0, 'No hay sector')]
 
 
-class OrderFirstStepForm(forms.ModelForm):
+class LineItemForm(forms.ModelForm):
+
     class Meta:
-        model = Order
-        fields = ('user', 'line_items')
+        model = LineItem
+        fields = ('quantity',)
+
+
+class OrderFirstStepForm(forms.Form):
+    pass
 
 
 class OrderSecondStepForm(forms.ModelForm):

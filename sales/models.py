@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from tickets.models import Ticket
-from profiles.models import Sector
 from geoposition.fields import GeopositionField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -10,13 +8,13 @@ from django.template import loader
 
 
 class Address(models.Model):
-    sector = models.ForeignKey(Sector)
+    sector = models.ForeignKey('profiles.Sector')
     street_and_house = models.CharField(max_length=100)
     reference = models.CharField(max_length=100)
 
 
 class LineItem(models.Model):
-    product = models.ForeignKey(Ticket)
+    product = models.ForeignKey('tickets.Ticket')
     order = models.ForeignKey('Order')
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(decimal_places=2, max_digits=8)
@@ -40,7 +38,7 @@ class Order(models.Model):
         choices=STATUS_CHOICES,
         default=PREPARING,
     )
-    line_items = models.ManyToManyField(Ticket, through='LineItem')
+    line_items = models.ManyToManyField('tickets.Ticket', through='LineItem')
     address = models.ForeignKey('Address', null=True)
     map_position = GeopositionField(null=True)
     user = models.ForeignKey(get_user_model(), null=True)

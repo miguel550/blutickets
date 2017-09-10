@@ -17,18 +17,52 @@
   </thead>
   <tbody>
     {% for line_item in line_items %}
-    <tr>
+    <tr id="li{{ line_item.pk }}">
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{ line_item.product.party_name }}</td>
       <td>{{ line_item.price }}</td>
-      <td><input type="number" min="0" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
+      <td><input type="number" min="0" max="{{ line_item.product.remaining }}" name="quantity_{{ line_item.pk }}" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
         <td>{{ line_item.price }}</td>
-    <td><i class="fa fa-trash" aria-hidden="true"></i></td>
+        <td><button class="delete" data-lineitemid="{{ line_item.pk }}"> <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
     </tr>
+        {% empty %}
+        <tr><td></td><td>No hay productos en el carrito.</td></tr>
     {% endfor %}
   </tbody>
 </table>
         <p><input class="btn btn-outline-primary" type="submit" value="Continuar" /></p>
     </form>
     <a class="btn btn-outline-primary" href="{% url 'home' %}">Seguir comprando</a>
+    <script>
+        var buttons = document.querySelectorAll('.delete');
+        var delete_action = function(e){
+            e.preventDefault();
+            if(confirm("¿Desea eliminarlo de su lista?")){
+                var formData = new FormData();
+                var id = this.dataset.lineitemid;
+                formData.append("line_item_id", id);
+                formData.append('csrftoken', this.dataset.csrf);
+                fetch('{% url 'remove_item_from_order' %}', {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-CSRFToken": Cookies.get('csrftoken'),
+                        "Accept": "application/json",
+                    },
+                    body: formData
+                }).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    if(data.RESULT == "OK"){
+                        document.querySelector('#li'+id).style = "display: none;";
+                    }
+                }).catch(function(error){
+                    console.error(error);
+                });
+            }
+        };
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener("click", delete_action, false);
+        }
+    </script>
 {% endblock %}

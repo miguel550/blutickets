@@ -3,6 +3,8 @@ from geoposition.fields import GeopositionField
 from markupfield.fields import MarkupField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from sales.models import Order
+from django.db.models import Sum
 
 
 class Ticket(models.Model):
@@ -21,6 +23,15 @@ class Ticket(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def sold(self):
+        sold_items = self.lineitem_set.exclude(order__status=Order.PREPARING).aggregate(Sum('quantity'))
+        return sold_items['quantity__sum']
+
+    @property
+    def remaining(self):
+        return self.quantity - self.sold
 
     def __str__(self):
         return self.party_name

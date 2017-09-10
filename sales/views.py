@@ -8,20 +8,30 @@ from tickets.models import Ticket
 
 
 @login_required(login_url=reverse_lazy('account_login'))
-def create_order(request, ticket_pk):
+def create_order(request):
 
-    if request.method == "GET":
+    if request.method == "POST":
         order, created = Order.objects.get_or_create(user=request.user,
                                                      status=Order.PREPARING)
         line_items = LineItem.objects.filter(order=order)
-        if ticket_pk:
-            ticket = get_object_or_404(Ticket, pk=ticket_pk)
+        if 'ticket_id' in request.POST:
+            ticket = get_object_or_404(Ticket, pk=request.POST['ticket_id'])
             line_item, line_created = LineItem.objects.get_or_create(product=ticket,
                                                                      order=order,
                                                                      price=ticket.price)
-            if not line_created:
-                line_item.quantity += 1
-                line_item.save()
+
+        return render(request, 'sales/edit_order.html', {'order': order,
+                                                         'line_items': line_items})
+    elif request.method == "GET":
+        try:
+            order = Order.objects.get(user=request.user,
+                                      status=Order.PREPARING)
+        except Order.DoesNotExist:
+            order = None
+        line_items = None
+        if order:
+            line_items = LineItem.objects.filter(order=order)
+
         return render(request, 'sales/edit_order.html', {'order': order,
                                                          'line_items': line_items})
 

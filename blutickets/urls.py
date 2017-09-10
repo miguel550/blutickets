@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^terms-and-conditions/$', TemplateView.as_view(template_name='terms-and-conditions.html'), name='terms'),
     url(r'^privacy/$', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
     # Sales
-    url(r'^bucket/(?P<ticket_pk>\d+)?/?$', create_order, name='create_order_or_add_item'),
+    url(r'^bucket/$', create_order, name='create_order_or_add_item'),
     url(r'^edit-add-addresses/$', edit_order_and_next, name='edit_order_and_next'),
     url(r'^checkout/$', checkout, name='checkout'),
 ]

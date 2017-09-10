@@ -13,7 +13,10 @@
             </div>
             </div>
         </a>
-        <a href="{% url 'create_order_or_add_item' ticket.pk %}">Agregar a carrito</a>
+        <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
+            <input type="hidden" name="ticket_id" value="{{ ticket.pk }}" />
+            <input type="submit" class="btn btn-primary" value="Agregar a carrito" />
+        </form>
         <!--</div>-->
     {% endfor %}
     </div>

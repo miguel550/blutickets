@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignUpForm'
 AUTH_USER_MODEL = 'profiles.User'
 
+SALES_SLACK_CHANNEL = os.environ.get("SALES_SLACK_CHANNEL", "")
 
 SITE_ID = 1
 

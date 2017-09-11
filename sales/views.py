@@ -100,7 +100,8 @@ def remove_item_from_order(request):
 
 def send_slack_reponse(response_url, msg):
     requests.post(response_url, json={
-        "text": msg
+        "text": msg,
+        'replace_original': True
     })
 
 

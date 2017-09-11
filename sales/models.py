@@ -7,7 +7,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template import loader
 from django.conf import settings
 import requests
-from django.db.models import Sum, F
+from django.db.models import Sum, F, FloatField
 
 
 class Address(models.Model):
@@ -53,7 +53,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def total(self):
-        order_total = self.lineitem_set.aggregate(total=Sum(F('quantity')*F('price')))
+        order_total = self.lineitem_set.aggregate(total=Sum(F('quantity')*F('price')), output_field=FloatField())
         return order_total['total']
 
     def __str__(self):

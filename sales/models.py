@@ -53,7 +53,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def total(self):
-        order_total = self.lineitem_set.aggregate(total=Sum(F('quantity')*F('price')), output_field=FloatField())
+        order_total = self.lineitem_set.aggregate(total=Sum(F('quantity')*F('price'), output_field=FloatField()))
         return order_total['total']
 
     def __str__(self):

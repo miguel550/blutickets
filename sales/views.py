@@ -114,7 +114,9 @@ def slack_actions(request):
             action = response['actions'][0]
             if action['name'] == "status":
                 new_status, pk = action['value'].split()
-                Order.objects.filter(id=pk).update(status=new_status)
+                order = Order.objects.get(id=pk)
+                order.status = new_status
+                order.save()
                 if new_status == Order.APPROVED:
                     message = "Orden APROBADA :white_check_mark: TESTING"
                 elif new_status == Order.REJECTED:

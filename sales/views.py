@@ -6,10 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.views. decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from tickets.models import Ticket
+import logging
 import re
 import json
 import requests
 from django.db import transaction
+
+
+logger = logging.getLogger(__file__)
 
 
 @login_required(login_url=reverse_lazy('account_login'))
@@ -103,12 +107,13 @@ def remove_item_from_order(request):
 def send_slack_reponse(response, msg):
     response_url = response['response_url']
     payload = response['original_message']
-    payload['fields'].append({
-                        "title": "Status cambiado",
-                        "value": msg,
-                        "short": False
-                    })
-    requests.post(response_url, json=payload)
+    logger.info(str(payload))
+    # payload['fields'].append({
+    #                     "title": "Status cambiado",
+    #                     "value": msg,
+    #                     "short": False
+    #                 })
+    # requests.post(response_url, json=payload)
 
 
 @csrf_exempt

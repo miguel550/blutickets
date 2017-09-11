@@ -101,7 +101,7 @@ def remove_item_from_order(request):
 def send_slack_reponse(response_url, msg):
     requests.post(response_url, json={
         "text": msg,
-        'replace_original': True
+        'replace_original': False
     })
 
 
@@ -121,6 +121,8 @@ def slack_actions(request):
                     message = "Orden RECHAZADA :x: TESTING"
                 send_slack_reponse(response['response_url'],
                                    message)
+                return JsonResponse({'RESULT': 'OK'})
+    return JsonResponse({'RESULT': 'No known action invoked'})
 
 
 

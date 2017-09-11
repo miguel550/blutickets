@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404, HttpResponse
 from .models import Order, LineItem
 from .forms import OrderSecondStepForm, OrderFirstStepForm
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,7 @@ from tickets.models import Ticket
 import re
 import json
 import requests
+from django.db import transaction
 
 
 @login_required(login_url=reverse_lazy('account_login'))
@@ -55,25 +56,26 @@ def edit_order_and_next(request):
             items = []
             for line_item_id in line_item_ids:
                 items.append(get_object_or_404(LineItem, pk=line_item_id, order=order))
-            for item in items:
-                try:
-                    quantity = int(request.POST[f'quantity_{item.pk}'])
-                except:
-                    quantity = 0
-                if item.product.remaining >= quantity > 0:
-                    item.quantity = quantity
-                    item.save()
+            with transaction.atomic():
+                for item in items:
+                    try:
+                        quantity = int(request.POST[f'quantity_{item.pk}'])
+                    except:
+                        quantity = 0
+                    if item.product.remaining >= quantity > 0:
+                        item.quantity = quantity
+                        item.save()
 
             # form_populated = OrderFirstStepForm(request.POST)
             # if form_populated.is_valid():
             #     form_populated.save()
 
-            form = OrderSecondStepForm(instance=order)
-            return render(request, 'sales/edit_order_address.html', {
-                'order': order,
-                'form': form,
-            })
-
+                form = OrderSecondStepForm(instance=order)
+                return render(request, 'sales/edit_order_address.html', {
+                    'order': order,
+                    'form': form,
+                })
+            raise Http404("Ocurrio un error.")
 
 def checkout(request):
     if request.method == "POST":
@@ -98,11 +100,17 @@ def remove_item_from_order(request):
             return JsonResponse({'RESULT': 'OK'})
 
 
-def send_slack_reponse(response_url, msg):
-    requests.post(response_url, json={
-        "text": msg,
-        'replace_original': False
-    })
+def send_slack_reponse(response, msg):
+    response_url = response['response_url']
+    payload = response['original_message']
+    payload.pop('actions')
+    payload.pop('callback_id')
+    payload['fields'].append({
+                        "title": "Status cambiado",
+                        "value": msg,
+                        "short": False
+                    })
+    requests.post(response_url, json=payload)
 
 
 @csrf_exempt
@@ -121,9 +129,10 @@ def slack_actions(request):
                     message = "Orden APROBADA :white_check_mark: TESTING"
                 elif new_status == Order.REJECTED:
                     message = "Orden RECHAZADA :x: TESTING"
-                send_slack_reponse(response['response_url'],
+                send_slack_reponse(response,
                                    message)
-                return JsonResponse({'RESULT': 'OK'})
+
+                return HttpResponse("")
     return JsonResponse({'RESULT': 'No known action invoked'})
 
 

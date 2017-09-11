@@ -126,9 +126,11 @@ def slack_actions(request):
                 order.status = new_status
                 order.save()
                 if new_status == Order.APPROVED:
-                    message = ":white_check_mark: Orden APROBADA."
+                    message = f":white_check_mark: Orden APROBADA por " \
+                              f"<@{response['user']['id']}|{response['user']['name']}>."
                 elif new_status == Order.REJECTED:
-                    message = ":x: Orden RECHAZADA."
+                    message = f":x: Orden RECHAZADA por " \
+                              f"<@{response['user']['id']}|{response['user']['name']}>."
                 send_slack_reponse(response,
                                    message)
 

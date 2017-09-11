@@ -107,7 +107,7 @@ def remove_item_from_order(request):
 def send_slack_reponse(response, msg):
     response_url = response['response_url']
     payload = response['original_message']
-    logger.info(str(payload))
+    print(str(payload))
     # payload['fields'].append({
     #                     "title": "Status cambiado",
     #                     "value": msg,

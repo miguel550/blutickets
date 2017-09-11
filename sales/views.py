@@ -103,8 +103,6 @@ def remove_item_from_order(request):
 def send_slack_reponse(response, msg):
     response_url = response['response_url']
     payload = response['original_message']
-    payload.pop('actions')
-    payload.pop('callback_id')
     payload['fields'].append({
                         "title": "Status cambiado",
                         "value": msg,

@@ -3,9 +3,12 @@ from django.http import JsonResponse
 from .models import Order, LineItem
 from .forms import OrderSecondStepForm, OrderFirstStepForm
 from django.contrib.auth.decorators import login_required
+from django.views. decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from tickets.models import Ticket
 import re
+import json
+import requests
 
 
 @login_required(login_url=reverse_lazy('account_login'))
@@ -93,6 +96,30 @@ def remove_item_from_order(request):
             line_item = get_object_or_404(LineItem, pk=request.POST['line_item_id'], order=order)
             line_item.delete()
             return JsonResponse({'RESULT': 'OK'})
+
+
+def send_slack_reponse(response_url, msg):
+    requests.post(response_url, json={
+        "text": msg
+    })
+
+
+@csrf_exempt
+def slack_actions(request):
+    response = json.loads(request.POST['payload'])
+    callback_id = response['callback_id']
+    if callback_id == "change_order_status":
+        if response['actions']:
+            action = response['actions'][0]
+            if action['name'] == "status":
+                new_status, pk = action['value'].split()
+                Order.objects.filter(id=pk).update(status=new_status)
+                if new_status == Order.APPROVED:
+                    message = "Orden APROBADA :white_check_mark: TESTING"
+                elif new_status == Order.REJECTED:
+                    message = "Orden RECHAZADA :x: TESTING"
+                send_slack_reponse(response['response_url'],
+                                   message)
 
 
 

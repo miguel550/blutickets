@@ -91,6 +91,35 @@ def send_sales_slack_notification(order):
                                  f"\nTotal: RD${order.total()}",
                         "short": False
                     },
+                ],
+                "callback_id": "change_order_status",
+                "actions": [
+                    {
+                        "name": "status",
+                        "text": "Aprobado",
+                        "style": "primary",
+                        "type": "button",
+                        "value": f"{Order.APPROVED} {order.pk}",
+                        "confirm": {
+                            "title": "¿Estás seguro?",
+                            "text": "Estás a punto de cambiar la orden a APROBADO.",
+                            "ok_text": "Sí",
+                            "dismiss_text": "No"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "text": "Rechazado",
+                        "style": "danger",
+                        "type": "button",
+                        "value": f"{Order.REJECTED} {order.pk}",
+                        "confirm": {
+                            "title": "¿Estás seguro?",
+                            "text": "Estás a punto de cambiar la orden a RECHAZADO.",
+                            "ok_text": "Sí",
+                            "dismiss_text": "No"
+                        }
+                    }
                 ]
             }
         ]

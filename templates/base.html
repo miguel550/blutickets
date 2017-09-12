@@ -17,6 +17,11 @@
   ga('send', 'pageview');
 
 </script>
+<style>
+    div#body{
+        background-image: url("{% static 'black-min.png' %}");
+    }
+</style>
 </head>
 <body>
 <header>
@@ -58,8 +63,10 @@
   </div>
 </nav>
 </header>
+<div id="body">
 {% block content %}
 {% endblock content %}
+</div>
 <style>
     .blutickets-footer{
         background-color: #f8f9fa!important;

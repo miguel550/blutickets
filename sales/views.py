@@ -118,7 +118,6 @@ def slack_actions(request):
     response = json.loads(request.POST['payload'])
     callback_id = response['callback_id']
     if callback_id == "change_order_status":
-        print(json.dumps(response, sort_keys=True, indent=4))
         if response['actions']:
             action = response['actions'][0]
             if action['name'] == "status":

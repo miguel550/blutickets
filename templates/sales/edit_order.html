@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-
+{% load l10n %}
+{% load humanize %}
 {% block content %}
     <form method="post" class="pt-5" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
         <input type="hidden" name="order_id" value="{{ order.pk }}" />
@@ -20,9 +21,9 @@
     <tr id="li{{ line_item.pk }}">
       <th scope="row">{{ forloop.counter }}</th>
       <td>{{ line_item.product.party_name }}</td>
-      <td>{{ line_item.price }}</td>
-      <td><input type="number" min="0" max="{{ line_item.product.remaining }}" name="quantity_{{ line_item.pk }}" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
-        <td>{{ line_item.price }}</td>
+      <td>RD${{ line_item.price|unlocalize|intcomma }}</td>
+      <td><input class="quantity" data-price="{{ line_item.price|unlocalize }}" data-id="{{ forloop.counter }}" type="number" min="1" max="{{ line_item.product.remaining }}" name="quantity_{{ line_item.pk }}" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
+        <td >RD$<span id="total{{ forloop.counter }}">{{ line_item.total|unlocalize|intcomma }}</span></td>
         <td><button class="delete" data-lineitemid="{{ line_item.pk }}"> <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
     </tr>
         {% empty %}
@@ -63,6 +64,21 @@
         };
         for (var i = 0; i < buttons.length; i++) {
           buttons[i].addEventListener("click", delete_action, false);
+        }
+        var quantities = document.querySelectorAll('.quantity');
+        var change_action = function(e){
+            var quantity = parseFloat(e.target.value);
+            var price = parseFloat(e.target.dataset.price);
+            var total = quantity * price;
+
+            var elem_total = document.getElementById('total'+e.target.dataset.id);
+            if(isNaN(total))
+                elem_total.innerHTML = "0.00"
+            else
+                elem_total.innerHTML = total.toLocaleString() + ".00";
+        };
+        for (var i = 0; i < quantities.length; i++) {
+          quantities[i].addEventListener("input", change_action, false);
         }
     </script>
 {% endblock %}

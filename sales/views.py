@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.views. decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from tickets.models import Ticket
+from django.db import IntegrityError
 import re
 import json
 import requests
@@ -56,15 +57,20 @@ def edit_order_and_next(request):
             items = []
             for line_item_id in line_item_ids:
                 items.append(get_object_or_404(LineItem, pk=line_item_id, order=order))
-            with transaction.atomic():
-                for item in items:
-                    try:
-                        quantity = int(request.POST[f'quantity_{item.pk}'])
-                    except:
-                        quantity = 0
-                    if item.product.remaining >= quantity > 0:
-                        item.quantity = quantity
-                        item.save()
+            try:
+                with transaction.atomic():
+                    for item in items:
+                        try:
+                            quantity = int(request.POST[f'quantity_{item.pk}'])
+                        except ValueError:
+                            raise IntegrityError(f"'{request.POST[f'quantity_{item.pk}']}' is not a quantity.")
+                        if item.product.remaining >= quantity > 0:
+                            item.quantity = quantity
+                            item.save()
+                        else:
+                            raise IntegrityError(f"Trying to put {quantity} when remaining is {item.product.remaining}")
+            except IntegrityError:
+                return redirect('create_order_or_add_item')
 
             # form_populated = OrderFirstStepForm(request.POST)
             # if form_populated.is_valid():
@@ -75,7 +81,8 @@ def edit_order_and_next(request):
                     'order': order,
                     'form': form,
                 })
-            raise Http404("Ocurrio un error.")
+            return redirect('create_order_or_add_item')
+
 
 def checkout(request):
     if request.method == "POST":

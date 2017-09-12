@@ -76,12 +76,11 @@ def edit_order_and_next(request):
             # if form_populated.is_valid():
             #     form_populated.save()
 
-                form = OrderSecondStepForm(instance=order)
-                return render(request, 'sales/edit_order_address.html', {
-                    'order': order,
-                    'form': form,
-                })
-            return redirect('create_order_or_add_item')
+            form = OrderSecondStepForm(instance=order)
+            return render(request, 'sales/edit_order_address.html', {
+                'order': order,
+                'form': form,
+            })
 
 
 def checkout(request):

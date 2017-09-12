@@ -118,17 +118,20 @@ def slack_actions(request):
     response = json.loads(request.POST['payload'])
     callback_id = response['callback_id']
     if callback_id == "change_order_status":
+        print(json.dumps(response, sort_keys=True, indent=4))
         if response['actions']:
             action = response['actions'][0]
             if action['name'] == "status":
                 new_status, pk = action['value'].split()
                 order = Order.objects.get(id=pk)
-                order.status = new_status
-                order.save()
+                if order.status != new_status:
+                    order.status = new_status
+                    order.save()
                 if new_status == Order.APPROVED:
-                    message = ":white_check_mark: Orden APROBADA."
+                    message = ":white_check_mark: Orden APROBADA"
                 elif new_status == Order.REJECTED:
-                    message = ":x: Orden RECHAZADA."
+                    message = ":x: Orden RECHAZADA"
+                message += f" por <@{response['user']['id']}|{response['user']['name']}>."
                 send_slack_reponse(response,
                                    message)
 

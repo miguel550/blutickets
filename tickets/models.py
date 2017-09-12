@@ -26,7 +26,9 @@ class Ticket(models.Model):
 
     @property
     def sold(self):
-        sold_items = self.lineitem_set.exclude(order__status=Order.PREPARING).aggregate(Sum('quantity'))
+        sold_items = self.lineitem_set.exclude(
+            order__status__in=[Order.PREPARING, Order.REJECTED]
+        ).aggregate(Sum('quantity'))
         return sold_items['quantity__sum']
 
     @property

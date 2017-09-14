@@ -35,5 +35,9 @@ class Ticket(models.Model):
     def remaining(self):
         return self.quantity - self.sold
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('ticket-detail', args=[str(self.pk)])
+
     def __str__(self):
         return self.party_name

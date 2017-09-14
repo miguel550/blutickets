@@ -6,7 +6,7 @@
 
     {% for ticket in object_list %}
         <!--<div class="">-->
-        <a href="{% url 'ticket-detail' ticket.id %}">
+        <a href="{{ ticket.get_absolute_url }}">
             <div class="mx-auto pt-3" style="width: -webkit-fill-available">
             <div class="card" style="">
               <img class="card-img" height="auto" width="100%" src="{{ ticket.flyer_image_compressed.url }}" alt="Card image cap">
@@ -18,10 +18,14 @@
             <input type="hidden" name="ticket_id" value="{{ ticket.pk }}" />
             <input type="submit" class="btn btn-primary" value="Agregar al carrito de compras" />
         </form>
+
         {% elif ticket.remaining <= 0 %}
                 <button disabled class="alert alert-danger" role="alert"><strong>Sold out</strong></button>
 
         {% endif %}
+        <div class="px-3">
+            <a class="btn btn-primary" href="{{ ticket.get_absolute_url }}">Ver detalle</a>
+        </div>
         <!--</div>-->
     {% endfor %}
     </div>

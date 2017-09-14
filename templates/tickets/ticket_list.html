@@ -16,14 +16,14 @@
         {% if ticket.remaining > 0 %}
         <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
             <input type="hidden" name="ticket_id" value="{{ ticket.pk }}" />
-            <input type="submit" class="btn btn-primary" value="Agregar al carrito de compras" />
+            <input type="submit" class="btn btn-primary" value="Comprar" />
         </form>
 
         {% elif ticket.remaining <= 0 %}
                 <button disabled class="alert alert-danger" role="alert"><strong>Sold out</strong></button>
 
         {% endif %}
-        <div class="px-3">
+        <div class="pl-2">
             <a class="btn btn-primary" href="{{ ticket.get_absolute_url }}">Ver detalle</a>
         </div>
         <!--</div>-->

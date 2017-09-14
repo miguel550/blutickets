@@ -19,7 +19,7 @@
                     {% if object.remaining > 0 %}
                     <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
                         <input type="hidden" name="ticket_id" value="{{ object.pk }}" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary" value="Agregar al carrito de compras" />
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary" value="Comprar" />
                     </form>
                     {% elif object.remaining <= 0 %}
                         <div class="px-5">

@@ -5,13 +5,23 @@
         label[for="id_province"], label[for="id_sector"] {
             display: none;
         }
+        #no-label label {
+            display: none;
+        }
     </style>
-    <h1>Dirección de envío</h1>
+
     <form method="post"  class="col-md-12" action="{% url 'checkout' %}">{% csrf_token %}
             <input type="hidden" name="order_id" value="{{ order.pk }}" />
             {{ form.media }}
         <div class="pt-3">
+            <h1>Dirección de envío</h1>
+            <fieldset class="form-group">
             {{ form.as_p }}
+                </fieldset>
+            <h1>Teléfonos</h1>
+            <fieldset class="form-group" id="no-label">
+            {{ form_phones.as_p }}
+            </fieldset>
             <input class="btn btn-outline-primary" type="submit" value="Checkout" />
         </div>
 

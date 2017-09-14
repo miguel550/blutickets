@@ -29,7 +29,10 @@ class Ticket(models.Model):
         sold_items = self.lineitem_set.exclude(
             order__status__in=[Order.PREPARING, Order.REJECTED]
         ).aggregate(Sum('quantity'))
-        return sold_items['quantity__sum']
+        sum_items = sold_items['quantity__sum']
+        if sum_items:
+            return sum_items
+        return 0
 
     @property
     def remaining(self):

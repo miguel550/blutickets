@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, Http404, HttpResponse
 from .models import Order, LineItem
-from .forms import OrderSecondStepForm, OrderFirstStepForm
+from .forms import OrderSecondStepForm, OrderFirstStepForm, OrderSecondStepFormPhones
 from django.contrib.auth.decorators import login_required
 from django.views. decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
@@ -77,9 +77,11 @@ def edit_order_and_next(request):
             #     form_populated.save()
 
             form = OrderSecondStepForm(instance=order)
+            form2 = OrderSecondStepFormPhones(instance=order.user)
             return render(request, 'sales/edit_order_address.html', {
                 'order': order,
                 'form': form,
+                'form_phones': form2,
             })
 
 
@@ -87,13 +89,16 @@ def checkout(request):
     if request.method == "POST":
         # map location through post
         if 'order_id' in request.POST:
-            order = get_object_or_404(Order, pk=request.POST['order_id'])
+            order = get_object_or_404(Order, pk=request.POST['order_id'], user=request.user)
             # order.user = request.user
             form = OrderSecondStepForm(instance=order, data=request.POST)
-            if form.is_valid():
-                form.save()
-            order.status = Order.PENDING
-            order.save()
+            form_phones = OrderSecondStepFormPhones(instance=request.user, data=request.POST)
+            if form.is_valid() and form_phones.is_valid():
+                form_phones.save()
+
+                order = form.save(commit=False)
+                order.status = Order.PENDING
+                order.save()
             return render(request, 'sales/thank_you.html', {'order': order})
 
 

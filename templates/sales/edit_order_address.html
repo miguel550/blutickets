@@ -15,9 +15,12 @@
             {{ form.media }}
         <div class="pt-3">
             <h1>Dirección de envío</h1>
-            <fieldset class="form-group">
-            {{ form.as_p }}
-                </fieldset>
+            <fieldset class="form-group" id="address">
+                {{ form.as_p }}
+            </fieldset>
+            <div class="pb-3">
+                <button id="clean" class="btn btn-outline-danger">Limpiar dirección</button>
+            </div>
             <h1>Teléfonos</h1>
             <fieldset class="form-group" id="no-label">
             {{ form_phones.as_p }}
@@ -26,5 +29,14 @@
         </div>
 
     </form>
-
+<script>
+document.querySelector("#clean").onclick = function(e){
+    e.preventDefault();
+    var inputs = document.querySelectorAll("#address input");
+    for(var i = 0; i<inputs.length; i++){
+        inputs[i].value = "";
+    }
+    document.querySelector("select[name='sector']").selectedIndex = 0;
+}
+</script>
 {% endblock %}

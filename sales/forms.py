@@ -11,13 +11,6 @@ def get_province_choices():
         return [(0, 'No hay provincias')]
 
 
-def get_sector_choices():
-    try:
-        return Sector.objects.filter(active=True)
-    except:
-        return [(0, 'No hay sector')]
-
-
 class LineItemForm(forms.ModelForm):
 
     class Meta:
@@ -35,42 +28,36 @@ class OrderSecondStepForm(forms.ModelForm):
         initial=get_user_model().DISTRITO_NACIONAL,
         label="Provincia",
     )
-    sector = forms.ModelChoiceField(
-        queryset=get_sector_choices(),
-        empty_label="--Sector--"
-    )
-    street_and_house = forms.CharField(
-        max_length=100,
-        label="Calle",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': " (Calle/Casa/apart,etc)",
-            }
-        ),
-    )
-    reference = forms.CharField(
-        max_length=100,
-        label="Referencias",
-        widget=forms.TextInput(
-            attrs={
-                'placeholder': "(Al lado de/Frente a/etc)",
-            }
-        ),
-    )
 
-    def save(self, commit=True):
-        order = super().save(commit=commit)
-        order.address = Address.objects.create(
-            sector=self.cleaned_data['sector'],
-            street_and_house=self.cleaned_data['street_and_house'],
-            reference=self.cleaned_data['reference'],
-        )
-        order.save()
-        return order
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['sector'].queryset = Sector.objects.filter(active=True)
+        self.fields['sector'].empty_label = "--Sector--"
 
     class Meta:
-        model = Order
-        fields = ('province',)
+        model = Address
+        fields = (
+            'province',
+            'sector',
+            'street_and_house',
+            'reference'
+        )
+        widgets = {
+            'street_and_house': forms.TextInput(
+                attrs={
+                    'placeholder': " (Calle/Casa/apart,etc)",
+                }
+            ),
+            'reference': forms.TextInput(
+                attrs={
+                    'placeholder': "(Al lado de/Frente a/etc)",
+                }
+            )
+        }
+        labels = {
+            'street_and_house': 'Calle',
+            'reference': "Referencias",
+        }
 
 
 class OrderSecondStepFormPhones(forms.ModelForm):

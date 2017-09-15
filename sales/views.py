@@ -75,8 +75,16 @@ def edit_order_and_next(request):
             # form_populated = OrderFirstStepForm(request.POST)
             # if form_populated.is_valid():
             #     form_populated.save()
+            try:
+                last_order = request.user.order_set.exclude(
+                                status=Order.PREPARING
+                             ).latest()
+                address = last_order.address
+            except Order.DoesNotExist:
+                # No last order found, this is the first order for the user
+                address = None
 
-            form = OrderSecondStepForm(instance=order)
+            form = OrderSecondStepForm(instance=address)
             form2 = OrderSecondStepFormPhones(instance=order.user)
             return render(request, 'sales/edit_order_address.html', {
                 'order': order,
@@ -91,12 +99,11 @@ def checkout(request):
         if 'order_id' in request.POST:
             order = get_object_or_404(Order, pk=request.POST['order_id'], user=request.user)
             # order.user = request.user
-            form = OrderSecondStepForm(instance=order, data=request.POST)
+            form = OrderSecondStepForm(request.POST)
             form_phones = OrderSecondStepFormPhones(instance=request.user, data=request.POST)
             if form.is_valid() and form_phones.is_valid():
                 form_phones.save()
-
-                order = form.save(commit=False)
+                order.address = form.save()
                 order.status = Order.PENDING
                 order.save()
             return render(request, 'sales/thank_you.html', {'order': order})

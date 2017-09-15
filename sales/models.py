@@ -59,6 +59,9 @@ class Order(models.Model):
     def __str__(self):
         return f"Orden:{self.pk}"
 
+    class Meta:
+        get_latest_by = "created_at"
+
 
 def send_sales_slack_notification(order):
     sales_webhook = settings.SALES_SLACK_CHANNEL

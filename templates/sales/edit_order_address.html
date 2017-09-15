@@ -10,11 +10,11 @@
         }
     </style>
 
-    <form method="post" action="{% url 'checkout' %}">{% csrf_token %}
+    <form method="post" class="col-md-12" action="{% url 'checkout' %}">{% csrf_token %}
             <input type="hidden" name="order_id" value="{{ order.pk }}" />
             {{ form.media }}
         <div class="row">
-            <div class="mx-auto" >
+            <div class="mx-auto px-2" >
                 <h1>Dirección de envío</h1>
                 <fieldset class="form-group" id="address">
                     {{ form.as_p }}

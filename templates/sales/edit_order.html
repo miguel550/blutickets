@@ -33,7 +33,7 @@
                         <option data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}">{{  type.ttype.name }}</option>
                     {% endif %}
                 {% empty %}
-                    <option>General</option>
+                    <option value="no-options">General</option>
                 {% endfor %}
             </select>
         </td>
@@ -100,28 +100,30 @@
         var changeSelection = function (e) {
 
             var option = e.target.selectedOptions[0];
-            if(option.value){
-                var price = option.dataset.price;
-                var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
-                quantity_elem.dataset.price = price;
-                e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = option.dataset.priceprint;
-                var event = new Event('input', {
-                    'bubbles': true,
-                    'cancelable': true
-                });
+            if(option.value !="no-options") {
+                if (option.value) {
+                    var price = option.dataset.price;
+                    var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
+                    quantity_elem.dataset.price = price;
+                    e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = option.dataset.priceprint;
+                    var event = new Event('input', {
+                        'bubbles': true,
+                        'cancelable': true
+                    });
 
-                quantity_elem.dispatchEvent(event);
-            }else{
-                var price = "0";
-                var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
-                quantity_elem.dataset.price = price;
-                e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = price;
-                var event = new Event('input', {
-                    'bubbles': true,
-                    'cancelable': true
-                });
+                    quantity_elem.dispatchEvent(event);
+                } else {
+                    var price = "0";
+                    var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
+                    quantity_elem.dataset.price = price;
+                    e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = price;
+                    var event = new Event('input', {
+                        'bubbles': true,
+                        'cancelable': true
+                    });
 
-                quantity_elem.dispatchEvent(event);
+                    quantity_elem.dispatchEvent(event);
+                }
             }
 
         };

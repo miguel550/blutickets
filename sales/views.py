@@ -64,17 +64,19 @@ def edit_order_and_next(request):
                             quantity = int(request.POST[f'quantity_{item.pk}'])
                         except ValueError:
                             raise IntegrityError(f"'{request.POST[f'quantity_{item.pk}']}' is not a quantity.")
-                        try:
-                            type_id = int(request.POST[f'type_{item.pk}'])
-                        except ValueError:
-                            raise IntegrityError(f"'{request.POST[f'type_{item.pk}']}' is not a number.")
+
                         if item.product.remaining >= quantity > 0:
                             item.quantity = quantity
                         else:
                             raise IntegrityError(f"Trying to put {quantity} when remaining is {item.product.remaining}")
-                        item.ttype = get_object_or_404(item.product.ticket_types, id=type_id)
-                        ticket_type = get_object_or_404(item.product.ticket_types.through, ttype_id=type_id, ticket=item.product)
-                        item.price = ticket_type.price
+                        if item.product.ticket_types.all().exists():
+                            try:
+                                type_id = int(request.POST[f'type_{item.pk}'])
+                            except ValueError:
+                                raise IntegrityError(f"'{request.POST[f'type_{item.pk}']}' is not a number.")
+                            item.ttype = get_object_or_404(item.product.ticket_types, id=type_id)
+                            ticket_type = get_object_or_404(item.product.ticket_types.through, ttype_id=type_id, ticket=item.product)
+                            item.price = ticket_type.price
                         item.save()
 
             except IntegrityError:

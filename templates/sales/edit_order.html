@@ -30,7 +30,7 @@
                     {% if type.ttype.pk == line_item.ttype.pk %}
                         <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}" selected>{{  type.ttype.name }}</option>
                     {% else %}
-                        <option data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}">{{  type.ttype.name }}</option>
+                        <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}">{{  type.ttype.name }}</option>
                     {% endif %}
                 {% empty %}
                     <option value="no-options">General</option>

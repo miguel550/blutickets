@@ -54,53 +54,55 @@ def edit_order_and_next(request):
             line_item_ids = map(lambda x: x.group('line_item_id'),
                                 filter(None,
                                        map(pattern.match,  request.POST.keys())))
-            items = []
-            for line_item_id in line_item_ids:
-                items.append(get_object_or_404(LineItem, pk=line_item_id, order=order))
-            try:
-                with transaction.atomic():
-                    for item in items:
-                        try:
-                            quantity = int(request.POST[f'quantity_{item.pk}'])
-                        except ValueError:
-                            raise IntegrityError(f"'{request.POST[f'quantity_{item.pk}']}' is not a quantity.")
-
-                        if item.product.remaining >= quantity > 0:
-                            item.quantity = quantity
-                        else:
-                            raise IntegrityError(f"Trying to put {quantity} when remaining is {item.product.remaining}")
-                        if item.product.ticket_types.all().exists():
+            if order.lineitem_set.all().exists():
+                items = []
+                for line_item_id in line_item_ids:
+                    items.append(get_object_or_404(LineItem, pk=line_item_id, order=order))
+                try:
+                    with transaction.atomic():
+                        for item in items:
                             try:
-                                type_id = int(request.POST[f'type_{item.pk}'])
+                                quantity = int(request.POST[f'quantity_{item.pk}'])
                             except ValueError:
-                                raise IntegrityError(f"'{request.POST[f'type_{item.pk}']}' is not a number.")
-                            item.ttype = get_object_or_404(item.product.ticket_types, id=type_id)
-                            ticket_type = get_object_or_404(item.product.ticket_types.through, ttype_id=type_id, ticket=item.product)
-                            item.price = ticket_type.price
-                        item.save()
+                                raise IntegrityError(f"'{request.POST[f'quantity_{item.pk}']}' is not a quantity.")
 
-            except IntegrityError:
-                return redirect('create_order_or_add_item')
+                            if item.product.remaining >= quantity > 0:
+                                item.quantity = quantity
+                            else:
+                                raise IntegrityError(f"Trying to put {quantity} when remaining is {item.product.remaining}")
+                            if item.product.ticket_types.all().exists():
+                                try:
+                                    type_id = int(request.POST[f'type_{item.pk}'])
+                                except ValueError:
+                                    raise IntegrityError(f"'{request.POST[f'type_{item.pk}']}' is not a number.")
+                                item.ttype = get_object_or_404(item.product.ticket_types, id=type_id)
+                                ticket_type = get_object_or_404(item.product.ticket_types.through, ttype_id=type_id, ticket=item.product)
+                                item.price = ticket_type.price
+                            item.save()
 
-            # form_populated = OrderFirstStepForm(request.POST)
-            # if form_populated.is_valid():
-            #     form_populated.save()
-            try:
-                last_order = request.user.order_set.exclude(
-                                status=Order.PREPARING
-                             ).latest()
-                address = last_order.address
-            except Order.DoesNotExist:
-                # No last order found, this is the first order for the user
-                address = None
+                except IntegrityError:
+                    return redirect('create_order_or_add_item')
 
-            form = OrderSecondStepForm(instance=address)
-            form2 = OrderSecondStepFormPhones(instance=order.user)
-            return render(request, 'sales/edit_order_address.html', {
-                'order': order,
-                'form': form,
-                'form_phones': form2,
-            })
+                # form_populated = OrderFirstStepForm(request.POST)
+                # if form_populated.is_valid():
+                #     form_populated.save()
+                try:
+                    last_order = request.user.order_set.exclude(
+                                    status=Order.PREPARING
+                                 ).latest()
+                    address = last_order.address
+                except Order.DoesNotExist:
+                    # No last order found, this is the first order for the user
+                    address = None
+
+                form = OrderSecondStepForm(instance=address)
+                form2 = OrderSecondStepFormPhones(instance=order.user)
+                return render(request, 'sales/edit_order_address.html', {
+                    'order': order,
+                    'form': form,
+                    'form_phones': form2,
+                })
+            return redirect('home')
 
 
 def checkout(request):

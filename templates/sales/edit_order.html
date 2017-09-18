@@ -47,7 +47,9 @@
     {% endfor %}
   </tbody>
 </table>
-        <p><input class="btn btn-outline-primary" type="submit" value="Continuar" /></p>
+    {% if line_items %}
+        <p><input class="btn btn-outline-primary" id="continue" type="submit" value="Continuar" /></p>
+    {% endif %}
     </form>
     <a class="btn btn-outline-primary" href="{% url 'home' %}">Seguir comprando</a>
     <script>
@@ -72,6 +74,15 @@
                 }).then(function(data){
                     if(data.RESULT == "OK"){
                         document.querySelector('#li'+id).style = "display: none;";
+                        var lis = document.querySelectorAll('tbody tr');
+                        var is_empty = true;
+                        for(var i=0;i<lis.length;i++){
+                            is_empty = is_empty && lis[i].style.length > 0;
+                        }
+                        if(is_empty){
+                            document.querySelector('#continue').style = "display: none;";
+                            document.querySelector('tbody').innerHTML = "<tr><td></td><td>No hay productos en el carrito.</td></tr>";
+                        }
                     }
                 }).catch(function(error){
                     console.error(error);

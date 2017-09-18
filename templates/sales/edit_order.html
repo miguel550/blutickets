@@ -8,8 +8,8 @@
     <table class="table table-bordered " style="width: 100%;">
   <thead class="thead-inverse">
     <tr>
-      <th>#</th>
       <th>Evento</th>
+        <th>Tipo</th>
       <th>Precio</th>
       <th>Cantidad</th>
         <th>Total</th>
@@ -19,9 +19,25 @@
   <tbody>
     {% for line_item in line_items %}
     <tr id="li{{ line_item.pk }}">
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{ line_item.product.party_name }}</td>
-      <td>RD${{ line_item.price|unlocalize|intcomma }}</td>
+      <td style="word-wrap: break-word;">{{ line_item.product.party_name }}</td>
+        <td>
+            <select class="type" name="type_{{ line_item.pk }}" required>
+
+                {% for type in line_item.product.tickettype_set.all %}
+                    {% if forloop.first %}
+                        <option value>--Tipo--</option>
+                    {% endif %}
+                    {% if type.ttype.pk == line_item.ttype.pk %}
+                        <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}" selected>{{  type.ttype.name }}</option>
+                    {% else %}
+                        <option data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}">{{  type.ttype.name }}</option>
+                    {% endif %}
+                {% empty %}
+                    <option>General</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>RD$<span>{{ line_item.price|unlocalize|intcomma }}</span></td>
       <td><input class="quantity" data-price="{{ line_item.price|unlocalize }}" data-id="{{ forloop.counter }}" type="number" min="1" max="{{ line_item.product.remaining }}" name="quantity_{{ line_item.pk }}" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
         <td >RD$<span id="total{{ forloop.counter }}">{{ line_item.total|unlocalize|intcomma }}</span></td>
         <td><button class="delete" data-lineitemid="{{ line_item.pk }}"> <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
@@ -79,6 +95,44 @@
         };
         for (var i = 0; i < quantities.length; i++) {
           quantities[i].addEventListener("input", change_action, false);
+        }
+        var selects = document.querySelectorAll('.type');
+        var changeSelection = function (e) {
+
+            var option = e.target.selectedOptions[0];
+            if(option.value){
+                var price = option.dataset.price;
+                var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
+                quantity_elem.dataset.price = price;
+                e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = option.dataset.priceprint;
+                var event = new Event('input', {
+                    'bubbles': true,
+                    'cancelable': true
+                });
+
+                quantity_elem.dispatchEvent(event);
+            }else{
+                var price = "0";
+                var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
+                quantity_elem.dataset.price = price;
+                e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = price;
+                var event = new Event('input', {
+                    'bubbles': true,
+                    'cancelable': true
+                });
+
+                quantity_elem.dispatchEvent(event);
+            }
+
+        };
+        for (var i = 0; i < selects.length; i++) {
+          selects[i].addEventListener("change", changeSelection, false);
+            var event = new Event('change', {
+                    'bubbles': true,
+                    'cancelable': true
+            });
+
+            selects[i].dispatchEvent(event);
         }
     </script>
 {% endblock %}

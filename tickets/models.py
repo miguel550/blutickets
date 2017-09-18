@@ -7,6 +7,18 @@ from sales.models import Order
 from django.db.models import Sum
 
 
+class Type(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class TicketType(models.Model):
+    ttype = models.ForeignKey('Type')
+    ticket = models.ForeignKey('Ticket')
+    price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
+
+
 class Ticket(models.Model):
     party_name = models.CharField(max_length=150)
     flyer_image = models.ImageField(upload_to='flyers')
@@ -20,6 +32,8 @@ class Ticket(models.Model):
     when = models.DateTimeField()
     quantity = models.IntegerField(default=0)
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
+
+    ticket_types = models.ManyToManyField('Type', through='TicketType')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

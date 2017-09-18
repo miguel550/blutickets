@@ -19,6 +19,7 @@ class Address(models.Model):
 class LineItem(models.Model):
     product = models.ForeignKey('tickets.Ticket')
     order = models.ForeignKey('Order')
+    ttype = models.ForeignKey('tickets.Type', default=None, null=True)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(decimal_places=2, max_digits=8)
 
@@ -48,6 +49,9 @@ class Order(models.Model):
     address = models.ForeignKey('Address', null=True)
     map_position = GeopositionField(null=True)
     user = models.ForeignKey(get_user_model(), null=True)
+
+    shipped = models.BooleanField(default=False)
+    shipped_at = models.DateTimeField(null=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

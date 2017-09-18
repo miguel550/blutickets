@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import Order, LineItem
+from . import models
 
 
 class TermInlineAdmin(admin.TabularInline):
-    model = Order.line_items.through
+    model = models.Order.line_items.through
 
 
+@admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
         'status',
@@ -33,4 +34,3 @@ class OrderAdmin(admin.ModelAdmin):
             return f"{obj.user.phone_number_secondary_type}: {obj.user.phone_number_secondary}"
         return "No hay telefono."
 
-admin.site.register(Order, OrderAdmin)

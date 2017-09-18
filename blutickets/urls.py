@@ -42,7 +42,7 @@ urlpatterns = [
     # Slack app
     url(r'^slack/actions/$', slack_actions, name='slack_actions'),
 ]
-
+handler404 = TicketList.as_view()
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,10 +8,11 @@ from django.db.models import Sum
 
 
 class Type(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
+
 
 class TicketType(models.Model):
     ttype = models.ForeignKey('Type')

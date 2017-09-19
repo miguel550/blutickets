@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'storages',
-    "geoposition",
+    'geoposition',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',

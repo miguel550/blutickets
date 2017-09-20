@@ -2,7 +2,7 @@ from .base import *
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-CSRF_COOKIE_DOMAIN = 'www.blutickets.com'
+CSRF_COOKIE_DOMAIN = os.environ['CSRF_COOKIE_DOMAIN']
 
 LANGUAGE_CODE = 'es'
 

@@ -1,5 +1,7 @@
 from .base import *
 
+SECRET_KEY = os.environ['SECRET_KEY']
+
 LANGUAGE_CODE = 'es'
 
 AWS_IS_GZIPPED = True

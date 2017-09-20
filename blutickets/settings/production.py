@@ -2,6 +2,8 @@ from .base import *
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
+CSRF_COOKIE_DOMAIN = 'www.blutickets.com'
+
 LANGUAGE_CODE = 'es'
 
 AWS_IS_GZIPPED = True

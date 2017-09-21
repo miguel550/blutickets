@@ -22,6 +22,7 @@ from tickets.views import TicketList, TicketDetailView
 from sales.views import (create_order, edit_order_and_next,
                          checkout, remove_item_from_order,
                          slack_actions)
+from contact.views import ContactFormView
 
 
 urlpatterns = [
@@ -39,6 +40,8 @@ urlpatterns = [
     url(r'^order/delete-item/$', remove_item_from_order, name='remove_item_from_order'),
     url(r'^edit-add-addresses/$', edit_order_and_next, name='edit_order_and_next'),
     url(r'^checkout/$', checkout, name='checkout'),
+    # Contact
+    url(r'^contact/$', ContactFormView.as_view(), name='contact'),
     # Slack app
     url(r'^slack/actions/$', slack_actions, name='slack_actions'),
 ]

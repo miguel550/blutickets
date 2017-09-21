@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="" method="post" class="pt-2">{% csrf_token %}
+        <div class="form-group px-4">
+            <div class="row">
+                <div class="col-md-4 mx-auto">
+                    <h1>Contáctese con nosotros</h1>
+                    {{ form.as_p }}
+                    <input type="submit" class="btn btn-outline-primary" value="Enviar mensaje" />
+                </div>
+            </div>
+        </div>
+
+</form>
+{% endblock content %}

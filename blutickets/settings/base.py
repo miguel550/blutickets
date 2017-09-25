@@ -201,3 +201,4 @@ MESSAGE_TAGS = {
     messages.ERROR: 'alert-danger',
 }
 
+CONTACT_EMAIL = "contacto@blutickets.com"

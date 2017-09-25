@@ -11,6 +11,6 @@ class ContactFormView(FormView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        form.send_slack_notification()
+        form.send_notifications()
         messages.success(self.request, 'Mensaje de contacto enviado, te contactaremos lo más pronto posible.')
         return super().form_valid(form)

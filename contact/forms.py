@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from . import tasks
 
 
@@ -36,7 +37,13 @@ class ContactForm(forms.Form):
         self._send_slack_notification()
 
     def _send_email_notification(self):
-        tasks.send_email_notification.delay(self.cleaned_data)
+        if settings.USE_CELERY:
+            tasks.send_email_notification.delay(self.cleaned_data)
+        else:
+            tasks.send_email_notification(self.cleaned_data)
 
     def _send_slack_notification(self):
-        tasks.send_slack_notification.delay(self.cleaned_data)
+        if settings.USE_CELERY:
+            tasks.send_slack_notification.delay(self.cleaned_data)
+        else:
+            tasks.send_slack_notification(self.cleaned_data)

@@ -1,8 +1,5 @@
 from django import forms
-from django.core.mail import EmailMultiAlternatives
-from django.conf import settings
-from django.template import loader
-import requests
+from . import tasks
 
 
 class ContactForm(forms.Form):
@@ -39,49 +36,7 @@ class ContactForm(forms.Form):
         self._send_slack_notification()
 
     def _send_email_notification(self):
-        c = {
-            'content': self.cleaned_data['content']
-        }
-        email = EmailMultiAlternatives(
-            f"Contacto: {self.cleaned_data['contact_name']}",
-            loader.get_template(
-                'email_templates/email_contact_sent.html'
-            ).render(c),
-            bcc=(settings.SLACK_EMAIL,),
-            reply_to=(self.cleaned_data['contact_email'],),
-            to=[settings.CONTACT_EMAIL]
-        )
-        email.content_subtype = "html"
-        email.send()
+        tasks.send_email_notification.delay(self.cleaned_data)
 
     def _send_slack_notification(self):
-        contact_webhook = settings.CONTACT_SLACK_CHANNEL
-        requests.post(contact_webhook, json={
-
-            "username": "ContactBot",
-            "icon_emoji": ":man_in_business_suit_levitating:",
-            "attachments": [
-                {
-                    "fallback": "Alguien intenta contactarse con nosotros!",
-                    "pretext": "Alguien intenta contactarse con nosotros!",
-                    "color": "#89bdd3",
-                    "fields": [
-                        {
-                            "title": "Nombre",
-                            "value": self.cleaned_data['contact_name'],
-                            "short": False
-                        },
-                        {
-                            "title": "Email",
-                            "value": self.cleaned_data['contact_email'],
-                            "short": False
-                        },
-                        {
-                            "title": "Mensaje",
-                            "value": self.cleaned_data['content'],
-                            "short": False
-                        },
-                    ],
-                }
-            ]
-        })
+        tasks.send_slack_notification.delay(self.cleaned_data)

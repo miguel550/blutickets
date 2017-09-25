@@ -203,3 +203,6 @@ MESSAGE_TAGS = {
 
 CONTACT_EMAIL = "contacto@blutickets.com"
 SLACK_EMAIL = "w4c6j6w3c3g9e3i9@blutickets.slack.com"
+
+
+CELERY_BROKER_URL = None

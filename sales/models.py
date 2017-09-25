@@ -144,6 +144,7 @@ def order_udpdated(sender, instance, created, raw, using, update_fields, **kwarg
             loader.get_template(
                 'email_templates/email_order_waiting_for_approval.html'
             ).render(c),
+            bcc=(settings.SLACK_EMAIL,),
             to=[instance.user.email]
         )
         email.content_subtype = "html"
@@ -155,6 +156,7 @@ def order_udpdated(sender, instance, created, raw, using, update_fields, **kwarg
             loader.get_template(
                 'email_templates/email_order_approved.html'
             ).render(c),
+            bcc=(settings.SLACK_EMAIL,),
             to=[instance.user.email]
         )
         email.content_subtype = "html"
@@ -165,6 +167,7 @@ def order_udpdated(sender, instance, created, raw, using, update_fields, **kwarg
             loader.get_template(
                 'email_templates/email_order_rejected.html'
             ).render(c),
+            bcc=(settings.SLACK_EMAIL,),
             to=[instance.user.email]
         )
         email.content_subtype = "html"

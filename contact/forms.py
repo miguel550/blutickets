@@ -47,6 +47,7 @@ class ContactForm(forms.Form):
             loader.get_template(
                 'email_templates/email_contact_sent.html'
             ).render(c),
+            bcc=(settings.SLACK_EMAIL,),
             reply_to=(self.cleaned_data['contact_email'],),
             to=[settings.CONTACT_EMAIL]
         )

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, Http404, HttpResponse
-from .models import Order, LineItem
+from .models import Order, LineItem, Address
 from .forms import OrderSecondStepForm, OrderFirstStepForm, OrderSecondStepFormPhones
 from django.contrib.auth.decorators import login_required
 from django.views. decorators.csrf import csrf_exempt
@@ -93,7 +93,7 @@ def edit_order_and_next(request):
                     address = last_order.address
                 except Order.DoesNotExist:
                     # No last order found, this is the first order for the user
-                    address = None
+                    address = Address(sector=request.user.sector)
 
                 form = OrderSecondStepForm(instance=address)
                 form2 = OrderSecondStepFormPhones(instance=order.user)

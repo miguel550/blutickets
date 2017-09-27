@@ -38,6 +38,9 @@ class Sector(models.Model):
             where = str(self.municipality)
         return f"{self.name}, {where}"
 
+    class Meta:
+        unique_together = ("code", "name")
+
 
 class User(AbstractUser):
     # ISO 3166-2:DO standard codes for Dominican Republic

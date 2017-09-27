@@ -187,6 +187,10 @@ class Migration(migrations.Migration):
         province.delete()
 
     operations = [
+        migrations.AlterUniqueTogether(
+            name='sector',
+            unique_together=set([('code', 'name')]),
+        ),
         migrations.RunPython(forwards_func, reverse_func),
     ]
 

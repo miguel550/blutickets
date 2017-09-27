@@ -89,7 +89,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = os.environ.get('ROOT_URLCONF', 'blutickets.urls')
-
+USE_GA = os.environ.get('DJANGO_USE_GA', False)
+GA_TRACKING_ID = os.environ.get('GA_TRACKING_ID', '')
+GA_TRACKING_LOGGED_IN_ID = os.environ.get('GA_TRACKING_LOGGED_IN_ID', '')
+GA_TRACKING_ANONYMOUS_USERS_ID = os.environ.get('GA_TRACKING_ANONYMOUS_USERS_ID', '')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -101,6 +104,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Add ga_tracking_id variable to all view contexts
+                'blutickets.context_processors.ga_tracking_id',
+                # Add use_ga variable to all view contexts
+                'blutickets.context_processors.use_ga',
             ],
         },
     },

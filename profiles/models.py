@@ -11,14 +11,32 @@ class Province(models.Model):
         return self.name
 
 
-class Sector(models.Model):
-    code = models.CharField(max_length=5)
+class Municipality(models.Model):
     name = models.CharField(max_length=100, unique=True)
     province = models.ForeignKey('Province')
     active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
+
+
+class Sector(models.Model):
+    # Sectors are from wwww.codigopostalrepublicadominicana.com
+    # Filtered with only unique sector's names
+    code = models.CharField(max_length=5)
+    name = models.CharField(max_length=100)
+    province = models.ForeignKey('Province', null=True)
+    municipality = models.ForeignKey('Municipality', null=True)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        # In case of District then province name will be used.
+        if self.province:
+            where = str(self.province)
+        # Otherwise will use the municipality name.
+        elif self.municipality:
+            where = str(self.municipality)
+        return f"{self.name}, {where}"
 
 
 class User(AbstractUser):

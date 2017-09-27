@@ -28,6 +28,7 @@ from contact.views import ContactFormView
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
+    url(r'^select2/', include('django_select2.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', TicketList.as_view(), name='home'),
     url(r'^accounts/', include('allauth.urls')),

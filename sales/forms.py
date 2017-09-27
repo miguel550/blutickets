@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from .models import Order, Address, LineItem
 from profiles.models import Province, Sector
+from django_select2.forms import Select2Widget
 
 
 def get_province_choices():
@@ -23,21 +24,16 @@ class OrderFirstStepForm(forms.Form):
 
 
 class OrderSecondStepForm(forms.ModelForm):
-    province = forms.ModelChoiceField(
-        queryset=get_province_choices(),
-        initial=get_user_model().DISTRITO_NACIONAL,
-        label="Provincia",
-    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['sector'].widget = Select2Widget(attrs={'data-placeholder': 'Elija su sector'})
         self.fields['sector'].queryset = Sector.objects.filter(active=True)
-        self.fields['sector'].empty_label = "--Sector--"
+        self.fields['sector'].empty_label = "---Sector---"
 
     class Meta:
         model = Address
         fields = (
-            'province',
             'sector',
             'street_and_house',
             'reference'

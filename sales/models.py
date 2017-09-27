@@ -1,13 +1,13 @@
-from django.db import models
-from django.contrib.auth import get_user_model
-from geoposition.fields import GeopositionField
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from django.core.mail import EmailMultiAlternatives
-from django.template import loader
 from django.conf import settings
-import requests
+from django.contrib.auth import get_user_model
+from django.core.mail import EmailMultiAlternatives
+from django.db import models
+from django.db.models.signals import post_save
 from django.db.models import Sum, F, FloatField
+from django.dispatch import receiver
+from django.template import loader
+from geoposition.fields import GeopositionField
+import requests
 
 
 class Address(models.Model):

@@ -1,34 +1,16 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Province, Sector
-from operator import methodcaller
-
-
-def get_province_choices():
-    try:
-        return Province.objects.filter(active=True)
-    except:
-        return [(0, 'No hay provincias')]
-
-
-def get_sector_choices():
-    try:
-        return Sector.objects.filter(active=True)
-    except:
-        return [(0, 'No hay sector')]
+from .models import Sector
+from django_select2.forms import Select2Widget
 
 
 class SignUpForm(forms.ModelForm):
 
-    province = forms.ModelChoiceField(queryset=get_province_choices(),
-                                      initial=get_user_model().DISTRITO_NACIONAL,
-                                      label="Provincia")
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
+        self.fields['sector'].widget = Select2Widget(attrs={'data-placeholder': 'Elija su sector'})
         self.fields['sector'].queryset = Sector.objects.filter(active=True)
-        self.fields['sector'].empty_label = "--Sector--"
+        self.fields['sector'].empty_label = "---Sector---"
 
     def signup(self, request, user):
         user.first_name = self.cleaned_data['first_name']
@@ -41,7 +23,6 @@ class SignUpForm(forms.ModelForm):
         fields = (
             'first_name',
             'last_name',
-            'province',
             'sector',
             # 'select_number_primary',
             # 'phone_number_primary',

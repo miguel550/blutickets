@@ -1,4 +1,5 @@
 from .base import *
+from urllib.parse import urlparse
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
@@ -39,3 +40,15 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 CELERY_BROKER_URL = os.environ['CLOUDAMQP_URL']
+
+redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "{0}:{1}".format(redis_url.hostname, redis_url.port),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "PASSWORD": redis_url.password,
+        }
+    }
+}

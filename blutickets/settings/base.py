@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'sales',
     'markupfield',
     'imagekit',
+    'django_select2',
 ]
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignUpForm'

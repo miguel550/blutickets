@@ -54,7 +54,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
 CELERY_BROKER_URL = os.environ['CLOUDAMQP_URL']
 
-redis_url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+redis_url = urlparse(os.environ.get('REDISCLOUD_URL'))
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",

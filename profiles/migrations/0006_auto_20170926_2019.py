@@ -187,6 +187,11 @@ class Migration(migrations.Migration):
         province.delete()
 
     operations = [
+        migrations.AlterField(
+            model_name='sector',
+            name='name',
+            field=models.CharField(max_length=100),
+        ),
         migrations.AlterUniqueTogether(
             name='sector',
             unique_together=set([('code', 'name')]),

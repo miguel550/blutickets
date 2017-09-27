@@ -2,7 +2,7 @@ _notebook_
 venv
 *.pyc
 staticfiles
-.env
+*.env
 .idea/
 db.sqlite3
 htmlcov

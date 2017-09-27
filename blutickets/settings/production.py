@@ -1,6 +1,10 @@
 from .base import *
 from urllib.parse import urlparse
 
+
+STATICFILES_STORAGE = 'blutickets.storages.StaticStorage'
+DEFAULT_FILE_STORAGE = 'blutickets.storages.MediaStorage'
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 CSRF_COOKIE_DOMAIN = os.environ.get('CSRF_COOKIE_DOMAIN', None)

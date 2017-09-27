@@ -17,3 +17,4 @@ feedparser==5.2.1
 celery==4.1.0
 django-select2==5.11.1
 django-redis==4.8.0
+django-environ==0.4.4

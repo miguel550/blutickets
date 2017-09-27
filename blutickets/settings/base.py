@@ -13,6 +13,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 import os
 
 import dj_database_url
+import environ
+
+
+root = environ.Path(__file__) - 3  # three folder back (/a/b/c/ - 3 = /)
+env = environ.Env()
+environ.Env.read_env()  # reading .env file
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -159,10 +165,6 @@ USE_TZ = True
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
-STATICFILES_STORAGE = 'blutickets.storages.StaticStorage'
-DEFAULT_FILE_STORAGE = 'blutickets.storages.MediaStorage'
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
@@ -203,7 +205,7 @@ MESSAGE_TAGS = {
 }
 
 CONTACT_EMAIL = "contacto@blutickets.com"
-SLACK_EMAIL = "w4c6j6w3c3g9e3i9@blutickets.slack.com"
+SLACK_EMAIL = env('SLACK_EMAIL', default="email@slack.com")
 
 
 CELERY_BROKER_URL = None

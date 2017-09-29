@@ -52,11 +52,28 @@
     {% endif %}
     </form>
     <a class="btn btn-outline-primary" href="{% url 'home' %}">Seguir comprando</a>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+
+     <!-- Compiled and minified CSS
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"></script>
+
+    <link href="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.css" rel="stylesheet">
+<script src="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.js"></script>
     <script>
         var buttons = document.querySelectorAll('.delete');
         var delete_action = function(e){
+
             e.preventDefault();
-            if(confirm("¿Desea eliminarlo de su lista?")){
+            mbox.confirm('¿Desea eliminarlo de su carrito?', function(yes) {
+    if (yes) {
+        console.log('You took the drugs :(');
+
                 var formData = new FormData();
                 var id = this.dataset.lineitemid;
                 formData.append("line_item_id", id);
@@ -87,7 +104,7 @@
                 }).catch(function(error){
                     console.error(error);
                 });
-            }
+            }}.bind(this));
         };
         for (var i = 0; i < buttons.length; i++) {
           buttons[i].addEventListener("click", delete_action, false);

@@ -49,6 +49,7 @@ class Migration(migrations.Migration):
     def reverse_func(apps, schema_editor):
         # forwards_func() creates two Country instances,
         # so reverse_func() should delete them.
+        # TODO: Delete also new sectors added by ID.
         Sector = apps.get_model("profiles", "Sector")
         Province = apps.get_model("profiles", "Province")
         db_alias = schema_editor.connection.alias

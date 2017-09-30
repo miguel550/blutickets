@@ -26,7 +26,7 @@ class Sector(models.Model):
     code = models.CharField(max_length=5)
     name = models.CharField(max_length=100)
     province = models.ForeignKey('Province', null=True)
-    municipality = models.ForeignKey('Municipality', null=True)
+    municipality = models.ForeignKey('Municipality', null=True, blank=True)
     active = models.BooleanField(default=True)
 
     def __str__(self):

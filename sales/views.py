@@ -7,12 +7,14 @@ from django.views. decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
 from tickets.models import Ticket
 from django.db import IntegrityError
+from django.views.decorators.cache import never_cache
 import re
 import json
 import requests
 from django.db import transaction
 
 
+@never_cache
 @login_required(login_url=reverse_lazy('account_login'))
 def create_order(request):
 
@@ -41,6 +43,8 @@ def create_order(request):
                                                          'line_items': line_items})
 
 
+@never_cache
+@login_required(login_url=reverse_lazy('account_login'))
 def edit_order_and_next(request):
     if request.method == "POST":
         # edit items quantity
@@ -105,6 +109,8 @@ def edit_order_and_next(request):
             return redirect('home')
 
 
+@never_cache
+@login_required(login_url=reverse_lazy('account_login'))
 def checkout(request):
     if request.method == "POST":
         # map location through post

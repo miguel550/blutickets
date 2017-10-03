@@ -4,8 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{% block title %}Blutickets{% endblock %}</title>
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <title>{% block title %}Blutickets | Boletas a domicilio{% endblock %}</title>
+
+    <script language = "JavaScript">
+
+        heavyImage = new Image();
+        heavyImage.src = "{% static 'loading6.gif' %}";
+
+    </script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon2.png' %}"/>
     {% block ga %}
         {% if use_ga and user.is_staff is False and user.is_superuser is False %}
             {# This will be loaded with ga_tracking_id variable from context_procesor #}
@@ -25,8 +33,24 @@
     .select2-container{
         width: 100% !important;
     }
-
+    .loader {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('{% static 'loading6.gif' %}') 50% 50% no-repeat rgb(249,249,249);
+}
 </style>
+<div class="loader"></div>
+<script type="text/javascript">
+window.addEventListener('load',function() {
+    $(function(){
+	    jQuery(".loader").fadeOut("slow");
+	});
+});
+</script>
 </head>
 <body>
 <header>

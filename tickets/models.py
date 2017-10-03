@@ -35,6 +35,7 @@ class Ticket(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
 
     ticket_types = models.ManyToManyField('Type', through='TicketType')
+    active = models.BooleanField(default=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -8,6 +8,10 @@ from .models import Ticket
 class TicketList(ListView):
     model = Ticket
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(active=True)
+
 
 class TicketDetailView(DetailView):
     model = Ticket

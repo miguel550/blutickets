@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>{% block title %}Blutickets{% endblock %}</title>
+    <title>{% block title %}Blutickets | Boletas a domicilio{% endblock %}</title>
 
 
     <script language = "JavaScript">
@@ -14,7 +14,7 @@
 
     </script>
 
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon2.png' %}"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.4/js.cookie.min.js" integrity="sha256-NjbogQqosWgor0UBdCURR5dzcvAgHnfUZMcZ8RCwkk8=" crossorigin="anonymous"></script>
     {% block ga %}
         {% if use_ga and user.is_staff is False and user.is_superuser is False %}

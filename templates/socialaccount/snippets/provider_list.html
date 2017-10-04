@@ -1,0 +1,20 @@
+{% load socialaccount %}
+
+{% get_providers as socialaccount_providers %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+{% for provider in socialaccount_providers %}
+{% if provider.id == "openid" %}
+{% for brand in provider.get_brands %}
+<li>
+  <a title="{{brand.name}}" 
+     class="btn btn-block btn-social btn-{{brand.id}}"
+     href="{% provider_login_url provider.id openid=brand.openid_url process=process %}"
+     ><i class="fa fa-{{ brand.id }}"></i>Iniciar sesión con {{brand.name}}</a>
+</li>
+{% endfor %}
+{% endif %}
+<div class="col-md-4 pl-0">
+  <a title="{{provider.name}}" class="btn btn-block btn-social btn-{{provider.id}}"
+     href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{ provider.id }}"></i>Iniciar sesión con {{provider.name}}</a>
+</div>
+{% endfor %}

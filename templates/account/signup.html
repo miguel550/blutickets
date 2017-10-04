@@ -1,10 +1,12 @@
 {% extends "account/base.html" %}
-
+{% load socialaccount %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Signup" %}{% endblock %}
 
 {% block content %}
+
+{% providers_media_js %}
     <style>
         form input:not([type='checkbox']){
             width: 100% !important;
@@ -13,7 +15,9 @@
 <h1>{% trans "Sign Up" %}</h1>
 
 <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+<a class="btn btn-block btn-social btn-facebook" href="{% provider_login_url "facebook" method="js_sdk" %}"><i class="fa fa-facebook"></i>Regístrate con Facebook</a>
+    <p></p>
 <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
   {% csrf_token %}
   {{ form.as_p }}
@@ -24,5 +28,7 @@
     <p><input type="checkbox" required /> <span>Aceptas nuestros <a href="{% url 'terms' %}">Términos y Condiciones</a>.</span></p>
   <button type="submit">{% trans "Sign Up" %} &raquo;</button>
 </form>
+<p></p>
+
 
 {% endblock %}

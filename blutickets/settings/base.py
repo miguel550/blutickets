@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.facebook',
     'tickets',
     'profiles',
     'sales',
@@ -218,3 +218,29 @@ SLACK_EMAIL = env('SLACK_EMAIL', default="email@slack.com")
 CELERY_BROKER_URL = None
 
 USE_CELERY = os.environ.get('USE_CELERY', False)
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email', 'public_profile', 'user_friends'],
+        'AUTH_PARAMS': {},
+        'INIT_PARAMS': {'cookie': True},
+        'FIELDS': [
+            'id',
+            'email',
+            'name',
+            'first_name',
+            'last_name',
+            'verified',
+            'locale',
+            'timezone',
+            'link',
+            'gender',
+            'updated_time',
+        ],
+        'EXCHANGE_TOKEN': True,
+        'LOCALE_FUNC': lambda request: 'es',
+        'VERIFIED_EMAIL': False,
+        'VERSION': 'v2.5',
+    }
+}

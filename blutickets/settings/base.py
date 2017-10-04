@@ -244,3 +244,5 @@ SOCIALACCOUNT_PROVIDERS = {
         'VERSION': 'v2.5',
     }
 }
+
+SOCIALACCOUNT_ADAPTER = 'profiles.adapters.SocialAccountAdapter'

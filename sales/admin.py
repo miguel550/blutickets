@@ -25,12 +25,12 @@ class OrderAdmin(admin.ModelAdmin):
         return "No address."
 
     def user_number_primary(self, obj):
-        if obj.user.phone_number_primary_type:
-            return f"{obj.user.phone_number_primary_type}: {obj.user.phone_number_primary}"
+        if obj.user.phone_number_primary:
+            return obj.user.phone_number_primary
         return "No hay telefono."
 
     def user_number_secondary(self, obj):
-        if obj.user.phone_number_secondary_type:
-            return f"{obj.user.phone_number_secondary_type}: {obj.user.phone_number_secondary}"
+        if obj.user.phone_number_secondary:
+            return obj.user.phone_number_secondary
         return "No hay telefono."
 

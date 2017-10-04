@@ -41,12 +41,14 @@ class OrderSecondStepForm(forms.ModelForm):
         widgets = {
             'street_and_house': forms.TextInput(
                 attrs={
-                    'placeholder': " (Calle/Casa/apart,etc)",
+                    'placeholder': "Calle, número, casi esquina.",
+                    'style': "width: -webkit-fill-available;"
                 }
             ),
             'reference': forms.TextInput(
                 attrs={
-                    'placeholder': "(Al lado de/Frente a/etc)",
+                    'placeholder': "Al lado de, Frente a, etc.",
+                    'style': "width: -webkit-fill-available;"
                 }
             )
         }
@@ -57,19 +59,21 @@ class OrderSecondStepForm(forms.ModelForm):
 
 
 class OrderSecondStepFormPhones(forms.ModelForm):
+    """
     phone_number_primary_type = forms.ChoiceField(choices=(
                                                 ('', '--Contacto--'),
                                                 ('phone', 'Teléfono'),
                                                 ('cellphone', 'Celular')
                                                ),
                                       initial=''
-                                      )
+                                      )"""
     phone_number_primary = forms.CharField(max_length=15,
                                    widget=forms.TextInput(
                                        attrs={
                                             'placeholder': 'Ej: 809 555 5555'
                                        })
                                    )
+    """
     phone_number_secondary_type = forms.ChoiceField(choices=(
                                                 ('', '--Contacto Adicional--'),
                                                 ('phone', 'Teléfono'),
@@ -77,7 +81,7 @@ class OrderSecondStepFormPhones(forms.ModelForm):
                                                ),
                                       initial='',
                                         required=False
-                                      )
+                                      )"""
     phone_number_secondary = forms.CharField(max_length=15,
                                              required=False,
                                              widget=forms.TextInput(
@@ -88,9 +92,9 @@ class OrderSecondStepFormPhones(forms.ModelForm):
 
     def save(self, commit=True):
         user = self.instance
-        user.phone_number_primary_type = self.cleaned_data['phone_number_primary_type']
+        #user.phone_number_primary_type = self.cleaned_data['phone_number_primary_type']
         user.phone_number_primary = self.cleaned_data['phone_number_primary']
-        user.phone_number_secondary_type = self.cleaned_data['phone_number_secondary_type']
+        #user.phone_number_secondary_type = self.cleaned_data['phone_number_secondary_type']
         user.phone_number_secondary = self.cleaned_data['phone_number_secondary']
         if commit:
             user.save()
@@ -99,8 +103,8 @@ class OrderSecondStepFormPhones(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = (
-            'phone_number_primary_type',
+            #'phone_number_primary_type',
             'phone_number_primary',
-            'phone_number_secondary_type',
+            #'phone_number_secondary_type',
             'phone_number_secondary',
         )

@@ -26,16 +26,35 @@ from contact.views import ContactFormView
 
 
 urlpatterns = [
+    # admin 
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^select2/', include('django_select2.urls')),
     url(r'^admin/', admin.site.urls),
+
+    # home
     url(r'^$', TicketList.as_view(), name='home'),
+    # profiles
     url(r'^accounts/', include('allauth.urls')),
+    # tickets
     url(r'^tickets/(?P<pk>[-\w]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
-    url(r'^who-we-are/$', TemplateView.as_view(template_name='who-we-are.html'), name='who-we-are'),
-    url(r'^terms-and-conditions/$', TemplateView.as_view(template_name='terms-and-conditions.html'), name='terms'),
-    url(r'^privacy/$', TemplateView.as_view(template_name='privacy.html'), name='privacy'),
+
+    # text pages 
+    url(
+        r'^who-we-are/$',
+        TemplateView.as_view(template_name='who-we-are.html'),
+        name='who-we-are'
+    ),
+    url(
+        r'^terms-and-conditions/$',
+        TemplateView.as_view(template_name='terms-and-conditions.html'),
+        name='terms'
+    ),
+    url(
+        r'^privacy/$',
+        TemplateView.as_view(template_name='privacy.html'),
+        name='privacy'
+    ),
     # Sales
     url(r'^bucket/$', create_order, name='create_order_or_add_item'),
     url(r'^order/delete-item/$', remove_item_from_order, name='remove_item_from_order'),

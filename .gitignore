@@ -10,3 +10,5 @@ htmlcov
 .ipynb_checkpoints
 media
 bfg.jar
+node_modules
+mix-manifest.json

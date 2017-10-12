@@ -12,3 +12,5 @@ media
 bfg.jar
 node_modules
 mix-manifest.json
+assets/css
+assets/js

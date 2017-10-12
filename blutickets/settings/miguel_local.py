@@ -42,7 +42,7 @@ AWS_MEDIA_LOCATION = 'media'
 
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "../staticfiles"),
+    os.path.join(BASE_DIR, "../assets"),
 ]
 
 MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_MEDIA_LOCATION)

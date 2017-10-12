@@ -51,7 +51,7 @@ LANGUAGE_CODE = 'es'
 TIME_ZONE = 'UTC'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, '../staticfiles'),
+    os.path.join(BASE_DIR, '../assets'),
 ]
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'

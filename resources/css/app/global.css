@@ -1,3 +1,16 @@
 /**
- * Global styles, maybe?
+ * Global styles.
+ * These apply for most pages, not for a single one.
  */
+
+
+/* HEADER */
+.logo {
+  margin: 10px 0;
+}
+.logo img {
+  width: 350px;
+}
+
+/* FOOTER */
+

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load socialaccount %}
+<!-- TODO: Move this shit to the header -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+
+<div class="container jumbotron accounts-box">
+
+
+<div class="row">
+  <!-- TODO: Fix duplicated IDs -->
+  {% if messages %}
+  <div class="col-sm-4 l-sm-offset-4">
+    {% include 'partials/messages.html' %}
+  </div>
+  {% endif %}
+
+  <div class="col-sm-4 col-sm-offset-4 accounts-facebook-signin">
+    <a class="btn btn-block btn-social btn-facebook" href="{% provider_login_url 'facebook' %}" method="js_sdk"><i class="fa fa-facebook"></i>
+      Iniciar sesión con Facebook
+    </a>
+  </div>
+
+  <div class="col-sm-6">
+    <form class="form-signin" method="POST" action="{% url 'account_login' %}">
+      <h2 class="form-signin-heading">
+        Iniciar sesión
+      </h2>
+      <label for="id_login" class="sr-only">
+        Correo
+      </label>
+      <input type="email" name="login" id="id_login" class="form-control" placeholder="Correo" required autofocus>
+
+      <label for="id_password" class="sr-only">
+        Contraseña
+      </label>
+
+      <input type="password" name="password" id="id_password" class="form-control accounts-last-input" placeholder="Contraseña" required>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" name="remember" id="id_remember" value="remember-me"> Recuérdame
+        </label>
+      </div>
+
+      <div class="row accounts-bottom-link">
+        <div class="col-md-7">
+          <a class="button" href="{% url 'account_reset_password' %}">
+            ¿Contraseña olvidada?
+          </a>
+        </div>
+      </div>
+
+      {% csrf_token %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesión</button>
+    </form>
+  </div><!-- .col -->
+  <div class="col-sm-6">
+    <form class="form-signin" method="POST" action="{% url 'account_signup' %}">
+      <h2 class="form-signin-heading">
+        Registro
+      </h2>
+      <label for="id_login" class="sr-only">
+        Correo
+      </label>
+      <input type="email" name="email" id="id_email" class="form-control" placeholder="Correo" required>
+
+      <label for="id_first_name" class="sr-only">
+        Nombre(s)
+      </label>
+      <input type="text" name="first_name" placeholder="Nombre(s)" maxlength="30" id="id_first_name" class="form-control" />
+
+      <label for="id_last_name" class="sr-only">
+        Apellido(s)
+      </label>
+      <input type="text" name="last_name" placeholder="Apellido(s)" maxlength="30" id="id_last_name" class="form-control" />
+
+      <label for="id_password" class="sr-only">
+        Contraseña
+      </label>
+      <input type="password" name="password1" placeholder="Contraseña" required id="id_password1" class="form-control"/>
+
+      <label for="id_password2" class="sr-only">
+        Confirmar contraseña
+      </label>
+      <input type="password" name="password2" placeholder="Confirmar contraseña" required id="id_password2" class="form-control accounts-last-input" />
+
+      {% csrf_token %}
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Crear cuenta</button>
+    </form>
+  </div><!-- .col -->
+</div> <!-- .row -->
+
+</div>
+
+{% endblock %}

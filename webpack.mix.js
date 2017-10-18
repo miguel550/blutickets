@@ -2,7 +2,8 @@ const mix = require('laravel-mix');
 
 mix.styles(
     [
-        'resources/css/app/global.css'
+        'resources/css/app/global.css',
+        'resources/css/app/accounts.css',
     ],
     'assets/css/app.css'
 );

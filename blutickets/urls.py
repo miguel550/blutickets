@@ -33,7 +33,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     # home
-    url(r'^$', TicketList.as_view(), name='home'),
+    url(r'^$', TicketList.as_view(template_name='pages/home.html'), name='home'),
     # profiles
     url(r'^accounts/', include('allauth.urls')),
     # tickets

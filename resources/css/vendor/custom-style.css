@@ -266,7 +266,7 @@ z-index: 9;
     left: 0;
     position: absolute;
     top: 0;
-    width: 100%;overflow: hidden;border: 1px solid #ddd;
+    width: 215px;overflow: hidden;border: 1px solid #ddd;
 }
 .product-hover:after {
   background: none repeat scroll 0 0 #000;
@@ -326,10 +326,12 @@ z-index: 9;
 
 .single-product {
   overflow: hidden;
+  float: left;
+  margin-right: 25px;
 }
 .single-product:hover {}
-.single-product:hover .product-hover a.add-to-cart-link {top: 32%;}
-.single-product:hover .product-hover a.view-details-link {bottom: 32%;}
+.single-product:hover .product-hover a.add-to-cart-link {top: 30%;}
+.single-product:hover .product-hover a.view-details-link {bottom: 30%;}
 .single-product:hover .product-hover:after{left: 0}
 
 

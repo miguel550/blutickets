@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- tu real slider pp -->
+<div class="slider-area">
+  <div class="zigzag-bottom"></div>
+  <div id="slide-list" class="carousel carousel-fade slide" data-ride="carousel">
+    <div class="slide-bulletz">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ol class="carousel-indicators slide-indicators">
+              <li data-target="#slide-list" data-slide-to="0" class="active"></li>
+              <li data-target="#slide-list" data-slide-to="1"></li>
+              <li data-target="#slide-list" data-slide-to="2"></li>
+            </ol>              
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <div class="single-slide">
+          <div class="slide-bg slide-one"></div>
+          <div class="slide-text-wrapper">
+            <div class="slide-text">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-6">
+                    <div class="slide-content">
+                      <h2>¡Envíos gratis!</h2>
+                      <p>Buscamos tu comodidad por encima de todo.</p>
+                      <p>Por ello, brindamos servicio a domicilio GRATUITO por todo el distrito nacional.</p>
+                      <a href="Eventos.html" class="readmore">Empieza ahora</a>
+                    </div><!--slide content -->
+                  </div><!--slide col md 6 -->
+                </div><!-- .row -->
+              </div><!-- .container -->
+            </div><!-- .slide-text -->
+          </div><!--.slide-text-wrapper -->
+        </div><!-- .single-slide -->
+      </div> <!-- .item -->
+
+      <div class="item">
+        <div class="single-slide">
+          <div class="slide-bg slide-two"></div>
+          <div class="slide-text-wrapper">
+            <div class="slide-text">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-6">
+                    <div class="slide-content">
+                      <h2>¿Qué pasará esa noche?</h2>
+                      <p>Todo lo que pasará esa noche se quedará ahí.</p>
+                      <a href="" class="readmore">Empezar</a>
+                    </div><!--slide content -->
+                  </div><!--slide col md 6 -->
+                </div><!-- .row -->
+              </div><!-- .container -->
+            </div><!-- .slide-text -->
+          </div><!--.slide-text-wrapper -->
+        </div><!-- .single-slide -->
+      </div> <!-- .item -->
+
+      <div class="item">
+        <div class="single-slide">
+          <div class="slide-bg slide-three"></div>
+          <div class="slide-text-wrapper">
+            <div class="slide-text">
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-6">
+                    <div class="slide-content">
+                      <h2>¿Quieres vender con nosotros?</h2>
+                      <p>¿Tienes un evento y quieres aumentar el alcance de tus ventas?</p>
+                      <p>Con nosotros es súper fácil, solo completa el formulario para empezar.</p>
+                      <a href="" class="readmore">Completar formulario</a>
+                    </div><!--slide content -->
+                  </div><!--slide col md 6 -->
+                </div><!-- .row -->
+              </div><!-- .container -->
+            </div><!-- .slide-text -->
+          </div><!--.slide-text-wrapper -->
+        </div><!-- .single-slide -->
+      </div> <!-- .item -->
+    </div>
+
+  </div>    
+</div> <!-- End slider area -->
+
+<div class="promo-area">
+  <div class="zigzag-bottom"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <div class="single-promo">
+          <i class="fa fa-truck"></i>
+          <p>Envío Gratis</p>
+        </div>
+      </div>
+
+       <div class="col-md-3 col-sm-6">
+        <div class="single-promo">
+          <i class="fa fa-users"></i>
+          <p>Servicio al cliente</p>
+        </div>
+      </div>
+
+        <div class="col-md-3 col-sm-6">
+        <div class="single-promo">
+          <i class="fa fa-money"></i>
+          <p>Pago en efectivo</p>
+        </div>
+      </div>
+    
+      <div class="col-md-3 col-sm-6">
+        <div class="single-promo">
+           <i class="fa fa-credit-card"></i>
+           <p>Pagos electrónicos</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- End promo area -->
+
+<div class="maincontent-area">
+  <div class="zigzag-bottom"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="latest-product">
+          <h2 class="section-title">EVENTOS</h2>
+          <div class="product-carousel">
+            {% for ticket in object_list %}
+            <div class="single-product">
+              <div class="product-f-image">
+                <img src="{{ ticket.flyer_image_compressed.url }}" width="215" height="265">
+                <div class="product-hover">
+                  <a href="javascript:void(0)" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> añadir al carrito</a>
+                  <a href="{{ ticket.get_absolute_url }}" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
+                </div>
+              </div>
+              
+              <h2><a href="{{ ticket.get_absolute_url }}">{{ object.party_name }}</a></h2>
+
+              <div class="product-carousel-price">
+                <ins>RD${{ ticket.price }}</ins>
+              </div>              
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- End main content area -->
+
+
+{% endblock %}

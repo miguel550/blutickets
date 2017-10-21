@@ -1,51 +1,56 @@
 {% extends 'base.html' %}
-{% load static %}
-{% load l10n %}
 {% block title %}{{ block.super }} - {{ object.party_name }}{% endblock title %}
 {% block content %}
-    <style>
-        .geoposition-widget > table, .geoposition-search, label{
-            display: none !important;
-        }
-    </style>
-    <div class="container">
-        <div class="row">
-            <div style="width: -webkit-fill-available">
-                <img src="{{ object.flyer_image_compressed.url }}" height="auto" width="100%" />
-                <p><div class="mx-auto">
-                <p ><div class="mx-auto">{{ object.description.rendered|default:"<No tiene cuerpo>"|safe }}</div></p>
-
-                <p>
-                    {% if object.remaining > 0 %}
-                    <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
-                        <input type="hidden" name="ticket_id" value="{{ object.pk }}" />
-                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary" value="Comprar" />
-                    </form>
-                    {% elif object.remaining <= 0 %}
-                        <div class="px-5">
-                            <button disabled class="alert alert-danger" role="alert"><strong>Sold out</strong></button>
-                        </div>
-                    {% endif %}
-                </p>
-                <p style="text-align: justify;">&nbsp;&nbsp;<img src="http://oi63.tinypic.com/n2e2ja.jpg" alt="" width="36" height="36" />&nbsp;<strong>Precio: RD${{ object.price|unlocalize }} P/P</strong></p>
-                <p class="text-justify">&nbsp;&nbsp;<strong><i class="fa fa-calendar fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Fecha: {{ object.when|date }}.</strong></p>
-                <p class="text-justify">&nbsp;&nbsp;<strong><i class="fa fa-clock-o fa-2x" aria-hidden="true"></i></i>&nbsp;&nbsp;Hora: {{ object.when|time:"h:i A" }}.</strong></p>
-                <p class="text-justify">&nbsp;&nbsp;&nbsp;<strong><i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;Ubicaci&oacute;n del evento en el MAPA.</strong></p>
-                {{ form.media }}
-                {{ form.as_p }}
-            </div></p>
-
-            </div>
+<div class="container jumbotron">
+  <div class="row">
+      <div class="col-sm-12">
+        <img src="{{ object.flyer_image_compressed.url }}" height="auto" width="100%" />
+        <div class="well">
+          {{ object.description.rendered|safe }}
         </div>
-    </div>
-    <script>
+      </div>
+      <div class="col-sm-6">
+        <p style="text-align: justify;">
+          &nbsp;&nbsp;
+          <img src="http://oi63.tinypic.com/n2e2ja.jpg" alt="" width="36" height="36" />&nbsp;
+          <strong>
+            Precio: RD${{ object.price }} P/P
+          </strong>
+        </p>
+        <p class="text-justify">
+          &nbsp;&nbsp;
+          <strong>
+            <i class="fa fa-calendar fa-2x" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            Fecha: {{ object.when|date }}.
+          </strong>
+        </p>
+        <p class="text-justify">
+          &nbsp;&nbsp;
+          <strong>
+            <i class="fa fa-clock-o fa-2x" aria-hidden="true"></i>
+            &nbsp;&nbsp;
+            Hora: {{ object.when|time:"h:i A" }}.
+          </strong>
+        </p>
+        <p class="text-justify">
+          &nbsp;&nbsp;&nbsp;
+          <strong>
+            <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+            &nbsp;&nbsp;Ubicación del evento en el MAPA.
+          </strong>
+        </p>
+      </div>
+
+      <div class="col-sm-6">
+        {{ form.media }}
+        {{ form.as_p }}
+            <script>
 
       function initMap() {
-        {% localize off %}
 
-            var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
+        var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
 
-        {% endlocalize %}
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: myLatLng
@@ -61,4 +66,7 @@
     <!--<script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3B2CnwKHWPZCOkm40bPzYZBJ9dcEoXGo&callback=initMap">
     </script>-->
-{% endblock content %}
+      </div>
+  </div>
+</div>
+{% endblock %}

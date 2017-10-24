@@ -1,42 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <style>
-        label[for="id_province"], label[for="id_sector"] {
-            display: none;
-        }
-        #no-label label {
-            display: none;
-        }
-    </style>
-
-    <form method="post" class="col-md-12" action="{% url 'checkout' %}">{% csrf_token %}
-            <input type="hidden" name="order_id" value="{{ order.pk }}" />
-            {{ form.media }}
-        <div class="row">
-            <div class="mx-auto px-2" >
-                <h2>Información de envío</h2>
-                <fieldset class="form-group" id="address">
-                    {{ form.as_p }}
-                </fieldset>
-                <h2>Teléfonos</h2>
-                <fieldset class="form-group" id="no-label">
-                {{ form_phones.as_p }}
-                </fieldset>
-                <input class="btn btn-outline-primary" type="submit" value="Checkout" />
-            </div>
-        </div>
-
-
-    </form>
+<form method="post" class="col-md-12" action="{% url 'checkout' %}">
+  {% csrf_token %}
+  <input type="hidden" name="order_id" value="{{ order.pk }}" />
+    {{ form.media }}
+  <div class="row">
+    <div class="mx-auto px-2" >
+      <h2>Información de envío</h2>
+      <fieldset class="form-group" id="address">
+        {{ form.as_p }}
+      </fieldset>
+      <h2>Teléfonos</h2>
+      <fieldset class="form-group" id="no-label">
+      {{ form_phones.as_p }}
+      </fieldset>
+      <input class="btn btn-outline-primary" type="submit" value="Checkout" />
+    </div>
+  </div>
+</form>
 <script>
-document.querySelector("#clean").onclick = function(e){
-    e.preventDefault();
-    var inputs = document.querySelectorAll("#address input");
-    for(var i = 0; i<inputs.length; i++){
-        inputs[i].value = "";
-    }
-    document.querySelector("select[name='sector']").selectedIndex = 0;
+document.querySelector("#clean").onclick = function (e) {
+  e.preventDefault();
+  var inputs = document.querySelectorAll("#address input");
+  for(var i = 0; i<inputs.length; i++){
+    inputs[i].value = "";
+  }
+  document.querySelector("select[name='sector']").selectedIndex = 0;
 }
 </script>
 {% endblock %}

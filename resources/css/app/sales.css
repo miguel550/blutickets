@@ -1,0 +1,6 @@
+label[for="id_province"], label[for="id_sector"] {
+  display: none;
+}
+#no-label label {
+  display: none;
+}

@@ -40,7 +40,9 @@ urlpatterns = [
     url(r'^tickets/(?P<pk>[-\w]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
 
     #text pages
-    url(r'^(about|tos|privacy)/$', load_text_view, name='text'),
+    url(r'^about/$', load_text_view, name='who-we-are'),
+    url(r'^tos/$', load_text_view, name='terms'),
+    url(r'^privacy/$', load_text_view, name='privacy'),
 
     # Sales
     url(r'^bucket/$', create_order, name='create_order_or_add_item'),

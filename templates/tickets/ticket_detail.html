@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container jumbotron">
   <div class="row">
-      <div class="col-sm-12">
-        <img src="{{ object.flyer_image_compressed.url }}" height="auto" width="100%" />
+      <div class="col-sm-6 col-lg-offset-3">
+        <img src="{{ object.flyer_image_compressed.url }}" class="flyer-image" />
         <div class="well">
           {{ object.description.rendered|safe }}
         </div>
@@ -41,31 +41,28 @@
           </strong>
         </p>
       </div>
-
       <div class="col-sm-6">
         {{ form.media }}
         {{ form.as_p }}
-            <script>
+        <script>
 
-      function initMap() {
+        function initMap() {
 
-        var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
+          var myLatLng = {lat: {{ object.map_position.latitude }}, lng: {{ object.map_position.longitude }} };
 
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: myLatLng
-        });
+          var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: myLatLng
+          });
 
-        var marker = new google.maps.Marker({
-          position: myLatLng,
-          map: map,
-          title: "{{ object.party_name }}"
-        });
-      }
-    </script>
-    <!--<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3B2CnwKHWPZCOkm40bPzYZBJ9dcEoXGo&callback=initMap">
-    </script>-->
+          var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: "{{ object.party_name }}"
+          });
+        }
+        </script>
+        <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3B2CnwKHWPZCOkm40bPzYZBJ9dcEoXGo&callback=initMap"></script>-->
       </div>
   </div>
 </div>

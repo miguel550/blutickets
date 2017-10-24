@@ -1,0 +1,11 @@
+.geoposition-widget > table,
+.geoposition-search, label {
+  display: none !important;
+}
+
+/** yes i know, !important shouldn't be used. */
+.flyer-image {
+    display: block !important;
+    max-height: 400px !important;
+    margin: 0 auto !important;
+}

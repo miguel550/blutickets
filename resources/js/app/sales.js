@@ -104,7 +104,7 @@ window.orders = {
     const option       = e.target.selectedOptions[0];
     const quantityElem = e.target.parentElement.parentElement.
                          querySelector('.quantity');
-    const quantityElem.dataset.price = option.value ? option.dataset.price : 0;
+    quantityElem.dataset.price = option.value ? option.dataset.price : 0;
 
     e.target.parentElement.parentElement. // ↓
     querySelector('td:nth-child(3) span'). // ↓ YISUSCRAIST

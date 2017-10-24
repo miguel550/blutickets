@@ -45,9 +45,11 @@
         <div class="user-menu">
           <ul>
             {% if user.is_authenticated %}
-            <li><a href="{{link}}"><i class="fa fa-user"></i>&nbsp;Mi cuenta</a></li>
+            <li><a href="{% url 'home' %}"><i class="fa fa-user"></i>&nbsp;Mi cuenta</a></li>
+            <li><a href="{% url 'account_logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Cerrar Sesión</a></li>
             {% else %}
-            <li><a href="{{link}}"><i class="fa fa-user"></i>&nbsp;Iniciar sesión / Registro</a></li>
+            <li><a href="{% url 'account_login' %}"><i class="fa fa-user"></i>&nbsp;Iniciar sesión / Registro</a></li>
+
             {% endif %}
           </ul>
         </div>

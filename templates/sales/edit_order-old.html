@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load l10n %}
+{% load humanize %}
+{% block content %}
+    <form method="post" class="pt-5" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
+        <input type="hidden" name="order_id" value="{{ order.pk }}" />
+    <h1>Carrito</h1>
+    <table class="table table-bordered " style="width: 100%;">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Evento</th>
+        <th>Tipo</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+        <th>Total</th>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for line_item in line_items %}
+    <tr id="li{{ line_item.pk }}">
+      <td style="word-wrap: break-word;">{{ line_item.product.party_name }}</td>
+        <td>
+            <select class="type" name="type_{{ line_item.pk }}" required>
+
+                {% for type in line_item.product.tickettype_set.all %}
+                    {% if forloop.first %}
+                        <option value>--Tipo--</option>
+                    {% endif %}
+                    {% if type.ttype.pk == line_item.ttype.pk %}
+                        <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}" selected>{{  type.ttype.name }}</option>
+                    {% else %}
+                        <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}">{{  type.ttype.name }}</option>
+                    {% endif %}
+                {% empty %}
+                    <option value="no-options">General</option>
+                {% endfor %}
+            </select>
+        </td>
+        <td>RD$<span>{{ line_item.price|unlocalize|intcomma }}</span></td>
+      <td><input class="quantity" data-price="{{ line_item.price|unlocalize }}" data-id="{{ forloop.counter }}" type="number" min="1" max="{{ line_item.product.remaining }}" name="quantity_{{ line_item.pk }}" style="width: 100%;" value="{{ line_item.quantity }}" /></td>
+        <td >RD$<span id="total{{ forloop.counter }}">{{ line_item.total|unlocalize|intcomma }}</span></td>
+        <td><button class="delete" data-lineitemid="{{ line_item.pk }}"> <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+    </tr>
+        {% empty %}
+        <tr><td></td><td>No hay productos en el carrito.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+    {% if line_items %}
+        <p><input class="btn btn-outline-primary" id="continue" type="submit" value="Continuar" /></p>
+    {% endif %}
+    </form>
+    <a class="btn btn-outline-primary" href="{% url 'home' %}">Seguir comprando</a>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+
+     <!-- Compiled and minified CSS
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">-->
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"></script>
+
+    <link href="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.css" rel="stylesheet">
+<script src="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.js"></script>
+    <script>
+        var buttons = document.querySelectorAll('.delete');
+        var delete_action = function(e){
+
+            e.preventDefault();
+            mbox.confirm('¿Desea eliminarlo de su carrito?', function(yes) {
+    if (yes) {
+        console.log('You took the drugs :(');
+
+                var formData = new FormData();
+                var id = this.dataset.lineitemid;
+                formData.append("line_item_id", id);
+                formData.append('csrftoken', this.dataset.csrf);
+                fetch('{% url 'remove_item_from_order' %}', {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-CSRFToken": Cookies.get('csrftoken'),
+                        "Accept": "application/json",
+                    },
+                    body: formData
+                }).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    if(data.RESULT == "OK"){
+                        document.querySelector('#li'+id).style = "display: none;";
+                        var lis = document.querySelectorAll('tbody tr');
+                        var is_empty = true;
+                        for(var i=0;i<lis.length;i++){
+                            is_empty = is_empty && lis[i].style.length > 0;
+                        }
+                        if(is_empty){
+                            document.querySelector('#continue').style = "display: none;";
+                            document.querySelector('tbody').innerHTML = "<tr><td></td><td>No hay productos en el carrito.</td></tr>";
+                        }
+                    }
+                }).catch(function(error){
+                    console.error(error);
+                });
+            }}.bind(this));
+        };
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener("click", delete_action, false);
+        }
+        var quantities = document.querySelectorAll('.quantity');
+        var change_action = function(e){
+            var quantity = parseFloat(e.target.value);
+            var price = parseFloat(e.target.dataset.price);
+            var total = quantity * price;
+
+            var elem_total = document.getElementById('total'+e.target.dataset.id);
+            if(isNaN(total))
+                elem_total.innerHTML = "0.00"
+            else
+                elem_total.innerHTML = total.toLocaleString() + ".00";
+        };
+        for (var i = 0; i < quantities.length; i++) {
+          quantities[i].addEventListener("input", change_action, false);
+        }
+        var selects = document.querySelectorAll('.type');
+        var changeSelection = function (e) {
+
+            var option = e.target.selectedOptions[0];
+            if(option.value !="no-options") {
+                if (option.value) {
+                    var price = option.dataset.price;
+                    var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
+                    quantity_elem.dataset.price = price;
+                    e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = option.dataset.priceprint;
+                    var event = new Event('input', {
+                        'bubbles': true,
+                        'cancelable': true
+                    });
+
+                    quantity_elem.dispatchEvent(event);
+                } else {
+                    var price = "0";
+                    var quantity_elem = e.target.parentElement.parentElement.querySelector('.quantity');
+                    quantity_elem.dataset.price = price;
+                    e.target.parentElement.parentElement.querySelector('td:nth-child(3) span').innerHTML = price;
+                    var event = new Event('input', {
+                        'bubbles': true,
+                        'cancelable': true
+                    });
+
+                    quantity_elem.dispatchEvent(event);
+                }
+            }
+
+        };
+        for (var i = 0; i < selects.length; i++) {
+          selects[i].addEventListener("change", changeSelection, false);
+            var event = new Event('change', {
+                    'bubbles': true,
+                    'cancelable': true
+            });
+
+            selects[i].dispatchEvent(event);
+        }
+    </script>
+{% endblock %}

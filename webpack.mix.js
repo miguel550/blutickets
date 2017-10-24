@@ -30,7 +30,8 @@ mix.babel(
 
 mix.babel(
     [
-        'resources/js/app/functions.js'
+        'resources/js/app/functions.js',
+        'resources/js/app/sales.js',
     ],
     'assets/js/app.js'
 );

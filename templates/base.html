@@ -22,6 +22,7 @@
   <!-- finally -->
 
   <link rel="stylesheet" href="{% static 'css/vendor.css' %}" />
+  {% block more_styles %}{% endblock %}
   <link rel="stylesheet" href="{% static 'css/app.css' %}" />
   
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -185,6 +186,7 @@
 
 
 <script src="{% static 'js/vendor.js' %}"></script>
+{% block more_scripts %}{% endblock %}
 <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

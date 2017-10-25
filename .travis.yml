@@ -16,9 +16,9 @@ deploy:
   app:
     master: prod-blutickets
     dev: dev-blutickets
-    on:
-      all_branches: true
-      node: 6.11.4
+  on:
+    all_branches: true
+    node: 6.11.4
   api_key:
     secure: Yntms4rePmkKrUhhr0xrRGV6nrIfILy8ULx5BDFkEqbhIAEi8lCct0+9enrOenBNHKp6rTEHGxn6Y+MFzpXPt4N8xICOsqO/f3VvK3x7loC0vMjPGrx08wEMPhSWq8JGMmc1FGaIyXxctRGi9HtHozFYElQK9BuQWjCjtUNfFRvg84lhMENhq1bzaKFnbsQ5F/zJZ/RU22T13WEo1EVJdssiaSy+TrVjSY0dsoas1wKRxiTn0D9bQFwbJMLoKD5H4+rff5YMmKPMzkaQzBchG1i2MfR+Bp4lSUmthhxwKv/KtCMJh3dFMLJDbkcDtxclv8s6p2/Rxqj1sCGoBv6XsUohKXIYRu5Mm2srxhGRy913WVcOH7b0tF54NpbQ8GHeQQIYkwDLTD3LLn8Ck8FejDyJstN/mbZs943bYA7x8I4vJcIZE8B2z/TDZyJxHgXUb1Ar4wLTjAfvudeeN4ElETri+DBocQFBAxlSiBxwcoN8mZRDanKIgkV4XpP1DOx6vmvTpIkjKLW8J5SC0VNl4ul4AQRiroJu0kvKo9CBf5IYvFp8kuHN8dGcuwVLXSHizjONW4T58K/KdzK3uXRCbcYZGWmF4KU3311x3gSzeahC4uOYSDuBkAtEuJ74TwEo+uoqsvak17R3ApcsdAEMhVIUiAzRQtRlCyi0CN2ud34=
 notifications:

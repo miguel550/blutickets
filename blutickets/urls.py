@@ -23,7 +23,6 @@ from sales.views import (create_order, edit_order_and_next,
                          checkout, remove_item_from_order,
                          slack_actions)
 from contact.views import ContactFormView
-from blutickets.TextView import load_text_view
 
 urlpatterns = [
     # admin 
@@ -40,9 +39,9 @@ urlpatterns = [
     url(r'^tickets/(?P<pk>[-\w]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
 
     #text pages
-    url(r'^about/$', load_text_view, name='who-we-are'),
-    url(r'^tos/$', load_text_view, name='terms'),
-    url(r'^privacy/$', load_text_view, name='privacy'),
+    url(r'^about/$', TemplateView.as_view(template_name='text/about.html'), name='who-we-are'),
+    url(r'^tos/$', TemplateView.as_view(template_name='text/tos.html'), name='terms'),
+    url(r'^privacy/$', TemplateView.as_view(template_name='text/privacy.html'), name='privacy'),
 
     # Sales
     url(r'^bucket/$', create_order, name='create_order_or_add_item'),

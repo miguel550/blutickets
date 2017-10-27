@@ -3,7 +3,7 @@
 {% block content %}
   
   <div class="container jumbotron">
-    {{ text_content|safe }}
+    {% block text %}{% endblock text %}
   </div>
 
 {% endblock %}

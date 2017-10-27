@@ -247,6 +247,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 SOCIALACCOUNT_ADAPTER = 'profiles.adapters.SocialAccountAdapter'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "assets"),
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "assets"),
+# ]

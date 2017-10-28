@@ -1,16 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
+                <div class="row">
+                <div class="col-md-offset-4 col-md-4" style="padding: 0 30px;">
     <form action="" method="post" class="pt-2">{% csrf_token %}
-        <div class="form-group px-4">
-            <div class="row">
-                <div class="col-md-4 mx-auto">
+        <div class="form-group text-center">
+
                     <h1>Contáctese con nosotros</h1>
                     {{ form.as_p }}
                     <input type="submit" class="btn btn-outline-primary" value="Enviar mensaje" />
-                </div>
-            </div>
-        </div>
 
-</form>
+        </div></form>
+                        </div>
+            </div>
+
+
 {% endblock content %}

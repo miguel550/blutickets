@@ -13,6 +13,15 @@ class TicketList(ListView):
         return qs.filter(active=True)
 
 
+class OnlyTicketList(ListView):
+    model = Ticket
+    template_name = 'tickets/only_ticket_list.html'
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.filter(active=True)
+
+
 class TicketDetailView(DetailView):
     model = Ticket
 

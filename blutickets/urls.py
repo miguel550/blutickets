@@ -18,7 +18,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
-from tickets.views import TicketList, TicketDetailView
+from tickets.views import TicketList, TicketDetailView, OnlyTicketList
 from sales.views import (create_order, edit_order_and_next,
                          checkout, remove_item_from_order,
                          slack_actions)
@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     # tickets
     url(r'^tickets/(?P<pk>[-\w]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
+    url(r'^tickets/$', OnlyTicketList.as_view(), name='tickets'),
 
     #text pages
     url(r'^about/$', TemplateView.as_view(template_name='text/about.html'), name='who-we-are'),

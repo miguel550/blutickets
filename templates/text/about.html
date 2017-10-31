@@ -1,4 +1,7 @@
 {% extends 'text.html' %}
+{% block navbar %}
+    {% include 'partials/navbar-items.html' with place="who-we-are" %}
+{% endblock navbar %}
 {% block text %}
     <h1>Sobre nosotros</h1>
     <p><b><i>Blutickets.com</i></b> es una plataforma de venta online de boletas para cualquier tipo de evento, ofreciéndoles así a los clientes más facilidad a la hora de adquirirlas.</p>

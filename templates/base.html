@@ -91,10 +91,9 @@
       </div> 
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="{% url 'home' %}">Inicio</a></li>
-          <li><a href="{% url 'home' %}">Eventos</a></li>
-          <li><a href="{% url 'who-we-are' %}">Sobre nosotros</a></li>
-          <li><a href="{% url 'contact' %}">Contacto</a></li>
+            {% block navbar %}
+                {% include 'partials/navbar-items.html' with place="home" %}
+            {% endblock navbar %}
         </ul>
       </div>  
     </div>

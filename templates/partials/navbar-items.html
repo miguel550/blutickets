@@ -1,0 +1,4 @@
+<li {% if place == "home" %}class="active"{% endif %}><a href="{% url 'home' %}">Inicio</a></li>
+<li {% if place == "events" %}class="active"{% endif %}><a href="{% url 'home' %}">Eventos</a></li>
+<li {% if place == "who-we-are" %}class="active"{% endif %}><a href="{% url 'who-we-are' %}">Sobre nosotros</a></li>
+<li {% if place == "contact" %}class="active"{% endif %}><a href="{% url 'contact' %}">Contacto</a></li>

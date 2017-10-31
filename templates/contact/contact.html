@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
-
+{% block navbar %}
+    {% include 'partials/navbar-items.html' with place="contact" %}
+{% endblock navbar %}
 {% block content %}
+
                 <div class="row">
                 <div class="col-md-offset-4 col-md-4" style="padding: 0 30px;">
     <form action="" method="post" class="pt-2">{% csrf_token %}

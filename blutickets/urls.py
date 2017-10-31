@@ -41,7 +41,7 @@ urlpatterns = [
 
     #text pages
     url(r'^about/$', TemplateView.as_view(template_name='text/about.html'), name='who-we-are'),
-    url(r'^tos/$', TemplateView.as_view(template_name='text/tos.html'), name='terms'),
+    url(r'^tos/$', TemplateView.as_view(template_name='text/tos.html'), name='tos'),
     url(r'^privacy/$', TemplateView.as_view(template_name='text/privacy.html'), name='privacy'),
 
     # Sales

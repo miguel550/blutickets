@@ -15,7 +15,7 @@
                             <div class="product-upper">
                                 <img src="{{ ticket.flyer_image_compressed.url }}" alt="">
                             </div>
-                            <h2><a href="">{{ ticket.party_name }}</a></h2>
+                            <h2><a href="{{ ticket.get_absolute_url }}">{{ ticket.party_name }}</a></h2>
                             <div class="product-carousel-price">
                                 <ins>{{ ticket.price }}</ins> <del>$999.00</del>
                             </div>

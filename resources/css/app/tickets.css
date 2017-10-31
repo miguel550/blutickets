@@ -5,7 +5,22 @@
 
 /** yes i know, !important shouldn't be used. */
 .flyer-image {
-    display: block !important;
-    max-height: 400px !important;
-    margin: 0 auto !important;
+  display: block !important;
+  max-height: 400px !important;
+  margin: 0 auto !important;
+}
+
+.money-icon-hack {
+  width: 36px;
+  height: 36px;
+}
+
+@media (max-width: 720px) {
+  .ticket-info-text * {
+    font-size: 16px !important;
+  }
+  .money-icon-hack {
+    width: 20px;
+    height: 20px;
+  }
 }

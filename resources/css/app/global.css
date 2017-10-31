@@ -9,7 +9,8 @@
   margin: 10px 0;
 }
 .logo img {
-  width: 350px;
+  width: 250px;
+  height: auto;
 }
 
 /* FOOTER */

@@ -180,10 +180,10 @@ z-index: 9;
   left: 0;
   position: absolute;
   top: 0;
-  width: 100%;background-position: center;background-size: cover
+  width: 100%;background-position: center;background-size: initial;
 }
 .slide-bg:after {
-  background: none repeat scroll 0 0 #000;
+  background: none scroll 0 0 #000;
   content: "";
   height: 100%;
   left: 0;

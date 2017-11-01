@@ -2,6 +2,12 @@
 {% load static %}
 {% block content %}
 
+    <style>
+        .slide-one {background-image: url(http://i64.tinypic.com/33ascpy.jpg)}
+        .slide-two {background-image: url(img/slide-2.jpg)}
+        .slide-three {background-image: url(img/slide-3.jpg)}
+    </style>
+
 <!-- tu real slider pp -->
 <div class="slider-area">
   <div class="zigzag-bottom"></div>
@@ -33,7 +39,7 @@
                       <h2>¡Envíos gratis!</h2>
                       <p>Buscamos tu comodidad por encima de todo.</p>
                       <p>Por ello, brindamos servicio a domicilio GRATUITO por todo el distrito nacional.</p>
-                      <a href="Eventos.html" class="readmore">Empieza ahora</a>
+                      <a href="{% url 'tickets' %}" class="readmore">Empieza ahora</a>
                     </div><!--slide content -->
                   </div><!--slide col md 6 -->
                 </div><!-- .row -->
@@ -43,7 +49,7 @@
         </div><!-- .single-slide -->
       </div> <!-- .item -->
 
-      <div class="item">
+      <div class="itemm">
         <div class="single-slide">
           <div class="slide-bg slide-two"></div>
           <div class="slide-text-wrapper">
@@ -64,7 +70,7 @@
         </div><!-- .single-slide -->
       </div> <!-- .item -->
 
-      <div class="item">
+      <div class="itemm">
         <div class="single-slide">
           <div class="slide-bg slide-three"></div>
           <div class="slide-text-wrapper">
@@ -85,6 +91,7 @@
           </div><!--.slide-text-wrapper -->
         </div><!-- .single-slide -->
       </div> <!-- .item -->
+        
     </div>
 
   </div>    

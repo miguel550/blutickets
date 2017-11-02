@@ -45,13 +45,20 @@ body { font-family: 'Titillium Web', sans-serif; }
 .user-menu li {
     display: inline-block;
 }
-.user-menu li a {
+.user-menu li a, .user-menu li button {
     display: block;
     font-size: 13px;
     margin-right: 5px;
     padding: 10px;
 }
-.user-menu li a i.fa {
+
+.user-menu li button[type="submit"]{
+    text-decoration: none;
+    color: #888;
+    background: 0 0;
+    text-transform: none;
+}
+.user-menu li a i.fa, .user-menu li button i.fa {
     margin-right: 5px;
 }
 .header-right ul.list-inline {

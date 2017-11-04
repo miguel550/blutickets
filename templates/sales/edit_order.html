@@ -2,74 +2,173 @@
 {% load l10n %}
 {% load humanize %}
 {% block content %}
+   <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Buscar un evento</h2>
+                        <form action="">
+                            <input type="text" placeholder="Buscar eventos...">
+                            <input type="submit" value="Buscar">
+                        </form>
+                    </div>
 
-<form method="post" class="pt-5" action="{% url 'edit_order_and_next' %}">
-  {% csrf_token %}
-  <input type="hidden" name="order_id" value="{{ order.pk }}" />
-  <h1>Carrito</h1>
-  <table class="table table-bordered " style="width: 100%;">
-    <thead class="thead-inverse">
-      <tr>
-        <th>Evento</th>
-        <th>Tipo</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Total</th>
-      </tr>
-    </thead>
-  <tbody>
-    {% for line_item in line_items %}
-    <tr id="li{{ line_item.pk }}">
-      <td style="word-wrap: break-word;">{{ line_item.product.party_name }}</td>
-        <td>
-            <select class="type" name="type_{{ line_item.pk }}" required>
-            {% for type in line_item.product.tickettype_set.all %}
-            {% if forloop.first %}
-              <option value>--Tipo--</option>
-            {% endif %}
-            {% if type.ttype.pk == line_item.ttype.pk %}
-              <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}" selected>{{  type.ttype.name }}</option>
-            {% else %}
-              <option data-priceprint="{{ type.price|unlocalize|intcomma }}" data-price="{{ type.price|unlocalize }}" value="{{ type.ttype.pk }}">{{  type.ttype.name }}</option>
-            {% endif %}
-            {% empty %}
-              <option value="no-options">General</option>
-            {% endfor %}
-            </select>
-        </td>
-        <td>
-          RD$<span>{{ line_item.price|unlocalize|intcomma }}</span>
-        </td>
-        <td>
-          <input class="quantity" data-price="{{ line_item.price|unlocalize }}" data-id="{{ forloop.counter }}" type="number" min="1" max="{{ line_item.product.remaining }}" name="quantity_{{ line_item.pk }}" style="width: 100%;" value="{{ line_item.quantity }}" />
-        </td>
-        <td>
-          RD$<span id="total{{ forloop.counter }}">{{ line_item.total|unlocalize|intcomma }}</span>
-        </td>
-        <td>
-          <button class="delete" data-lineitemid="{{ line_item.pk }}">
-            &nbsp;<i class="fa fa-trash" aria-hidden="true"></i>
-          </button>
-        </td>
-    </tr>
-    {% empty %}
-    <tr>
-      <td></td>
-      <td>
-        No hay productos en el carrito.
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% if line_items %}
-<p>
-  <input class="btn btn-outline-primary" id="continue" type="submit" value="Continuar" />
-</p>
-{% endif %}
-</form>
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Eventos</h2>
+                        {# for ticket in recommended_tickets #}
+                        <div class="thubmnail-recent">
+                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>$700.00</ins> <del>$800.00</del>
+                            </div>
+                        </div>
+                        {# endfor #}
+                        <div class="thubmnail-recent">
+                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>$700.00</ins> <del>$800.00</del>
+                            </div>
+                        </div>
+                        <div class="thubmnail-recent">
+                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>$700.00</ins> <del>$800.00</del>
+                            </div>
+                        </div>
+                        <div class="thubmnail-recent">
+                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
+                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
+                            <div class="product-sidebar-price">
+                                <ins>$700.00</ins> <del>$800.00</del>
+                            </div>
+                        </div>
+                    </div>
 
-<a class="btn btn-outline-primary" href="{% url 'home' %}">Seguir comprando</a>
+                    <div class="single-sidebar">
+                        <h2 class="sidebar-title">Eventos recientes</h2>
+                        <ul>
+                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+                            <form method="post" action="#">
+                                <table cellspacing="0" class="shop_table cart">
+                                    <thead>
+                                        <tr>
+                                            <th class="product-remove">&nbsp;</th>
+                                            <th class="product-thumbnail">&nbsp;</th>
+                                            <th class="product-name">Evento</th>
+                                            <th class="product-price">Precio</th>
+                                            <th class="product-quantity">Cantidad</th>
+                                            <th class="product-subtotal">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="cart_item">
+                                            <td class="product-remove">
+                                                <a title="Remove this item" class="remove" href="#">×</a>
+                                            </td>
+
+                                            <td class="product-thumbnail">
+                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
+                                            </td>
+
+                                            <td class="product-name">
+                                                <a href="single-product.html">Ship Your Idea</a>
+                                            </td>
+
+                                            <td class="product-price">
+                                                <span class="amount">$00.00</span>
+                                            </td>
+
+                                            <td class="product-quantity">
+                                                <div class="quantity buttons_added">
+                                                    <input type="button" class="minus" value="-">
+                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
+                                                    <input type="button" class="plus" value="+">
+                                                </div>
+                                            </td>
+
+                                            <td class="product-subtotal">
+                                                <span class="amount">$00.00</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="actions" colspan="6">
+
+                                                <input type="submit" value="Actualizar carrito" name="update_cart" class="button">
+                                                <input type="submit" value="Proceder a comprar" name="proceed" class="checkout-button button alt wc-forward">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+
+                            <div class="cart-collaterals">
+
+
+                            <div class="cross-sells">
+                                <h2>You may be interested in...</h2>
+                                <ul class="products">
+                                    <li class="product">
+                                        <a href="single-product.html">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
+                                            <h3>Ship Your Idea</h3>
+                                            <span class="price"><span class="amount">£20.00</span></span>
+                                        </a>
+
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+                                    </li>
+
+                                    <li class="product">
+                                        <a href="single-product.html">
+                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
+                                            <h3>Ship Your Idea</h3>
+                                            <span class="price"><span class="amount">£20.00</span></span>
+                                        </a>
+
+                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div class="cart_totals ">
+                                <h2>Total del carrito</h2>
+
+                                <table cellspacing="0">
+                                    <tbody>
+                                        <tr class="cart-subtotal">
+                                            <th>Subtotal</th>
+                                            <td><span class="amount">$00.00</span></td>
+                                        </tr>
+
+                                        <tr class="shipping">
+                                            <th>Envío</th>
+                                            <td>Envío gratis</td>
+                                        </tr>
+
+                                        <tr class="order-total">
+                                            <th>Orden Total</th>
+                                            <td><strong><span class="amount">$00.00</span></strong> </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
 {% endblock %}
 
 {# include these in the header #}

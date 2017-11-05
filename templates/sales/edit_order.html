@@ -1,187 +1,132 @@
 {% extends 'base.html' %}
 {% load l10n %}
 {% load humanize %}
+
+{# OK THIS IS THE REAL ONE #}
+
 {% block content %}
-   <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Buscar un evento</h2>
-                        <form action="">
-                            <input type="text" placeholder="Buscar eventos...">
-                            <input type="submit" value="Buscar">
-                        </form>
-                    </div>
+<div class="container edit-order">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2 align="center">Carrito</h2>
+      <form method="POST" action="">
+        <table cellspacing="0" class="table">
+          <thead>
+            <tr>
+              <th class="product-remove">&nbsp;</th>
+              <th class="product-remove">&nbsp;</th>
+              <th class="product-name">Evento</th>
+              <th class="product-price">Precio</th>
+              <th class="product-quantity">Cantidad</th>
+              <th class="product-subtotal">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="cart_item">
+              <td class="product-remove">
+                <a title="Remove this item" class="remove" href="#">×</a>
+              </td>
+              <td class="product-thumbnail">
+                <a href="single-product.html"><img width="145" height="145" alt="img" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
+              </td>
 
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Eventos</h2>
-                        {# for ticket in recommended_tickets #}
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>
-                        </div>
-                        {# endfor #}
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>
-                        </div>
-                        <div class="thubmnail-recent">
-                            <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                            <h2><a href="single-product.html">Sony Smart TV - 2015</a></h2>
-                            <div class="product-sidebar-price">
-                                <ins>$700.00</ins> <del>$800.00</del>
-                            </div>
-                        </div>
-                    </div>
+              <td class="product-name">
+                <a href="single-product.html">Ship Your Idea</a>
+              </td>
 
-                    <div class="single-sidebar">
-                        <h2 class="sidebar-title">Eventos recientes</h2>
-                        <ul>
-                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                            <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-                        </ul>
-                    </div>
+              <td class="product-price">
+                <span class="amount">$00.00</span>
+              </td>
+
+              <td class="product-quantity">
+                <div class="quantity buttons_added">
+                  <input type="button" class="minus" value="-">
+                  <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
+                  <input type="button" class="plus" value="+">
                 </div>
+              </td>
 
-                <div class="col-md-8">
-                    <div class="product-content-right">
-                        <div class="woocommerce">
-                            <form method="post" action="#">
-                                <table cellspacing="0" class="shop_table cart">
-                                    <thead>
-                                        <tr>
-                                            <th class="product-remove">&nbsp;</th>
-                                            <th class="product-thumbnail">&nbsp;</th>
-                                            <th class="product-name">Evento</th>
-                                            <th class="product-price">Precio</th>
-                                            <th class="product-quantity">Cantidad</th>
-                                            <th class="product-subtotal">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="cart_item">
-                                            <td class="product-remove">
-                                                <a title="Remove this item" class="remove" href="#">×</a>
-                                            </td>
+              <td class="product-subtotal">
+                <span class="amount">$00.00</span>
+              </td>
+            </tr>
+            <tr style="margin-top: 10px">
+              <td colspan="6">
+                <button type="button" name="update_cart" class="btn btn-info">
+                  Actualizar carrito
+                </button>
+                <button type="button" name="proceed" class="btn btn-success">
+                  Proceder a comprar
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+    <div class="col-sm-4 col-sm-offset-1">
+      <h2 align="center">Total del carrito</h2>
 
-                                            <td class="product-thumbnail">
-                                                <a href="single-product.html"><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
-                                            </td>
+      <table cellspacing="0" class="table">
+        <tbody>
+          <tr class="cart-subtotal">
+            <th>Subtotal</th>
+            <td><span class="amount">$00.00</span></td>
+          </tr>
 
-                                            <td class="product-name">
-                                                <a href="single-product.html">Ship Your Idea</a>
-                                            </td>
+          <tr class="shipping">
+            <th>Envío</th>
+            <td>Envío gratis</td>
+          </tr>
 
-                                            <td class="product-price">
-                                                <span class="amount">$00.00</span>
-                                            </td>
+          <tr class="order-total">
+            <th>Orden Total</th>
+            <td><strong><span class="amount">$00.00</span></strong> </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-12"><hr></div>
+    <div class="col-sm-7">
+      <h2 align="center">Eventos recomendados</h2>
+      <div class="cart-collaterals text-center">
+        <div class="cross-sells">
+          <ul class="products">
+            <li class="product">
+              <a href="single-product.html">
+                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
+                <h3>Ship Your Idea</h3>
+                <span class="price"><span class="amount">£20.00</span></span>
+              </a>
 
-                                            <td class="product-quantity">
-                                                <div class="quantity buttons_added">
-                                                    <input type="button" class="minus" value="-">
-                                                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
-                                                    <input type="button" class="plus" value="+">
-                                                </div>
-                                            </td>
+              <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+            </li>
 
-                                            <td class="product-subtotal">
-                                                <span class="amount">$00.00</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="actions" colspan="6">
+            <li class="product">
+              <a href="single-product.html">
+                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
+                <h3>Ship Your Idea</h3>
+                <span class="price"><span class="amount">£20.00</span></span>
+              </a>
 
-                                                <input type="submit" value="Actualizar carrito" name="update_cart" class="button">
-                                                <input type="submit" value="Proceder a comprar" name="proceed" class="checkout-button button alt wc-forward">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </form>
-
-                            <div class="cart-collaterals">
-
-
-                            <div class="cross-sells">
-                                <h2>You may be interested in...</h2>
-                                <ul class="products">
-                                    <li class="product">
-                                        <a href="single-product.html">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-                                    </li>
-
-                                    <li class="product">
-                                        <a href="single-product.html">
-                                            <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
-                                            <h3>Ship Your Idea</h3>
-                                            <span class="price"><span class="amount">£20.00</span></span>
-                                        </a>
-
-                                        <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-
-                            <div class="cart_totals ">
-                                <h2>Total del carrito</h2>
-
-                                <table cellspacing="0">
-                                    <tbody>
-                                        <tr class="cart-subtotal">
-                                            <th>Subtotal</th>
-                                            <td><span class="amount">$00.00</span></td>
-                                        </tr>
-
-                                        <tr class="shipping">
-                                            <th>Envío</th>
-                                            <td>Envío gratis</td>
-                                        </tr>
-
-                                        <tr class="order-total">
-                                            <th>Orden Total</th>
-                                            <td><strong><span class="amount">$00.00</span></strong> </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-{% endblock %}
-
-{# include these in the header #}
-{% block more_styles %}
-<link href="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.css" rel="stylesheet">
-{% endblock %}
-
-{# include these in the footer #}
-{% block more_scripts %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.js"></script>
-<script src="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.js"></script>
-<script>
-const editOrder = true;
-const removeItemUrl = "{% url 'remove_item_from_order' %}";
-</script>
+              <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="single-sidebar">
+        <h2 class="sidebar-title">Eventos recientes</h2>
+        <ul>
+          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

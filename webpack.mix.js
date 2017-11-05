@@ -5,6 +5,7 @@ mix.styles(
         'resources/css/app/global.css',
         'resources/css/app/accounts.css',
         'resources/css/app/tickets.css',
+        'resources/css/app/sales.css',
         'resources/css/app/misc.css',
     ],
     'assets/css/app.css'

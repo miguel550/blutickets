@@ -4,3 +4,9 @@ label[for="id_province"], label[for="id_sector"] {
 #no-label label {
   display: none;
 }
+
+/** edit order **/
+.edit-order {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}

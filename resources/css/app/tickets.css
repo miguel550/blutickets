@@ -10,17 +10,12 @@
   margin: 0 auto !important;
 }
 
-.money-icon-hack {
-  width: 36px;
-  height: 36px;
+.ticket-info-text * {
+  font-size: 26px;
 }
 
 @media (max-width: 720px) {
   .ticket-info-text * {
-    font-size: 16px !important;
-  }
-  .money-icon-hack {
-    width: 20px;
-    height: 20px;
+    font-size: 20px !important;
   }
 }

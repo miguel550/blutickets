@@ -137,7 +137,31 @@
   <div class="zigzag-bottom"></div>
   <div class="container">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 hidden-sm hidden-xs">
+        <div class="latest-product">
+          <h2 class="section-title">EVENTOS</h2>
+          <div class="product-carousel">
+            {% for ticket in object_list %}
+            <div class="single-product">
+              <div class="product-f-image">
+                <img src="{{ ticket.flyer_image_compressed.url }}" width="215" height="265">
+                <div class="product-hover">
+                  <a href="javascript:void(0)" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> añadir al carrito</a>
+                  <a href="{{ ticket.get_absolute_url }}" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
+                </div>
+              </div>
+              
+              <h2><a href="{{ ticket.get_absolute_url }}">{{ object.party_name }}</a></h2>
+
+              <div class="product-carousel-price">
+                <ins>RD${{ ticket.price }}</ins>
+              </div>              
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-md-offset-3 hidden-md hidden-lg">
         <div class="latest-product">
           <h2 class="section-title">EVENTOS</h2>
           <div class="product-carousel">

@@ -15,3 +15,4 @@ mix-manifest.json
 assets/css
 assets/js
 media
+package-lock.json

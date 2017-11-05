@@ -1,4 +1,5 @@
 from django.conf import settings
+from sales.models import Order
 
 
 def ga_tracking_id(request):
@@ -11,3 +12,12 @@ def ga_tracking_id(request):
 
 def use_ga(request):
     return {'use_ga': settings.USE_GA}
+
+
+def cart(request):
+    try:
+        return {'cart': request.user.order_set.filter(status=Order.PREPARING).get()}
+    except Order.DoesNotExist:
+        return {'cart': None}
+    except AttributeError:
+        return {'cart': None}

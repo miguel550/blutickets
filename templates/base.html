@@ -1,4 +1,6 @@
 {% load static %}
+{% load humanize %}
+{% load l10n %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,12 +70,13 @@
           </a>
         </div>
       </div>
-      
+      {% if cart %}
       <div class="col-sm-6">
         <div class="shopping-item">
-          <a href="{% url 'create_order_or_add_item' %}">Carrito - <span class="cart-amunt">$0</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">0</span></a>
+          <a href="{% url 'create_order_or_add_item' %}">Carrito - <span class="cart-amunt">RD${{ cart.total|unlocalize|intcomma }}</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">{{ cart.line_items.count }}</span></a>
         </div>
       </div>
+    {% endif %}
     </div>
   </div>
 </div> <!-- End site branding area -->

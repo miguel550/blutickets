@@ -108,6 +108,8 @@ TEMPLATES = [
                 'blutickets.context_processors.ga_tracking_id',
                 # Add use_ga variable to all view contexts
                 'blutickets.context_processors.use_ga',
+                # Add cart variable to all views contexts
+                'blutickets.context_processors.cart',
             ],
         },
     },

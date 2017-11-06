@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-sm-6">
       <h2 align="center">Carrito</h2>
-      <form method="POST" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
+      <form method="POST" id="items" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
         <input type="hidden" name="order_id" value="{{ cart.pk }}" />
         <table cellspacing="0" class="table">
           <thead>
@@ -50,13 +50,13 @@
               <td class="product-quantity">
                 <div class="quantity buttons_added">
                   <input type="button" class="minus" value="-">
-                  <input type="number" size="4" class="input-text qty text" title="Qty" value="{{ item.quantity }}" min="0" step="1" max="{{ item.product.remaining }}">
+                  <input type="number" size="4" name="quantity_{{ item.pk }}" data-price="{{ item.price|unlocalize }}" data-id="{{ item.pk }}" class="input-text qty text quantity" title="Qty" value="{{ item.quantity }}" min="0" step="1" max="{{ item.product.remaining }}">
                   <input type="button" class="plus" value="+">
                 </div>
               </td>
 
               <td class="product-subtotal">
-                <span class="amount">RD${{ item.total }}</span>
+                RD$<span class="amount" id="total{{ item.pk }}">{{ item.total }}</span>
               </td>
             </tr>
             {% endfor %}
@@ -66,9 +66,7 @@
                   Actualizar carrito
                 </button>
 
-                <button type="button" name="proceed" class="btn btn-success">
-                  Proceder a comprar
-                </button>
+                <input type="submit" name="proceed" class="btn btn-success" value="Proceder a comprar" />
 
               </td>
             </tr>

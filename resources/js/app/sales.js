@@ -62,6 +62,7 @@ window.orders = {
     if(isNaN(total)) {
         elemTotal.innerHTML = "0.00";
     } else {
+        // TODO: Fix this
         elemTotal.innerHTML = total.toLocaleString() + ".00";
     }
   },
@@ -86,6 +87,23 @@ window.orders = {
     quantityElem.dispatchEvent(event);
   }
 };
+
+document.querySelector('#update_cart').addEventListener("click", function(e){
+    e.preventDefault();
+    var form = document.querySelector("#items");
+    var form_data =  new FormData(form);
+    fetch(form.action,
+      {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+              "X-CSRFToken": Cookies.get('csrftoken'),
+          },
+          body: form_data
+      }).then((response) => {
+        location.reload();
+    });
+}, false);
 
 (function ($) {
   if (typeof editOrder === 'undefined') {

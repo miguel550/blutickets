@@ -5,11 +5,19 @@
 {# OK THIS IS THE REAL ONE #}
 
 {% block content %}
+    <script>
+        var editOrder = true;
+        var removeItemUrl = "{% url 'remove_item_from_order' %}";
+    </script>
+    <link href="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.css" rel="stylesheet">
+<script src="//cdn.bri.io/mbox/dist/mbox-0.0.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <div class="container edit-order">
   <div class="row">
     <div class="col-sm-6">
       <h2 align="center">Carrito</h2>
-      <form method="POST" action="">
+      <form method="POST" action="{% url 'edit_order_and_next' %}">{% csrf_token %}
+        <input type="hidden" name="order_id" value="{{ cart.pk }}" />
         <table cellspacing="0" class="table">
           <thead>
             <tr>
@@ -22,42 +30,46 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="cart_item">
+            {% for item in cart.lineitem_set.all %}
+            <tr class="cart_item" id="i{{ item.pk }}">
               <td class="product-remove">
-                <a title="Remove this item" class="remove" href="#">×</a>
+                <a title="Remove this item" data-lineitemid="{{ item.pk }}" class="remove delete" href="#">×</a>
               </td>
               <td class="product-thumbnail">
-                <a href="single-product.html"><img width="145" height="145" alt="img" class="shop_thumbnail" src="img/product-thumb-2.jpg"></a>
+                <a href="{{ item.product.get_absolute_url }}"><img width="145" height="145" alt="img" class="shop_thumbnail" src="{{ item.product.flyer_image_compressed.url }}"></a>
               </td>
 
               <td class="product-name">
-                <a href="single-product.html">Ship Your Idea</a>
+                <a href="{{ item.product.get_absolute_url }}">{{ item.product.party_name }}</a>
               </td>
 
               <td class="product-price">
-                <span class="amount">$00.00</span>
+                <span class="amount">RD${{ item.price }}</span>
               </td>
 
               <td class="product-quantity">
                 <div class="quantity buttons_added">
                   <input type="button" class="minus" value="-">
-                  <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
+                  <input type="number" size="4" class="input-text qty text" title="Qty" value="{{ item.quantity }}" min="0" step="1" max="{{ item.product.remaining }}">
                   <input type="button" class="plus" value="+">
                 </div>
               </td>
 
               <td class="product-subtotal">
-                <span class="amount">$00.00</span>
+                <span class="amount">RD${{ item.total }}</span>
               </td>
             </tr>
+            {% endfor %}
             <tr style="margin-top: 10px">
               <td colspan="6">
-                <button type="button" name="update_cart" class="btn btn-info">
+                <button type="button" id="update_cart" name="update_cart" class="btn btn-info">
                   Actualizar carrito
                 </button>
+
                 <button type="button" name="proceed" class="btn btn-success">
                   Proceder a comprar
                 </button>
+
               </td>
             </tr>
           </tbody>
@@ -71,7 +83,7 @@
         <tbody>
           <tr class="cart-subtotal">
             <th>Subtotal</th>
-            <td><span class="amount">$00.00</span></td>
+            <td><span class="amount">${{ cart.total }}</span></td>
           </tr>
 
           <tr class="shipping">
@@ -81,7 +93,7 @@
 
           <tr class="order-total">
             <th>Orden Total</th>
-            <td><strong><span class="amount">$00.00</span></strong> </td>
+            <td><strong><span class="amount">${{ cart.total }}</span></strong> </td>
           </tr>
         </tbody>
       </table>
@@ -92,25 +104,19 @@
       <div class="cart-collaterals text-center">
         <div class="cross-sells">
           <ul class="products">
+            {% for event in recommended_events %}
             <li class="product">
-              <a href="single-product.html">
-                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-2.jpg">
-                <h3>Ship Your Idea</h3>
-                <span class="price"><span class="amount">£20.00</span></span>
+              <a href="{{ event.get_absolute_url }}">
+                <img width="325" height="325" alt="{{ event.party_name }}" class="attachment-shop_catalog wp-post-image" src="{{ event.flyer_image_compressed.url }}">
+                <h3>{{ event.party_name }}</h3>
+                <span class="price"><span class="amount">RD${{ event.price }}</span></span>
               </a>
-
-              <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
+        <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
+            <input type="hidden" name="ticket_id" value="{{ event.pk }}" />
+            <input type="submit" class="add_to_cart_button" value="Seleccionar opción" />
+        </form>
             </li>
-
-            <li class="product">
-              <a href="single-product.html">
-                <img width="325" height="325" alt="T_4_front" class="attachment-shop_catalog wp-post-image" src="img/product-4.jpg">
-                <h3>Ship Your Idea</h3>
-                <span class="price"><span class="amount">£20.00</span></span>
-              </a>
-
-              <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="22" rel="nofollow" href="single-product.html">Select options</a>
-            </li>
+            {% endfor %}
           </ul>
         </div>
       </div>
@@ -119,11 +125,9 @@
       <div class="single-sidebar">
         <h2 class="sidebar-title">Eventos recientes</h2>
         <ul>
-          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
-          <li><a href="single-product.html">Sony Smart TV - 2015</a></li>
+        {% for event in recommended_events %}
+          <li><a href="{{ event.get_absolute_url }}">{{ event.party_name }}</a></li>
+        {% endfor %}
         </ul>
       </div>
     </div>

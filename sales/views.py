@@ -30,17 +30,8 @@ def create_order(request):
 
         return redirect('create_order_or_add_item')
     elif request.method == "GET":
-        try:
-            order = Order.objects.get(user=request.user,
-                                      status=Order.PREPARING)
-        except Order.DoesNotExist:
-            order = None
-        line_items = None
-        if order:
-            line_items = LineItem.objects.filter(order=order)
-
-        return render(request, 'sales/edit_order.html', {'order': order,
-                                                         'line_items': line_items})
+        recommended_events = Ticket.objects.filter(active=True)[:3]
+        return render(request, 'sales/edit_order.html', {'recommended_events': recommended_events})
 
 
 @never_cache

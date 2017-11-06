@@ -1,5 +1,5 @@
 .geoposition-widget > table,
-.geoposition-search, label {
+.geoposition-search {
   display: none !important;
 }
 

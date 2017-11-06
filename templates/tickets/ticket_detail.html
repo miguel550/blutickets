@@ -45,7 +45,7 @@
           {% if ticket.remaining > 0 %}
           <form action="{% url 'create_order_or_add_item' %}" method="post">
               <input type="hidden" name="ticket_id" value="{{ ticket.pk }}" />
-              <input type="submit" class="add_to_cart_button" value="Añadir al carrito" />
+              <input type="submit" class="add-to-cart-btn" value="Añadir al carrito" />
               {% csrf_token %}
           </form>
 

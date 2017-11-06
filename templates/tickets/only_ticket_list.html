@@ -21,7 +21,16 @@
                             </div>
 
                             <div class="product-option-shop">
-                                <a class="add_to_cart_button" data-quantity="{{ ticket.remaining }}" data-product_sku="" data-product_id="70" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Añadir al carrito</a>
+                                        {% if ticket.remaining > 0 %}
+                                        <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
+                                            <input type="hidden" name="ticket_id" value="{{ ticket.pk }}" />
+                                            <input type="submit" class="add_to_cart_button" value="Añadir al carrito" />
+                                        </form>
+
+                                        {% elif ticket.remaining <= 0 %}
+                                            <button disabled class="alert alert-danger" role="alert"><strong>Sold out</strong></button>
+                                        {% endif %}
+                                <!--<a class="add_to_cart_button" data-quantity="{{ ticket.remaining }}" data-product_sku="" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Añadir al carrito</a>-->
                             </div>
                         </div>
                     </div>

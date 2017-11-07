@@ -27,9 +27,13 @@ class OrderSecondStepForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['sector'].widget = Select2Widget(attrs={'data-placeholder': 'Elija su sector'})
+        self.fields['sector'].widget = Select2Widget(
+            attrs={
+                'class': 'form-control'
+            },
+        )
         self.fields['sector'].queryset = Sector.objects.filter(active=True)
-        self.fields['sector'].empty_label = "---Sector---"
+        self.fields['sector'].empty_label = 'Elija su sector'
 
     class Meta:
         model = Address
@@ -42,18 +46,20 @@ class OrderSecondStepForm(forms.ModelForm):
             'street_and_house': forms.TextInput(
                 attrs={
                     'placeholder': "Calle, número, casi esquina.",
-                    'style': "width: -webkit-fill-available;"
+                    'class': 'form-control',
+                    'style': "width: -webkit-fill-available;",
                 }
             ),
             'reference': forms.TextInput(
                 attrs={
                     'placeholder': "Al lado de, Frente a, etc.",
-                    'style': "width: -webkit-fill-available;"
+                    'style': "width: -webkit-fill-available;",
+                    'class': 'form-control',
                 }
             )
         }
         labels = {
-            'street_and_house': 'Calle',
+            'street_and_house': 'Dirección',
             'reference': "Referencias",
         }
 
@@ -67,12 +73,16 @@ class OrderSecondStepFormPhones(forms.ModelForm):
                                                ),
                                       initial=''
                                       )"""
-    phone_number_primary = forms.CharField(max_length=15,
-                                   widget=forms.TextInput(
-                                       attrs={
-                                            'placeholder': 'Ej: 809 555 5555'
-                                       })
-                                   )
+    phone_number_primary = forms.CharField(
+        max_length=15,
+        widget=forms.TextInput(
+            attrs={
+                    'placeholder': 'Ej: 809 555 5555',
+                    'class': 'form-control',
+                }
+        ),
+        label='Número de teléfono primario'
+    )
     """
     phone_number_secondary_type = forms.ChoiceField(choices=(
                                                 ('', '--Contacto Adicional--'),
@@ -82,13 +92,17 @@ class OrderSecondStepFormPhones(forms.ModelForm):
                                       initial='',
                                         required=False
                                       )"""
-    phone_number_secondary = forms.CharField(max_length=15,
-                                             required=False,
-                                             widget=forms.TextInput(
-                                             attrs={
-                                                'placeholder': 'Teléfono opcional.'
-                                             })
-                                             )
+    phone_number_secondary = forms.CharField(
+        max_length=15,
+        required=False,
+        widget=forms.TextInput(
+        attrs={
+            'placeholder': 'Teléfono opcional.',
+            'class': 'form-control'
+            }
+        ),
+        label='Número de teléfono secundario'
+    )
 
     def save(self, commit=True):
         user = self.instance

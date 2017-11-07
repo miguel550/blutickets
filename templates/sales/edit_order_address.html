@@ -7,37 +7,25 @@
   <div class="row">
     <div class="col-sm-offset-2 col-sm-4">
       <h3 align="center">Detalles de facturación</h3>
-      <form enctype="multipart/form-data" action="#" method="post" name="checkout">
+      <form enctype="multipart/form-data" action="{% url 'checkout' %}" method="post" name="checkout" id="checkout-form">
+        
+        {% for field in form %}
         <div class="form-group">
-          <label class="" for="billing_country">
-            Sector <abbr title="required" class="required">*</abbr>
-          </label>
-          <select class="form-control" id="billing_country" name="billing_country">
-            <option value="">Selecciona un sector</option>
-            <option value="AX">Centro de los heroes</option>
-          </select>
+          {{field.label_tag}}
+          {{field}}
         </div>
+        {% endfor %}
 
+        {% for field in form_phones %}
         <div class="form-group">
-          <label class="" for="billing_address_1">Dirección<abbr title="required" class="required">*</abbr>
-          </label>
-          <input type="text" value="" placeholder="Calle, número, casi esquina..." id="billing_address_1" name="billing_address_1" class="form-control">
+          {{field.label_tag}}
+          {{field}}
         </div>
-
-        <div class="form-group">
-          <input type="text" value="" placeholder="Referencias: Al lado de, frente a, etc." id="billing_address_2" name="billing_address_2" class="form-control">
-        </div>
-
-        <div class="from-group">
-          <label class="" for="billing_phone">
-            Número telefónico <abbr title="required" class="required">*</abbr>
-          </label>
-          <input type="text" value="" placeholder="" id="billing_phone" name="billing_phone" class="form-control">
-        </div>
-
+        {% endfor %}
 
         <input type="hidden" name="order_id" value="{{ order.pk }}" />
         <input type="hidden" class="shipping_method" value="free_shipping" id="shipping_method_0" data-index="0" name="shipping_method[0]">
+        {{ form.media }}
         {% csrf_token %}
       </form>
     </div>
@@ -50,20 +38,23 @@
             <th class="product-total">Total</th>
           </tr>
         </thead>
+        {% for item in cart.lineitem_set.all %}
         <tbody>
           <tr class="cart_item">
             <td class="product-name">
-              Ship Your Idea <strong class="product-quantity">× {{order.quantity}}</strong>
+               <strong class="product-quantity">
+               {{item.product.party_name}} × {{item.quantity}}</strong>
             </td>
             <td class="product-total">
-              <span class="amount">{{ order.total|unlocalize|intcomma }}</span>
+              <span class="amount">{{ item.price|unlocalize|intcomma }}</span>
             </td>
           </tr>
         </tbody>
+        {% endfor %}
         <tfoot>
           <tr class="cart-subtotal">
             <th>Sub total</th>
-              <td><span class="amount">{{ order.total|unlocalize|intcomma }}</span></td>
+              <td><span class="amount">{{ cart.total|unlocalize|intcomma }}</span></td>
           </tr>
           <tr class="shipping">
             <th>Envío</th>
@@ -71,7 +62,7 @@
           </tr>
           <tr class="order-total">
             <th>Orden Total</th>
-            <td><strong><span class="amount">$00.00</span></strong> </td>
+            <td><strong><span class="amount">{{ cart.total|unlocalize|intcomma }}</span></strong> </td>
           </tr>
         </tfoot>
       </table>
@@ -95,7 +86,7 @@
     </div>
     <div class="col-sm-12"><hr></div>
     <div class="col-sm-12 text-center" style="margin-bottom:20px">
-      <input type="submit" data-value="Place order" value="Ordenar" id="place_order" name="woocommerce_checkout_place_order" class="button alt">
+      <input type="submit" data-value="Place order" value="Ordenar" id="place_order" name="woocommerce_checkout_place_order" class="button alt" onclick="$('#checkout-form').submit();">
     </div>
   </div>
 </div>

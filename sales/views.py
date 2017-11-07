@@ -115,7 +115,8 @@ def checkout(request):
                 order.address = form.save()
                 order.status = Order.PENDING
                 order.save()
-            return render(request, 'sales/thank_you.html', {'order': order})
+                return render(request, 'sales/thank_you.html', {'order': order})
+            raise Http404("Transacción incompleta. Error: Datos inválidos.")
 
 
 def remove_item_from_order(request):

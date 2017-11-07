@@ -106,9 +106,9 @@ class OrderSecondStepFormPhones(forms.ModelForm):
 
     def save(self, commit=True):
         user = self.instance
-        #user.phone_number_primary_type = self.cleaned_data['phone_number_primary_type']
+        # user.phone_number_primary_type = self.cleaned_data['phone_number_primary_type']
         user.phone_number_primary = self.cleaned_data['phone_number_primary']
-        #user.phone_number_secondary_type = self.cleaned_data['phone_number_secondary_type']
+        # user.phone_number_secondary_type = self.cleaned_data['phone_number_secondary_type']
         user.phone_number_secondary = self.cleaned_data['phone_number_secondary']
         if commit:
             user.save()

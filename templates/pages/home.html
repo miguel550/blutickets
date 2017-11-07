@@ -146,7 +146,13 @@
               <div class="product-f-image">
                 <img src="{{ ticket.flyer_image_compressed.url }}" width="215" height="265">
                 <div class="product-hover">
-                  <a href="javascript:void(0)" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> añadir al carrito</a>
+                {% if ticket.remaining > 0 %}
+                  <form id="home-add-to-cart" action="{% url 'create_order_or_add_item' %}" method="post">
+                    <input type="hidden" name="ticket_id" value="{{ ticket.pk }}" />
+                    {% csrf_token %}
+                  </form>
+                  <a href="javascript:void(0)" class="add-to-cart-link" onclick="$('#home-add-to-cart').submit()"><i class="fa fa-shopping-cart"></i> añadir al carrito</a>
+                {% endif %}
                   <a href="{{ ticket.get_absolute_url }}" class="view-details-link"><i class="fa fa-link"></i> Ver detalles</a>
                 </div>
               </div>

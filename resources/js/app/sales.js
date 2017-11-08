@@ -12,43 +12,45 @@ window.orders = {
     e.preventDefault();
     let elem = e.target;
     mbox.confirm('¿Seguro que desea eliminar esto del carrito?', (yes) => {
-      const formData = new FormData();
-      const id       = elem.dataset.lineitemid;
-      formData.append("line_item_id", id);
+        if(yes) {
+            const formData = new FormData();
+            const id = elem.dataset.lineitemid;
+            formData.append("line_item_id", id);
 
-      // let's go.
-      //
-      fetch(removeItemUrl,
-      {
-          method: "POST",
-          credentials: "same-origin",
-          headers: {
-              "X-CSRFToken": Cookies.get('csrftoken'),
-              "Accept": "application/json",
-          },
-          body: formData
-      }).then((response) => {
-        return response.json();
-      }).then((data) => {
-          console.log(data);
-        if(data.RESULT == "OK"){
-            document.querySelector('#i' + id).style = "display: none;";
-            /*
-            var lis     = document.querySelectorAll('tbody tr');
-            var isEmpty = true;
-            for(let i = 0; i < lis.length; i++) {
-                isEmpty = isEmpty && lis[i].style.length > 0;
-            }
-            if(isEmpty) {
-                document.querySelector('#continue').style = "display: none;";
-                document.querySelector('tbody').innerHTML = // ↓
-                "<tr><td></td><td>No hay productos en el carrito.</td></tr>";
-            }*/
+            // let's go.
+            //
+            fetch(removeItemUrl,
+                {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "X-CSRFToken": Cookies.get('csrftoken'),
+                        "Accept": "application/json",
+                    },
+                    body: formData
+            }).then((response) => {
+                return response.json();
+            }).then((data) => {
+                console.log(data);
+                if (data.RESULT == "OK") {
+                    document.querySelector('#i' + id).style = "display: none;";
+                    /*
+                    var lis     = document.querySelectorAll('tbody tr');
+                    var isEmpty = true;
+                    for(let i = 0; i < lis.length; i++) {
+                        isEmpty = isEmpty && lis[i].style.length > 0;
+                    }
+                    if(isEmpty) {
+                        document.querySelector('#continue').style = "display: none;";
+                        document.querySelector('tbody').innerHTML = // ↓
+                        "<tr><td></td><td>No hay productos en el carrito.</td></tr>";
+                    }*/
+                }
+            }).catch(function (error) {
+                //alert('Lo sentimos. Algo pasó. :(');
+                console.error(error);
+            });
         }
-      }).catch(function(error) {
-        //alert('Lo sentimos. Algo pasó. :(');
-         console.error(error);
-      });
     }).bind(this);
   },
 

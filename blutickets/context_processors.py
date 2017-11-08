@@ -16,7 +16,10 @@ def use_ga(request):
 
 def cart(request):
     try:
-        return {'cart': request.user.order_set.filter(status=Order.PREPARING).get()}
+        order_preparing = request.user.order_set.filter(status=Order.PREPARING).get()
+        if order_preparing.line_items.count() <= 0:
+            order_preparing = None
+        return {'cart': order_preparing}
     except Order.DoesNotExist:
         return {'cart': None}
     except AttributeError:

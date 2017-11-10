@@ -5,6 +5,12 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from sales.models import Order
 from django.db.models import Sum
+import random
+import string
+
+
+def random_string():
+    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=25))
 
 
 class Type(models.Model):
@@ -36,6 +42,8 @@ class Ticket(models.Model):
 
     ticket_types = models.ManyToManyField('Type', through='TicketType')
     active = models.BooleanField(default=True)
+
+    slug = models.SlugField(max_length=50, default=random_string)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

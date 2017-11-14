@@ -64,7 +64,7 @@ class Ticket(models.Model):
 
     def get_absolute_url(self):
         from django.urls import reverse
-        return reverse('ticket-detail', args=[str(self.pk)])
+        return reverse('ticket-detail', args=[self.slug])
 
     def __str__(self):
         return self.party_name

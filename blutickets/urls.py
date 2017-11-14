@@ -36,7 +36,7 @@ urlpatterns = [
     # profiles
     url(r'^accounts/', include('allauth.urls')),
     # tickets
-    url(r'^tickets/(?P<pk>[-\w]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
+    url(r'^tickets/(?P<slug>[a-zA-Z0-9-]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
     url(r'^tickets/$', OnlyTicketList.as_view(), name='tickets'),
 
     #text pages

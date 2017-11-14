@@ -43,7 +43,7 @@ class Ticket(models.Model):
     ticket_types = models.ManyToManyField('Type', through='TicketType')
     active = models.BooleanField(default=True)
 
-    slug = models.SlugField(max_length=50, default=random_string)
+    slug = models.SlugField(max_length=50, default=random_string, unique=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

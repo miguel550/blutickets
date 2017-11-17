@@ -19,7 +19,7 @@ class Address(models.Model):
 class LineItem(models.Model):
     product = models.ForeignKey('tickets.Ticket')
     order = models.ForeignKey('Order')
-    ttype = models.ForeignKey('tickets.Type', default=None, null=True)
+    ttype = models.ForeignKey('tickets.Type', default=None, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(decimal_places=2, max_digits=8)
 

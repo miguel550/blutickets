@@ -17,7 +17,7 @@
                             </div>
                             <h2><a href="{{ ticket.get_absolute_url }}">{{ ticket.party_name }}</a></h2>
                             <div class="product-carousel-price">
-                                <ins>{{ ticket.price }}</ins> <!--<del>$999.00</del>-->
+                                <ins>RD${{ ticket.price }}</ins> <!--<del>$999.00</del>-->
                             </div>
 
                             <div class="product-option-shop">
@@ -28,7 +28,7 @@
                                         </form>
 
                                         {% elif ticket.remaining <= 0 %}
-                                            <button disabled class="alert alert-danger" role="alert"><strong>Sold out</strong></button>
+                                            <button disabled class="alert alert-danger" role="alert"><strong>AGOTADO</strong></button>
                                         {% endif %}
                                 <!--<a class="add_to_cart_button" data-quantity="{{ ticket.remaining }}" data-product_sku="" rel="nofollow" href="/canvas/shop/?add-to-cart=70">Añadir al carrito</a>-->
                             </div>

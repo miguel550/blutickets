@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^select2/', include('django_select2.urls')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^panel/admin/', admin.site.urls),
 
     # home
     url(r'^$', TicketList.as_view(template_name='pages/home.html'), name='home'),

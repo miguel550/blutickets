@@ -22,6 +22,7 @@ from tickets.views import TicketList, TicketDetailView, OnlyTicketList
 from sales.views import (create_order, edit_order_and_next,
                          checkout, remove_item_from_order,
                          slack_actions)
+from profiles.views import SignupLogin, SignUp, Login
 from contact.views import ContactFormView
 
 urlpatterns = [
@@ -34,7 +35,10 @@ urlpatterns = [
     # home
     url(r'^$', TicketList.as_view(template_name='pages/home.html'), name='home'),
     # profiles
+    url(r'^accounts/login', Login.as_view(), name="login"),
+    url(r'^accounts/signup', SignUp.as_view(), name="signup"),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^enter/$', SignupLogin.as_view(), name="login-signup"),
     # tickets
     url(r'^tickets/(?P<slug>[a-zA-Z0-9-]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
     url(r'^tickets/$', OnlyTicketList.as_view(), name='tickets'),

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load socialaccount %}
+<!-- TODO: Move this shit to the header -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+
+<div class="container jumbotron accounts-box">
+
+
+<div class="row">
+  <!-- TODO: Fix duplicated IDs -->
+<div class="row">
+    {% include 'partials/messages.html' %}
+</div>
+
+  <div class="col-sm-6">
+    {% include "account/partials/login.html" with form=login_form %}
+  </div><!-- .col -->
+  <div class="col-sm-6 add-space-mobile">
+    {% include "account/partials/signup.html" with form=form %}
+  </div><!-- .col -->
+</div> <!-- .row -->
+
+</div>
+
+{% endblock %}

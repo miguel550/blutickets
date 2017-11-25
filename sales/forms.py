@@ -8,7 +8,7 @@ from django_select2.forms import Select2Widget
 def get_province_choices():
     try:
         return Province.objects.filter(active=True)
-    except:
+    except AttributeError:
         return [(0, 'No hay provincias')]
 
 

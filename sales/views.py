@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, Http404, HttpResponse
 from .models import Order, LineItem, Address
-from .forms import OrderSecondStepForm, OrderFirstStepForm, OrderSecondStepFormPhones
+from .forms import OrderSecondStepForm, OrderSecondStepFormPhones
 from django.contrib.auth.decorators import login_required
 from django.views. decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy
@@ -21,12 +21,11 @@ def create_order(request):
     if request.method == "POST":
         order, created = Order.objects.get_or_create(user=request.user,
                                                      status=Order.PREPARING)
-        line_items = LineItem.objects.filter(order=order)
         if 'ticket_id' in request.POST:
             ticket = get_object_or_404(Ticket, pk=request.POST['ticket_id'])
-            line_item, line_created = LineItem.objects.get_or_create(product=ticket,
-                                                                     order=order,
-                                                                     price=ticket.price)
+            LineItem.objects.get_or_create(product=ticket,
+                                           order=order,
+                                           price=ticket.price)
 
         return redirect('create_order_or_add_item')
     elif request.method == "GET":

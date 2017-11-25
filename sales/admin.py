@@ -21,7 +21,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     def show_address(self, obj):
         if obj.address:
-            return f"{obj.address.sector.name}, {obj.address.street_and_house}, {obj.address.reference}"
+            return f"{obj.address.sector.name}, {obj.address.street_and_house}, {obj.address.reference}"  # noqa
         return "No address."
 
     def user_number_primary(self, obj):
@@ -33,4 +33,3 @@ class OrderAdmin(admin.ModelAdmin):
         if obj.user.phone_number_secondary:
             return obj.user.phone_number_secondary
         return "No hay telefono."
-

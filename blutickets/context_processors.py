@@ -6,7 +6,7 @@ def ga_tracking_id(request):
     return {
         'ga_tracking_id': settings.GA_TRACKING_ID,
         'ga_tracking_logged_in_id': settings.GA_TRACKING_LOGGED_IN_ID,
-        'ga_tracking_anonymous_users_id': settings.GA_TRACKING_ANONYMOUS_USERS_ID,
+        'ga_tracking_anonymous_users_id': settings.GA_TRACKING_ANONYMOUS_USERS_ID,  # noqa
     }
 
 
@@ -16,7 +16,9 @@ def use_ga(request):
 
 def cart(request):
     try:
-        order_preparing = request.user.order_set.filter(status=Order.PREPARING).get()
+        order_set = request.user.order_set
+        order_preparing = order_set.filter(status=Order.PREPARING)
+        order_preparing = order_preparing.get()
         if order_preparing.line_items.count() <= 0:
             order_preparing = None
         return {'cart': order_preparing}

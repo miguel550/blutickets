@@ -26,7 +26,7 @@ from profiles.views import SignupLogin, SignUp, Login
 from contact.views import ContactFormView
 
 urlpatterns = [
-    # admin 
+    # admin
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^select2/', include('django_select2.urls')),
@@ -43,7 +43,7 @@ urlpatterns = [
     url(r'^tickets/(?P<slug>[a-zA-Z0-9-]+)/$', TicketDetailView.as_view(), name='ticket-detail'),
     url(r'^tickets/$', OnlyTicketList.as_view(), name='tickets'),
 
-    #text pages
+    # text pages
     url(r'^about/$', TemplateView.as_view(template_name='text/about.html'), name='who-we-are'),
     url(r'^tos/$', TemplateView.as_view(template_name='text/tos.html'), name='tos'),
     url(r'^privacy/$', TemplateView.as_view(template_name='text/privacy.html'), name='privacy'),

@@ -2,7 +2,6 @@ from django.db import models
 from geoposition.fields import GeopositionField
 from markupfield.fields import MarkupField
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
 from sales.models import Order
 from django.db.models import Sum
 import random

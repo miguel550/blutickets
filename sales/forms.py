@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Order, Address, LineItem
+from .models import Address, LineItem
 from profiles.models import Province, Sector
 from django_select2.forms import Select2Widget
 
@@ -96,11 +96,11 @@ class OrderSecondStepFormPhones(forms.ModelForm):
         max_length=15,
         required=False,
         widget=forms.TextInput(
-        attrs={
-            'placeholder': 'Teléfono opcional.',
-            'class': 'form-control'
-            }
-        ),
+            attrs={
+                    'placeholder': 'Teléfono opcional.',
+                    'class': 'form-control'
+                }
+                ),
         label='Número de teléfono secundario'
     )
 
@@ -117,8 +117,8 @@ class OrderSecondStepFormPhones(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = (
-            #'phone_number_primary_type',
+            # 'phone_number_primary_type',
             'phone_number_primary',
-            #'phone_number_secondary_type',
+            # 'phone_number_secondary_type',
             'phone_number_secondary',
         )

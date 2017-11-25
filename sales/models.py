@@ -24,7 +24,7 @@ class LineItem(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=8)
 
     def total(self):
-        return self.quantity*self.price
+        return self.quantity * self.price
 
 
 class Order(models.Model):
@@ -57,11 +57,11 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def total(self):
-        order_total = self.lineitem_set.aggregate(total=Sum(F('quantity')*F('price'), output_field=FloatField()))
+        order_total = self.lineitem_set.aggregate(total=Sum(F('quantity') * F('price'), output_field=FloatField()))
         return order_total['total']
 
     def __str__(self):
-        return f"Orden:{self.pk}"
+        return f"Orden:{self.pk}"  # noqa
 
     class Meta:
         get_latest_by = "created_at"
@@ -82,19 +82,19 @@ def send_sales_slack_notification(order):
                     {
                         "title": "Usuario",
                         "value": f"{order.user.first_name} {order.user.last_name}\n"
-                                 f"Teléfono({order.user.phone_number_primary_type}): {order.user.phone_number_primary}\n"
-                                 f"Teléfono opcional({order.user.phone_number_secondary_type}): {order.user.phone_number_secondary}",
+                                 f"Teléfono({order.user.phone_number_primary_type}):\ {order.user.phone_number_primary}\n"  # noqa: E501
+                                 f"Teléfono opcional({order.user.phone_number_secondary_type}): {order.user.phone_number_secondary}",  # noqa: E501
                         "short": False
                     },
                     {
                         "title": "Dirección",
-                        "value": f"{order.address.sector.name}\nCalle: {order.address.street_and_house}\nReferencias: {order.address.reference}",
+                        "value": f"{order.address.sector.name}\nCalle: {order.address.street_and_house}\nReferencias: {order.address.reference}",  # noqa: E501
                         "short": False
                     },
                     {
                         "title": "Productos",
-                        "value": "\n".join([f"Pidio {line_item.quantity} boleta(s) de '{line_item.product.party_name}' | RD${line_item.total()}"
-                                            for line_item in order.lineitem_set.all()])+
+                        "value": "\n".join([f"Pidio {line_item.quantity} boleta(s) de '{line_item.product.party_name}' | RD${line_item.total()}"  # noqa: E501
+                                            for line_item in order.lineitem_set.all()]) +
                                  f"\nTotal: RD${order.total()}",
                         "short": False
                     },

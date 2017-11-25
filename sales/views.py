@@ -48,7 +48,7 @@ def edit_order_and_next(request):
             pattern = re.compile(r"^quantity_(?P<line_item_id>\d+)$")
             line_item_ids = map(lambda x: x.group('line_item_id'),
                                 filter(None,
-                                       map(pattern.match,  request.POST.keys())))
+                                       map(pattern.match, request.POST.keys())))
             if order.lineitem_set.all().exists():
                 items = []
                 for line_item_id in line_item_ids:
@@ -57,21 +57,23 @@ def edit_order_and_next(request):
                     with transaction.atomic():
                         for item in items:
                             try:
-                                quantity = int(request.POST[f'quantity_{item.pk}'])
+                                quantity = int(request.POST[f'quantity_{item.pk}'])  # noqa: E901
                             except ValueError:
                                 raise IntegrityError(f"'{request.POST[f'quantity_{item.pk}']}' is not a quantity.")
 
                             if item.product.remaining >= quantity > 0:
                                 item.quantity = quantity
                             else:
-                                raise IntegrityError(f"Trying to put {quantity} when remaining is {item.product.remaining}")
+                                raise IntegrityError(f"Trying to put {quantity} when remaining is {item.product.remaining}")  # noqa: E501
                             if item.product.ticket_types.all().exists():
                                 try:
                                     type_id = int(request.POST[f'type_{item.pk}'])
                                 except ValueError:
                                     raise IntegrityError(f"'{request.POST[f'type_{item.pk}']}' is not a number.")
                                 item.ttype = get_object_or_404(item.product.ticket_types, id=type_id)
-                                ticket_type = get_object_or_404(item.product.ticket_types.through, ttype_id=type_id, ticket=item.product)
+                                ticket_type = get_object_or_404(item.product.ticket_types.through,
+                                                                ttype_id=type_id,
+                                                                ticket=item.product)
                                 item.price = ticket_type.price
                             item.save()
 
@@ -164,6 +166,3 @@ def slack_actions(request):
 
                 return HttpResponse("")
     return JsonResponse({'RESULT': 'No known action invoked'})
-
-
-

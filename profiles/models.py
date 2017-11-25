@@ -36,7 +36,7 @@ class Sector(models.Model):
         # Otherwise will use the municipality name.
         elif self.municipality:
             where = str(self.municipality)
-        return f"{self.name}, {where}"
+        return f"{self.name}, {where}"  # noqa: E901
 
     class Meta:
         unique_together = ("code", "name")

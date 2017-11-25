@@ -1,7 +1,5 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from .models import Sector
-from django_select2.forms import Select2Widget
 
 
 class SignUpForm(forms.ModelForm):
@@ -40,6 +38,3 @@ class SignUpForm(forms.ModelForm):
             "first_name": "Nombres",
             "last_name": "Apellidos",
         }
-
-
-

@@ -13,14 +13,14 @@ def send_email_notification(cleaned_data):
         'content': cleaned_data['content']
     }
     email = EmailMultiAlternatives(
-        f"Contacto: {cleaned_data['contact_name']}",
-        loader.get_template(
-            'email_templates/email_contact_sent.html'
-        ).render(c),
-        bcc=(settings.SLACK_EMAIL,),
-        reply_to=(cleaned_data['contact_email'],),
-        to=[settings.CONTACT_EMAIL]
-    )
+                f"Contacto: {cleaned_data['contact_name']}",  # noqa: E901
+                loader.get_template(
+                    'email_templates/email_contact_sent.html'
+                ).render(c),
+                bcc=(settings.SLACK_EMAIL,),
+                reply_to=(cleaned_data['contact_email'],),
+                to=[settings.CONTACT_EMAIL]
+            )
     email.content_subtype = "html"
     email.send()
 

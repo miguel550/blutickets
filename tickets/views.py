@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from .forms import ShowMapForm
 
@@ -29,5 +28,3 @@ class TicketDetailView(DetailView):
         ctx = super().get_context_data(**kwargs)
         ctx['form'] = ShowMapForm(instance=ctx['object'])
         return ctx
-
-

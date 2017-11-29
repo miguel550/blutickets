@@ -23,6 +23,7 @@ class TicketType(models.Model):
     ttype = models.ForeignKey('Type')
     ticket = models.ForeignKey('Ticket')
     price = models.DecimalField(decimal_places=2, max_digits=8, default=0)
+    quantity = models.IntegerField(default=0)
 
 
 class Ticket(models.Model):

@@ -15,7 +15,7 @@ from django.db import transaction
 
 
 @never_cache
-@login_required(login_url=reverse_lazy('account_login'))
+@login_required(login_url=reverse_lazy('login-signup'))
 def create_order(request):
 
     if request.method == "POST":
@@ -34,7 +34,7 @@ def create_order(request):
 
 
 @never_cache
-@login_required(login_url=reverse_lazy('account_login'))
+@login_required(login_url=reverse_lazy('login-signup'))
 def edit_order_and_next(request):
     if request.method == "POST":
         # edit items quantity
@@ -102,7 +102,7 @@ def edit_order_and_next(request):
 
 
 @never_cache
-@login_required(login_url=reverse_lazy('account_login'))
+@login_required(login_url=reverse_lazy('login-signup'))
 def checkout(request):
     if request.method == "POST":
         # map location through post

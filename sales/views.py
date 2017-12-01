@@ -12,6 +12,7 @@ import re
 import json
 import requests
 from django.db import transaction
+from django.db.models import Min
 
 
 @never_cache
@@ -23,13 +24,15 @@ def create_order(request):
                                                      status=Order.PREPARING)
         if 'ticket_id' in request.POST:
             ticket = get_object_or_404(Ticket, pk=request.POST['ticket_id'])
-            LineItem.objects.get_or_create(product=ticket,
-                                           order=order,
-                                           price=ticket.price)
+            price = ticket.price if ticket.ticket_types.count == 0 else ticket.tickettype_set.first().price
+            LineItem.objects.create(product=ticket,
+                                    order=order,
+                                    price=price)
 
         return redirect('create_order_or_add_item')
     elif request.method == "GET":
-        recommended_events = Ticket.objects.filter(active=True)[:3]
+        recommended_events = Ticket.objects.filter(active=True)[:3].annotate(min_price=Min('tickettype__price'))
+
         return render(request, 'sales/edit_order.html', {'recommended_events': recommended_events})
 
 

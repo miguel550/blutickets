@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView
 from .forms import ShowMapForm
-
+from django.db.models import Min
 from .models import Ticket
 
 
@@ -18,7 +18,7 @@ class OnlyTicketList(ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.filter(active=True)
+        return qs.filter(active=True).annotate(min_price=Min('tickettype__price'))
 
 
 class TicketDetailView(DetailView):

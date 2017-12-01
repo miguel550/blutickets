@@ -60,7 +60,15 @@ class Ticket(models.Model):
 
     @property
     def remaining(self):
+        if self.tickettype_set.count() > 0:
+            return self.tickettype_set.aggregate(Sum('quantity'))['quantity__sum'] - self.sold
         return self.quantity - self.sold
+
+    @property
+    def get_quantity(self):
+        if self.tickettype_set.count() > 0:
+            return self.tickettype_set.aggregate(Sum('quantity'))['quantity__sum']
+        return self.quantity
 
     def get_absolute_url(self):
         from django.urls import reverse

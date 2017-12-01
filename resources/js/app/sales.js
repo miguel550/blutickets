@@ -70,16 +70,17 @@ window.orders = {
   },
 
   selectAction: (e) => {
+
+    const option       = e.target.selectedOptions[0];
     if(option.value === "no-options") {
       return;
     }
-    const option       = e.target.selectedOptions[0];
     const quantityElem = e.target.parentElement.parentElement.
                          querySelector('.quantity');
     quantityElem.dataset.price = option.value ? option.dataset.price : 0;
 
     e.target.parentElement.parentElement. // ↓
-    querySelector('td:nth-child(3) span'). // ↓ YISUSCRAIST
+    querySelector('td.product-price .amount span'). // ↓ YISUSCRAIST
     innerHTML = option.dataset.priceprint;
 
     const event = new Event('input', {
@@ -125,7 +126,7 @@ document.querySelector('#update_cart').addEventListener("click", function(e){
   const selects = document.querySelectorAll('.type');
 
   for (let i = 0; i < selects.length; i++) {
-    selects[i].addEventListener("change", changeSelection, false);
+    selects[i].addEventListener("change", window.orders.selectAction, false);
     
     var event = new Event('change', {
             'bubbles':    true,

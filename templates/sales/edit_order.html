@@ -24,6 +24,7 @@
               <th class="product-remove">&nbsp;</th>
               <th class="product-remove">&nbsp;</th>
               <th class="product-name">Evento</th>
+                <th class="product-type">Tipo</th>
               <th class="product-price">Precio</th>
               <th class="product-quantity">Cantidad</th>
               <th class="product-subtotal">Total</th>
@@ -42,17 +43,31 @@
               <td class="product-name">
                 <a href="{{ item.product.get_absolute_url }}">{{ item.product.party_name }}</a>
               </td>
-
+              <td class="product-type">
+                  {% if item.product.ticket_types.count > 0 %}
+                  <select name="type_{{ item.pk }}" class="type">
+                      {% for type in item.product.tickettype_set.all %}
+                          {% if item.ttype.pk == type.pk %}
+                          <option value="{{type.ttype.pk}}" data-itempk="{{ item.pk }}" data-price="{{ type.price }}" data-priceprint="{{ type.price }}" selected>{{ type.ttype.name }}</option>
+                          {% else %}
+                          <option value="{{type.ttype.pk}}" data-itempk="{{ item.pk }}" data-price="{{ type.price }}" data-priceprint="{{ type.price }}">{{ type.ttype.name }}</option>
+                          {% endif %}
+                      {% endfor %}
+                  </select>
+                 {% else %}
+                  Regular
+                {% endif %}
+              </td>
               <td class="product-price">
-                <span class="amount">RD${{ item.price }}</span>
+                  <span class="amount">RD$<span id="priceprint {{ item.pk }}">{{ item.price }}</span></span>
               </td>
 
               <td class="product-quantity">
-                <div class="quantity buttons_added">
-                  <input type="button" class="minus" value="-">
+                <!--<div class="quantity buttons_added">-->
+                  <!--<input type="button" class="minus" value="-">-->
                   <input type="number" size="4" name="quantity_{{ item.pk }}" data-price="{{ item.price|unlocalize }}" data-id="{{ item.pk }}" class="input-text qty text quantity" title="Qty" value="{{ item.quantity }}" min="0" step="1" max="{{ item.product.remaining }}">
-                  <input type="button" class="plus" value="+">
-                </div>
+                  <!--<input type="button" class="plus" value="+">-->
+                <!--</div>-->
               </td>
 
               <td class="product-subtotal">
@@ -103,17 +118,23 @@
         <div class="cross-sells">
           <ul class="products">
             {% for event in recommended_events %}
-            <li class="product">
-              <a href="{{ event.get_absolute_url }}">
-                <img width="325" height="325" alt="{{ event.party_name }}" class="attachment-shop_catalog wp-post-image" src="{{ event.flyer_image_compressed.url }}">
-                <h3>{{ event.party_name }}</h3>
-                <span class="price"><span class="amount">RD${{ event.price }}</span></span>
-              </a>
-        <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
-            <input type="hidden" name="ticket_id" value="{{ event.pk }}" />
-            <input type="submit" class="add_to_cart_button" value="Seleccionar opción" />
-        </form>
-            </li>
+                {% if event.remaining > 0 %}
+                    <li class="product">
+                      <a href="{{ event.get_absolute_url }}">
+                        <img width="325" height="325" alt="{{ event.party_name }}" class="attachment-shop_catalog wp-post-image" src="{{ event.flyer_image_compressed.url }}">
+                        <h3>{{ event.party_name }}</h3>
+                          {% if event.ticket_types.count > 0 %}
+                         <span class="price">Desde <span class="amount">RD${{ event.min_price }}</span></span>
+                              {% else %}
+                        <span class="price"><span class="amount">RD${{ event.price }}</span></span>
+                              {% endif %}
+                      </a>
+                <form action="{% url 'create_order_or_add_item' %}" method="post">{% csrf_token %}
+                    <input type="hidden" name="ticket_id" value="{{ event.pk }}" />
+                    <input type="submit" class="add_to_cart_button" value="Seleccionar opción" />
+                </form>
+                    </li>
+                {% endif %}
             {% endfor %}
           </ul>
         </div>

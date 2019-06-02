@@ -61,8 +61,11 @@ INSTALLED_APPS = [
     'markupfield',
     'imagekit',
     'django_select2',
+    'graphene_django',
 ]
-
+GRAPHENE = {
+    'SCHEMA': 'blutickets.schema.schema'  # Where your Graphene schema lives
+}
 ACCOUNT_SIGNUP_FORM_CLASS = 'profiles.forms.SignUpForm'
 AUTH_USER_MODEL = 'profiles.User'
 

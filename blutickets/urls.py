@@ -18,6 +18,8 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
 from django.views.generic import TemplateView
+from graphene_django.views import GraphQLView
+
 from tickets.views import TicketList, TicketDetailView, OnlyTicketList
 from sales.views import (create_order, edit_order_and_next,
                          checkout, remove_item_from_order,
@@ -57,6 +59,7 @@ urlpatterns = [
     url(r'^contact/$', ContactFormView.as_view(), name='contact'),
     # Slack app
     url(r'^slack/actions/$', slack_actions, name='slack_actions'),
+    url(r'^graphql$', GraphQLView.as_view(graphiql=True)),
 ]
 handler404 = TicketList.as_view()
 

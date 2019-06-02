@@ -4,7 +4,7 @@ Django==1.11.5
 django-storages==1.6.5
 gunicorn==19.7.1
 Pillow==4.2.1
-psycopg2==2.7.3
+psycopg2==2.8.2
 django-allauth==0.33.0
 -e git+https://github.com/miguel550/django-geoposition.git#egg=django-geoposition
 Markdown==2.6.9
@@ -18,3 +18,4 @@ celery==4.1.0
 django-select2==5.11.1
 django-redis==4.8.0
 django-environ==0.4.4
+graphene-django==2.2.0

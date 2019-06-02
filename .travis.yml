@@ -8,12 +8,13 @@ install:
 - pip install flake8
 - pip install -r requirements.txt
 before_script:
-- flake8 . --exclude migrations,node_modules,settings,manage.py,__init__.py --max-line-length=120 --ignore=E901,E126,E127,E121
+- flake8 . --exclude migrations,node_modules,settings,manage.py,__init__.py --max-line-length=120
+  --ignore=E901,E126,E127,E121
 script:
 - celery -A blutickets worker -l info&
 - python manage.py test
 services:
-  - rabbitmq
+- rabbitmq
 deploy:
   provider: heroku
   app:
@@ -21,6 +22,6 @@ deploy:
     dev: dev-blutickets
     feature-redesign: redesign-blutickets
   api_key:
-    secure: Yntms4rePmkKrUhhr0xrRGV6nrIfILy8ULx5BDFkEqbhIAEi8lCct0+9enrOenBNHKp6rTEHGxn6Y+MFzpXPt4N8xICOsqO/f3VvK3x7loC0vMjPGrx08wEMPhSWq8JGMmc1FGaIyXxctRGi9HtHozFYElQK9BuQWjCjtUNfFRvg84lhMENhq1bzaKFnbsQ5F/zJZ/RU22T13WEo1EVJdssiaSy+TrVjSY0dsoas1wKRxiTn0D9bQFwbJMLoKD5H4+rff5YMmKPMzkaQzBchG1i2MfR+Bp4lSUmthhxwKv/KtCMJh3dFMLJDbkcDtxclv8s6p2/Rxqj1sCGoBv6XsUohKXIYRu5Mm2srxhGRy913WVcOH7b0tF54NpbQ8GHeQQIYkwDLTD3LLn8Ck8FejDyJstN/mbZs943bYA7x8I4vJcIZE8B2z/TDZyJxHgXUb1Ar4wLTjAfvudeeN4ElETri+DBocQFBAxlSiBxwcoN8mZRDanKIgkV4XpP1DOx6vmvTpIkjKLW8J5SC0VNl4ul4AQRiroJu0kvKo9CBf5IYvFp8kuHN8dGcuwVLXSHizjONW4T58K/KdzK3uXRCbcYZGWmF4KU3311x3gSzeahC4uOYSDuBkAtEuJ74TwEo+uoqsvak17R3ApcsdAEMhVIUiAzRQtRlCyi0CN2ud34=
+    secure: paYLF7RzRPp8zUBAT8jK8xPGVxeQVr5/iSVkh975J3VUDxgafUD99QhXEfzxTsuAzNARwml+/cOu2tnWtu3D2bNFiS0Rkwlvj5DvmlcODm+cScnZJeN57eUhMo3kP+h2q4by38r0ymeXbl9Mmk3QNkEShax+Gkd8jWr5jH6Jfk8ZZ5HhEiD9KXZihz2fM1gn/ujBmBt5XGLXHg1j1qpNTVwdtxjhYMqLfGxrpyWKXeYtvVVwHz9S66bP3q/mS0w+1C4sWShN9GaVkHJYqK1cNN9jNKcJzxnK0mv4jEYnVccwyvVCKIksAchb0cH+QF6638iUfV/0+gz0a38MeXtIG64hX9TcyXk0b+X+J6HyyD0z1Z/u1lmk5VS6ayujDm9sG9iUZz6ANFmv4COhlFrV6RyAG6MZGGDgL9yhvqZftgCXAPG6WpWZ4Mol09VluP5qEUf0XlMdVzqOYIhd1jG1uuq7h76iFTQWxZh7fsdmU1d8tGEKbp0XlOiuCek7fRA0qBbWuMR/BP2DqeiGRsNZJSe0tq7mU2wzD8V5PLJ6/oDWP6VkZ3PYdMtkSIaQsDZN1jZjHVFBYah8euZqj0sG58iPPfNSK0rV7UTtx3HLPq5pUkZnImSsdeeHAROex8lFW1iRoqfnEH/RdfS27kIBa8FhNBkUFdvMyTqGFmQebL8=
 notifications:
   slack: blutickets:2yPWlEHDWn8TCi0DgT0UhWjH

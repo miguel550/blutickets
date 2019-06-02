@@ -94,8 +94,7 @@ def send_sales_slack_notification(order):
                     {
                         "title": "Productos",
                         "value": "\n".join([f"Pidio {line_item.quantity} boleta(s) de '{line_item.product.party_name}' | RD${line_item.total()}"  # noqa: E501
-                                            for line_item in order.lineitem_set.all()]) +
-                                 f"\nTotal: RD${order.total()}",
+                                            for line_item in order.lineitem_set.all()]) + f"\nTotal: RD${order.total()}",  # noqa: E501
                         "short": False
                     },
                 ],

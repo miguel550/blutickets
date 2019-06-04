@@ -1,7 +1,7 @@
 import graphene
 import graphene_django
 from .models import Ticket
-from graphql_relay.node.node import to_global_id, from_global_id
+from graphql_relay.node.node import to_global_id
 
 
 class TicketType(graphene_django.DjangoObjectType):

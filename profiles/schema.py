@@ -48,4 +48,3 @@ class UserMutation(graphene.Mutation):
 
 class Mutation:
     update_user = UserMutation.Field()
-

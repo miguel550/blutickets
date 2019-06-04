@@ -26,6 +26,7 @@ from sales.views import (create_order, edit_order_and_next,
                          slack_actions)
 from profiles.views import SignupLogin, SignUp, Login
 from contact.views import ContactFormView
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     # admin
@@ -59,7 +60,7 @@ urlpatterns = [
     url(r'^contact/$', ContactFormView.as_view(), name='contact'),
     # Slack app
     url(r'^slack/actions/$', slack_actions, name='slack_actions'),
-    url(r'^graphql$', GraphQLView.as_view(graphiql=True)),
+    url(r'^graphql$', csrf_exempt(GraphQLView.as_view(graphiql=True))),
 ]
 handler404 = TicketList.as_view()
 
